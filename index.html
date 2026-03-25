@@ -4,8 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 
   *, *::before, *::after {
     margin: 0; padding: 0; box-sizing: border-box;
@@ -43,7 +45,11 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ── CURSOR ── */
+  /* ── CURSOR (oculto em touch) ── */
+  @media (hover: none), (pointer: coarse) {
+    .cursor, .cursor-follower { display: none !important; }
+  }
+
   .cursor {
     position: fixed;
     width: 10px; height: 10px;
@@ -1001,6 +1007,51 @@
   }
   #zoom-reset:hover { color: white; background: rgba(255,255,255,0.1); }
 
+  /* ── MARQUEE STRIP ── */
+  .marquee-strip {
+    overflow: hidden;
+    background: var(--text-primary);
+    padding: 14px 0;
+    position: relative;
+    z-index: 2;
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marqueeScroll 28s linear infinite;
+    will-change: transform;
+  }
+  .marquee-track:hover { animation-play-state: paused; }
+  @keyframes marqueeScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .marquee-content {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+  .mq-reg {
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .mq-bold {
+    font-size: 12px;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .mq-sep {
+    color: var(--accent);
+    margin: 0 20px;
+    font-size: 9px;
+    opacity: 0.8;
+  }
+
   /* ── SCROLLBAR ── */
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: transparent; }
@@ -1023,6 +1074,11 @@
     .hero { padding: 120px 24px 60px; }
     .stats-row, .section, .contact-strip { padding-left: 24px; padding-right: 24px; }
     footer { padding: 32px 24px; }
+    nav {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: rgba(245,245,247,0.97);
+    }
   }
 </style>
 </head>
@@ -1053,15 +1109,15 @@
 <nav>
   <div class="nav-inner">
     <div class="nav-logo">Kaue<span>.</span></div>
-    <a href="https://wa.me/5522996143022" target="_blank" class="nav-cta">Contato</a>
+    <a href="https://wa.me/5522996143022?text=E%20a%C3%AD%2C%20Kau%C3%AA!%20Vim%20pelo%20seu%20portf%C3%B3lio%2C%20gostaria%20de%20saber%20mais%20sobre%20seus%20servi%C3%A7os!" target="_blank" class="nav-cta">Contato</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-tag">Disponível para projetos</div>
-  <h1 class="hero-title">Design que<br><em>move</em> pessoas.</h1>
-  <p class="hero-sub">Criativos, carrosséis e páginas de alta conversão — cada pixel pensado para gerar resultado.</p>
+  <div class="hero-tag">1 vaga em aberto</div>
+  <h1 class="hero-title">Faço seu criativo<br>parar o feed<br><em>e converter.</em></h1>
+  <p class="hero-sub">Não trabalho pra portfólio bonito. Trabalho pra você vender mais. Criativos, carrosséis e páginas que fazem sentido pro seu bolso.</p>
 </div>
 
 <!-- STATS -->
@@ -1120,7 +1176,7 @@
       <!-- Débora Heller -->
       <div class="card card-real" data-img="ads debora.webp" style="animation-delay:0.1s">
         <div class="card-visual card-visual-real">
-          <img src="ads debora.webp" alt="Ads Débora Heller">
+          <img src="ads debora.webp" alt="Ads Débora Heller" loading="lazy">
           <div class="page-zoom-hint">Ver criativo</div>
         </div>
         <div class="card-info">
@@ -1133,7 +1189,7 @@
       <!-- Macagigo -->
       <div class="card card-real" data-img="ads macagigo.webp" style="animation-delay:0.15s">
         <div class="card-visual card-visual-real">
-          <img src="ads macagigo.webp" alt="Ads Macagigo">
+          <img src="ads macagigo.webp" alt="Ads Macagigo" loading="lazy">
           <div class="page-zoom-hint">Ver criativo</div>
         </div>
         <div class="card-info">
@@ -1146,7 +1202,7 @@
       <!-- Áurea -->
       <div class="card card-real" data-img="ads_aurea.webp" style="animation-delay:0.2s">
         <div class="card-visual card-visual-real">
-          <img src="ads_aurea.webp" alt="Ads Áurea">
+          <img src="ads_aurea.webp" alt="Ads Áurea" loading="lazy">
           <div class="page-zoom-hint">Ver criativo</div>
         </div>
         <div class="card-info">
@@ -1172,7 +1228,7 @@
 
       <div class="card card-real" data-img="carrosseis_polly.webp" data-zoom="true" style="animation-delay:0.05s">
         <div class="card-visual card-visual-real">
-          <img src="carrosseis_polly.webp" alt="Carrossel Polly">
+          <img src="carrosseis_polly.webp" alt="Carrossel Polly" loading="lazy">
           <div class="page-zoom-hint">Ver carrossel</div>
         </div>
         <div class="card-info">
@@ -1184,7 +1240,7 @@
 
       <div class="card card-real" data-img="carrosseis pri.webp" data-zoom="true" style="animation-delay:0.1s">
         <div class="card-visual card-visual-real">
-          <img src="carrosseis pri.webp" alt="Carrossel Pri">
+          <img src="carrosseis pri.webp" alt="Carrossel Pri" loading="lazy">
           <div class="page-zoom-hint">Ver carrossel</div>
         </div>
         <div class="card-info">
@@ -1196,7 +1252,7 @@
 
       <div class="card card-real" data-img="carrosseis_fernando.webp" data-zoom="true" style="animation-delay:0.15s">
         <div class="card-visual card-visual-real">
-          <img src="carrosseis_fernando.webp" alt="Carrossel Fernando">
+          <img src="carrosseis_fernando.webp" alt="Carrossel Fernando" loading="lazy">
           <div class="page-zoom-hint">Ver carrossel</div>
         </div>
         <div class="card-info">
@@ -1222,7 +1278,7 @@
 
       <div class="page-card page-card-real" data-img="pagina debora.webp" style="animation-delay:0.05s">
         <div class="page-preview page-preview-real">
-          <img src="pagina debora.webp" alt="Página Débora">
+          <img src="pagina debora.webp" alt="Página Débora" loading="lazy">
           <div class="page-zoom-hint">Ver página completa</div>
         </div>
         <div class="card-info">
@@ -1234,7 +1290,7 @@
 
       <div class="page-card page-card-real" data-img="pagina macagigo.webp" style="animation-delay:0.1s">
         <div class="page-preview page-preview-real">
-          <img src="pagina macagigo.webp" alt="Página Macagigo">
+          <img src="pagina macagigo.webp" alt="Página Macagigo" loading="lazy">
           <div class="page-zoom-hint">Ver página completa</div>
         </div>
         <div class="card-info">
@@ -1246,7 +1302,7 @@
 
       <div class="page-card page-card-real" data-img="pagina macagigo 2.webp" style="animation-delay:0.15s">
         <div class="page-preview page-preview-real">
-          <img src="pagina macagigo 2.webp" alt="Página Macagigo 2">
+          <img src="pagina macagigo 2.webp" alt="Página Macagigo 2" loading="lazy">
           <div class="page-zoom-hint">Ver página completa</div>
         </div>
         <div class="card-info">
@@ -1272,10 +1328,52 @@
 <div class="contact-strip">
   <div class="contact-card">
     <div>
-      <div class="contact-title">Pronto para elevar<br>o seu negócio?</div>
-      <div class="contact-sub">Vamos conversar sobre o seu próximo projeto.</div>
+      <div class="contact-title">Seu negócio merece<br>mais do que design bonito.</div>
+      <div class="contact-sub">Me chama. A gente vê onde tá travando a sua venda.</div>
     </div>
-    <a href="https://wa.me/5522996143022" target="_blank" class="contact-btn">Falar comigo →</a>
+    <a href="https://wa.me/5522996143022?text=E%20a%C3%AD%2C%20Kau%C3%AA!%20Vim%20pelo%20seu%20portf%C3%B3lio%2C%20gostaria%20de%20saber%20mais%20sobre%20seus%20servi%C3%A7os!" target="_blank" class="contact-btn">Falar comigo →</a>
+  </div>
+</div>
+
+<!-- MARQUEE STRIP -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <div class="marquee-content">
+      <span class="mq-reg">Você provavelmente</span>
+      <span class="mq-sep">✦</span>
+      <span class="mq-bold">precisa de mim</span>
+      <span class="mq-sep">✦</span>
+      <span class="mq-reg">hoje no seu negócio</span>
+      <span class="mq-sep">✦</span>
+      <span class="mq-bold">;)</span>
+      <span class="mq-sep">✦</span>
+      <span class="mq-bold">Você provavelmente</span>
+      <span class="mq-sep">✦</span>
+      <span class="mq-reg">precisa de mim</span>
+      <span class="mq-sep">✦</span>
+      <span class="mq-bold">hoje no seu negócio</span>
+      <span class="mq-sep">✦</span>
+      <span class="mq-reg">;)</span>
+      <span class="mq-sep">✦</span>
+    </div>
+    <div class="marquee-content" aria-hidden="true">
+      <span class="mq-reg">Você provavelmente</span>
+      <span class="mq-sep">✦</span>
+      <span class="mq-bold">precisa de mim</span>
+      <span class="mq-sep">✦</span>
+      <span class="mq-reg">hoje no seu negócio</span>
+      <span class="mq-sep">✦</span>
+      <span class="mq-bold">;)</span>
+      <span class="mq-sep">✦</span>
+      <span class="mq-bold">Você provavelmente</span>
+      <span class="mq-sep">✦</span>
+      <span class="mq-reg">precisa de mim</span>
+      <span class="mq-sep">✦</span>
+      <span class="mq-bold">hoje no seu negócio</span>
+      <span class="mq-sep">✦</span>
+      <span class="mq-reg">;)</span>
+      <span class="mq-sep">✦</span>
+    </div>
   </div>
 </div>
 
@@ -1283,36 +1381,40 @@
 <footer>
   <div class="footer-inner">
     <div>
-      <div class="footer-copy">© 2024 Studio. Todos os direitos reservados.</div>
-      <div class="footer-tagline">Resultado antes de tudo. Bonito é consequência.</div>
+      <div class="footer-copy">© 2026 Kauê. Todos os direitos reservados.</div>
+      <div class="footer-tagline">Bonito é bom. Bonito que vende é melhor.</div>
     </div>
     <div class="footer-links">
       <a href="https://instagram.com/kaueriscado" target="_blank" class="footer-link">Instagram</a>
-      <a href="https://wa.me/5522996143022" target="_blank" class="footer-link">WhatsApp</a>
+      <a href="https://wa.me/5522996143022?text=E%20a%C3%AD%2C%20Kau%C3%AA!%20Vim%20pelo%20seu%20portf%C3%B3lio%2C%20gostaria%20de%20saber%20mais%20sobre%20seus%20servi%C3%A7os!" target="_blank" class="footer-link">WhatsApp</a>
     </div>
   </div>
 </footer>
 
 <script>
-  // ── CURSOR ──
+  // ── CURSOR (apenas em dispositivos com mouse) ──
+  const isTouchOnly = window.matchMedia('(hover: none), (pointer: coarse)').matches;
   const cursor = document.getElementById('cursor');
   const follower = document.getElementById('cursorFollower');
-  let fx = 0, fy = 0, cx = 0, cy = 0;
 
-  document.addEventListener('mousemove', e => {
-    cx = e.clientX; cy = e.clientY;
-    cursor.style.left = cx + 'px';
-    cursor.style.top = cy + 'px';
-  });
+  if (!isTouchOnly) {
+    let fx = 0, fy = 0, cx = 0, cy = 0;
 
-  function animFollower() {
-    fx += (cx - fx) * 0.12;
-    fy += (cy - fy) * 0.12;
-    follower.style.left = fx + 'px';
-    follower.style.top = fy + 'px';
-    requestAnimationFrame(animFollower);
+    document.addEventListener('mousemove', e => {
+      cx = e.clientX; cy = e.clientY;
+      cursor.style.left = cx + 'px';
+      cursor.style.top = cy + 'px';
+    });
+
+    function animFollower() {
+      fx += (cx - fx) * 0.12;
+      fy += (cy - fy) * 0.12;
+      follower.style.left = fx + 'px';
+      follower.style.top = fy + 'px';
+      requestAnimationFrame(animFollower);
+    }
+    animFollower();
   }
-  animFollower();
 
   // ── TABS ──
   const pills = document.querySelectorAll('.tab-pill');
@@ -1517,14 +1619,16 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
   // ── HIDE CURSOR ON LEAVE ──
-  document.addEventListener('mouseleave', () => {
-    cursor.style.opacity = '0';
-    follower.style.opacity = '0';
-  });
-  document.addEventListener('mouseenter', () => {
-    cursor.style.opacity = '1';
-    follower.style.opacity = '1';
-  });
+  if (!isTouchOnly) {
+    document.addEventListener('mouseleave', () => {
+      cursor.style.opacity = '0';
+      follower.style.opacity = '0';
+    });
+    document.addEventListener('mouseenter', () => {
+      cursor.style.opacity = '1';
+      follower.style.opacity = '1';
+    });
+  }
 </script>
 </body>
 </html>
