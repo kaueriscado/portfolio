@@ -1052,6 +1052,189 @@
     opacity: 0.8;
   }
 
+  /* ── HERO BLOBS ── */
+  .hero-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+    animation: blobFloat 9s ease-in-out infinite;
+  }
+  .hero-blob-1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(0,113,227,0.13) 0%, transparent 70%);
+    top: -60px; right: -140px;
+  }
+  .hero-blob-2 {
+    width: 380px; height: 380px;
+    background: radial-gradient(circle, rgba(191,90,242,0.1) 0%, transparent 70%);
+    bottom: -80px; left: -100px;
+    animation-delay: -4.5s;
+  }
+  @keyframes blobFloat {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    33% { transform: translate(24px,-18px) scale(1.04); }
+    66% { transform: translate(-16px,12px) scale(0.97); }
+  }
+
+  /* ── HERO ACTIONS ── */
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 36px;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.8s cubic-bezier(0.25,0.46,0.45,0.94) 0.5s forwards;
+  }
+  .hero-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: white;
+    border-radius: 100px;
+    padding: 14px 28px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: -0.3px;
+    font-family: inherit;
+    transition: transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.3s;
+  }
+  .hero-btn-primary:hover {
+    transform: scale(1.04);
+    box-shadow: 0 12px 32px rgba(0,113,227,0.35);
+  }
+  .hero-btn-secondary {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: -0.2px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .hero-btn-secondary:hover { color: var(--text-primary); }
+
+  /* ── SERVICES ── */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .service-card {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+    border: 1px solid var(--border);
+    transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.4s, border-color 0.4s;
+  }
+  .service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: transparent;
+  }
+  .service-icon {
+    width: 46px; height: 46px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+  }
+  .service-icon svg { width: 22px; height: 22px; }
+  .service-name {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+  }
+  .service-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    letter-spacing: -0.1px;
+  }
+  .service-tag {
+    display: inline-block;
+    margin-top: 18px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 4px 10px;
+    border-radius: 100px;
+  }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .testimonial-card {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: 26px 24px;
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.4s;
+  }
+  .testimonial-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+  .testimonial-stars {
+    color: #ff9f0a;
+    font-size: 13px;
+    letter-spacing: 3px;
+    margin-bottom: 14px;
+  }
+  .testimonial-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    letter-spacing: -0.1px;
+    flex: 1;
+    margin-bottom: 20px;
+  }
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .testimonial-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+  .testimonial-name {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    color: var(--text-primary);
+  }
+  .testimonial-role {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    letter-spacing: -0.1px;
+    margin-top: 1px;
+  }
+
   /* ── SCROLLBAR ── */
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: transparent; }
@@ -1059,6 +1242,9 @@
 
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .hero-actions { flex-direction: column; align-items: flex-start; gap: 12px; }
     .grid-3 { grid-template-columns: 1fr; }
     .grid-2 { grid-template-columns: 1fr; }
     .carousel-showcase { grid-template-columns: 1fr; }
@@ -1118,6 +1304,18 @@
   <div class="hero-tag">1 vaga em aberto</div>
   <h1 class="hero-title">Faço seu criativo<br>parar o feed<br><em>e converter.</em></h1>
   <p class="hero-sub">Não trabalho pra portfólio bonito. Trabalho pra você vender mais. Criativos, carrosséis e páginas que fazem sentido pro seu bolso.</p>
+  <div class="hero-actions">
+    <a href="#portfolio" class="hero-btn-primary">
+      Ver portfólio
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+    </a>
+    <a href="https://wa.me/5522996143022?text=E%20a%C3%AD%2C%20Kau%C3%AA!%20Vim%20pelo%20seu%20portf%C3%B3lio%2C%20gostaria%20de%20saber%20mais%20sobre%20seus%20servi%C3%A7os!" target="_blank" class="hero-btn-secondary">
+      Falar comigo
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+  <div class="hero-blob hero-blob-1"></div>
+  <div class="hero-blob hero-blob-2"></div>
 </div>
 
 <!-- STATS -->
@@ -1140,8 +1338,46 @@
   </div>
 </div>
 
+<!-- SERVICES -->
+<div class="section" style="padding-bottom: 20px; padding-top: 60px;">
+  <div class="section-header">
+    <h2 class="section-title">O que eu faço</h2>
+    <span class="section-count">3 serviços</span>
+  </div>
+  <div class="services-grid">
+
+    <div class="service-card">
+      <div class="service-icon" style="background: rgba(0,113,227,0.1);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </div>
+      <div class="service-name">Criativos para Ads</div>
+      <div class="service-desc">Design estratégico de imagens e vídeos para campanhas no Meta Ads e Google Ads que param o scroll e convertem.</div>
+      <span class="service-tag">Meta · Google Ads</span>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon" style="background: rgba(191,90,242,0.1);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#bf5af2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="7" height="11" rx="1.5"/><rect x="15" y="11" width="7" height="11" rx="1.5"/><rect x="11" y="2" width="11" height="7" rx="1.5"/><rect x="2" y="15" width="11" height="7" rx="1.5"/></svg>
+      </div>
+      <div class="service-name">Carrosséis</div>
+      <div class="service-desc">Sequências visuais para Instagram e LinkedIn que educam, engajam e conduzem o lead até o próximo passo.</div>
+      <span class="service-tag" style="color:#bf5af2; background:rgba(191,90,242,0.08);">Instagram</span>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon" style="background: rgba(52,199,89,0.1);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#34c759" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <div class="service-name">Páginas de Ação</div>
+      <div class="service-desc">Landing pages e páginas de captura com hierarquia visual clara, focadas em uma única conversão.</div>
+      <span class="service-tag" style="color:#34c759; background:rgba(52,199,89,0.08);">Landing Page · Captura</span>
+    </div>
+
+  </div>
+</div>
+
 <!-- TAB PILLS -->
-<div class="tab-pills-wrapper">
+<div class="tab-pills-wrapper" id="portfolio">
   <div class="tab-pills" id="tabPills">
     <div class="tab-pill-bg" id="pillBg"></div>
     <button class="tab-pill active" data-tab="criativos">Criativos</button>
