@@ -38,9 +38,15 @@
     color: var(--text);
     min-height: 100vh;
     overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
     background-image: radial-gradient(circle, #b8b4a8 1px, transparent 1px);
     background-size: 20px 20px;
-    background-attachment: fixed;
+    pointer-events: none;
   }
 
   /* ── CURSOR ── */
@@ -50,19 +56,21 @@
   .cursor {
     position: fixed;
     width: 10px; height: 10px;
+    top: 0; left: 0;
     background: var(--accent);
     pointer-events: none;
     z-index: 9999;
-    transform: translate(-50%, -50%);
     outline: 2px solid var(--border);
+    will-change: transform;
   }
   .cursor-follower {
     position: fixed;
     width: 22px; height: 22px;
+    top: 0; left: 0;
     border: 2px solid var(--accent);
     pointer-events: none;
     z-index: 9998;
-    transform: translate(-50%, -50%);
+    will-change: transform;
   }
 
   /* ── NAV ── */
@@ -1353,20 +1361,19 @@
   const follower = document.getElementById('cursorFollower');
 
   if (!isTouchOnly) {
-    let fx = 0, fy = 0, cx = 0, cy = 0;
+    let fx = 0, fy = 0, cx = 0, cy = 0, rafId = null;
     document.addEventListener('mousemove', e => {
       cx = e.clientX; cy = e.clientY;
-      cursor.style.left = cx + 'px';
-      cursor.style.top = cy + 'px';
+      cursor.style.transform = `translate(${cx - 5}px,${cy - 5}px)`;
+      if (!rafId) rafId = requestAnimationFrame(animFollower);
     });
     function animFollower() {
       fx += (cx - fx) * 0.12;
       fy += (cy - fy) * 0.12;
-      follower.style.left = fx + 'px';
-      follower.style.top = fy + 'px';
-      requestAnimationFrame(animFollower);
+      follower.style.transform = `translate(${fx - 11}px,${fy - 11}px)`;
+      const dx = cx - fx, dy = cy - fy;
+      rafId = (dx * dx + dy * dy > 0.01) ? requestAnimationFrame(animFollower) : null;
     }
-    animFollower();
   }
 
   // ── TABS ──
@@ -1553,14 +1560,8 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
   if (!isTouchOnly) {
-    document.addEventListener('mouseleave', () => {
-      cursor.style.opacity = '0';
-      follower.style.opacity = '0';
-    });
-    document.addEventListener('mouseenter', () => {
-      cursor.style.opacity = '1';
-      follower.style.opacity = '1';
-    });
+    document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; follower.style.opacity = '0'; });
+    document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; follower.style.opacity = '1'; });
   }
 </script>
 </body>
