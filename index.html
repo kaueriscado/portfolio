@@ -1125,6 +1125,85 @@ footer {
   pointer-events: none;
   z-index: 5;
 }
+
+/* ═══════════════════════════════════════
+   SECTION LOCK OVERLAY
+═══════════════════════════════════════ */
+.row-section { position: relative; }
+
+.section-lock {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  background: linear-gradient(135deg, rgba(0,0,0,0.88) 0%, rgba(18,0,4,0.92) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: opacity 0.5s ease, backdrop-filter 0.5s ease;
+  border-radius: 4px;
+}
+.section-lock.unlocked {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.lock-icon-wrap {
+  width: 60px;
+  height: 60px;
+  background: rgba(229,9,20,0.12);
+  border: 2px solid rgba(229,9,20,0.45);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
+  transition: background 0.2s, border-color 0.2s;
+}
+.section-lock:hover .lock-icon-wrap {
+  background: rgba(229,9,20,0.22);
+  border-color: rgba(229,9,20,0.8);
+}
+.lock-icon-wrap svg {
+  width: 26px; height: 26px;
+  stroke: var(--red);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.lock-section-name {
+  font-size: 20px;
+  font-weight: 900;
+  color: white;
+  letter-spacing: -0.3px;
+}
+.lock-hint {
+  font-size: 13px;
+  color: var(--mid);
+  letter-spacing: 0.3px;
+}
+.lock-cta {
+  background: var(--red);
+  color: white;
+  border: none;
+  padding: 11px 32px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-family: inherit;
+  transition: background 0.2s, transform 0.1s;
+}
+.lock-cta:hover { background: var(--red-hover); transform: scale(1.04); }
 </style>
 </head>
 <body>
@@ -1257,6 +1336,14 @@ footer {
 
   <!-- ROW: CRIATIVOS -->
   <div class="row-section reveal" id="row-criativos">
+    <div class="section-lock" id="lock-criativos" onclick="unlockSection('criativos')">
+      <div class="lock-icon-wrap">
+        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <div class="lock-section-name">🎯 Criativos para Ads</div>
+      <div class="lock-hint">Clique para desbloquear o portfólio</div>
+      <button class="lock-cta">Ver Criativos</button>
+    </div>
     <div class="row-header">
       <div class="row-title">🎯 Criativos para Ads</div>
       <a href="#" class="row-see-all" onclick="scrollToSection('row-criativos'); return false;">Ver todos ›</a>
@@ -1371,6 +1458,14 @@ footer {
 
   <!-- ROW: CARROSSÉIS -->
   <div class="row-section reveal" id="row-carrosseis">
+    <div class="section-lock" id="lock-carrosseis" onclick="unlockSection('carrosseis')">
+      <div class="lock-icon-wrap">
+        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <div class="lock-section-name">📱 Carrosséis Instagram</div>
+      <div class="lock-hint">Clique para desbloquear o portfólio</div>
+      <button class="lock-cta">Ver Carrosséis</button>
+    </div>
     <div class="row-header">
       <div class="row-title">📱 Carrosséis Instagram</div>
       <a href="#" class="row-see-all" onclick="return false;">3 projetos</a>
@@ -1446,6 +1541,14 @@ footer {
 
   <!-- ROW: PÁGINAS -->
   <div class="row-section reveal" id="row-paginas">
+    <div class="section-lock" id="lock-paginas" onclick="unlockSection('paginas')">
+      <div class="lock-icon-wrap">
+        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <div class="lock-section-name">🖥️ Páginas de Ação</div>
+      <div class="lock-hint">Clique para desbloquear o portfólio</div>
+      <button class="lock-cta">Ver Páginas</button>
+    </div>
     <div class="row-header">
       <div class="row-title">🖥️ Páginas de Ação</div>
       <a href="#" class="row-see-all" onclick="return false;">3 páginas</a>
@@ -1865,6 +1968,14 @@ const statsObserver = new IntersectionObserver((entries) => {
 
 const statsSection = document.getElementById('stats-section');
 if (statsSection) statsObserver.observe(statsSection);
+
+// ── UNLOCK SECTION ──
+function unlockSection(id) {
+  const lock = document.getElementById('lock-' + id);
+  if (!lock) return;
+  lock.classList.add('unlocked');
+  setTimeout(() => lock.remove(), 500);
+}
 
 // ── SCROLL TO SECTION ──
 function scrollToSection(id) {
