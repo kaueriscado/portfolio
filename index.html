@@ -3,1578 +3,1896 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio — Kauê</title>
+<title>KAUEFLIX</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Netflix+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-  *, *::before, *::after {
-    margin: 0; padding: 0; box-sizing: border-box;
-  }
+:root {
+  --red: #E50914;
+  --red-hover: #f40612;
+  --bg: #141414;
+  --surface: #181818;
+  --surface-2: #232323;
+  --white: #ffffff;
+  --gray: #e5e5e5;
+  --mid: #b3b3b3;
+  --dim: #808080;
+  --dark: #000000;
+}
 
-  :root {
-    --bg: #dfe0d8;
-    --surface: #f4f0e6;
-    --surface-2: #fdfaf2;
-    --border: #111111;
-    --bw: 2px;
-    --text: #111111;
-    --text-dim: #555555;
-    --accent: #007755;
-    --accent-bg: #d8f5ec;
-    --green: #00cc88;
-    --dark: #111111;
-    --shadow: 4px 4px 0 #111111;
-    --font-px: 'Press Start 2P', monospace;
-    --font-b: 'Courier New', Courier, monospace;
-  }
+html { scroll-behavior: smooth; }
 
-  html { scroll-behavior: smooth; }
+body {
+  font-family: 'Netflix Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--white);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-  body {
-    font-family: var(--font-b);
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    background-image: radial-gradient(circle, #b8b4a8 1px, transparent 1px);
-    background-size: 20px 20px;
-    pointer-events: none;
-  }
+/* ═══════════════════════════════════════
+   INTRO SPLASH
+═══════════════════════════════════════ */
+#intro-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: splashFade 0.6s ease 3.2s forwards;
+  pointer-events: none;
+}
+@keyframes splashFade {
+  0%   { opacity: 1; }
+  100% { opacity: 0; pointer-events: none; }
+}
 
-  /* ── CURSOR ── */
-  @media (hover: none), (pointer: coarse) {
-    .cursor, .cursor-follower { display: none !important; }
-  }
-  .cursor {
-    position: fixed;
-    width: 10px; height: 10px;
-    top: 0; left: 0;
-    background: var(--accent);
-    pointer-events: none;
-    z-index: 9999;
-    outline: 2px solid var(--border);
-    will-change: transform;
-  }
-  .cursor-follower {
-    position: fixed;
-    width: 22px; height: 22px;
-    top: 0; left: 0;
-    border: 2px solid var(--accent);
-    pointer-events: none;
-    z-index: 9998;
-    will-change: transform;
-  }
+.intro-logo-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  /* ── NAV ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    background: var(--dark);
-    border-bottom: var(--bw) solid var(--border);
-  }
-  .nav-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 24px;
-    height: 52px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .nav-logo {
-    font-family: var(--font-px);
-    font-size: 13px;
-    color: #ffffff;
-    letter-spacing: 2px;
-  }
-  .nav-logo span { color: var(--green); }
-  .nav-cta {
-    font-family: var(--font-b);
-    font-size: 13px;
-    font-weight: bold;
-    color: var(--dark);
-    background: var(--green);
-    border: var(--bw) solid var(--border);
-    box-shadow: 3px 3px 0 var(--border);
-    padding: 6px 16px;
-    text-decoration: none;
-    transition: box-shadow 0.08s, transform 0.08s;
-    letter-spacing: 0.5px;
-    display: inline-block;
-  }
-  .nav-cta:hover {
-    box-shadow: 1px 1px 0 var(--border);
-    transform: translate(2px, 2px);
-  }
+.intro-logo {
+  font-size: clamp(52px, 10vw, 110px);
+  font-weight: 900;
+  letter-spacing: -2px;
+  color: var(--red);
+  text-transform: uppercase;
+  position: relative;
+  opacity: 0;
+  transform: scale(0.85);
+  animation:
+    logoIn 0.5s cubic-bezier(0.16,1,0.3,1) 0.3s forwards,
+    logoPulse 0.3s ease 1.8s,
+    logoOut 0.5s ease 2.6s forwards;
+  text-shadow: 0 0 80px rgba(229,9,20,0.9), 0 0 160px rgba(229,9,20,0.4);
+  font-style: italic;
+}
 
-  /* ── TAB PILLS ── */
-  .tab-pills {
-    display: flex;
-    background: var(--surface);
-    border: var(--bw) solid var(--border);
-    box-shadow: var(--shadow);
-    position: relative;
-  }
-  .tab-pill-bg { display: none; }
-  .tab-pill {
-    font-family: var(--font-b);
-    font-size: 12px;
-    font-weight: bold;
-    padding: 10px 22px;
-    border: none;
-    border-right: var(--bw) solid var(--border);
-    background: var(--surface);
-    color: var(--text-dim);
-    cursor: pointer;
-    white-space: nowrap;
-    letter-spacing: 0.5px;
-    transition: background 0.08s;
-  }
-  .tab-pill:last-child { border-right: none; }
-  .tab-pill:hover { background: #e0ddd4; }
-  .tab-pill.active {
-    background: var(--dark);
-    color: #ffffff;
-  }
+@keyframes logoIn {
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes logoPulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.08); text-shadow: 0 0 120px rgba(229,9,20,1), 0 0 220px rgba(229,9,20,0.6); }
+  100% { transform: scale(1); }
+}
+@keyframes logoOut {
+  to { opacity: 0; transform: scale(1.15); }
+}
 
-  /* ── HERO ── */
-  .hero {
-    padding: 100px 24px 48px;
-    max-width: 1100px;
-    margin: 0 auto;
-    position: relative;
-  }
-  .hero-tag {
-    display: inline-block;
-    font-family: var(--font-b);
-    font-size: 11px;
-    font-weight: bold;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--accent);
-    background: var(--accent-bg);
-    border: var(--bw) solid var(--accent);
-    padding: 4px 12px;
-    margin-bottom: 28px;
-  }
-  .hero-tag::before { content: '> '; }
-  .hero-title {
-    font-family: var(--font-px);
-    font-size: clamp(16px, 2.8vw, 34px);
-    font-weight: 400;
-    line-height: 2.2;
-    color: var(--text);
-    margin-bottom: 24px;
-  }
-  .hero-title em {
-    font-style: normal;
-    color: var(--accent);
-  }
-  .hero-sub {
-    font-size: 14px;
-    color: var(--text-dim);
-    max-width: 540px;
-    line-height: 2;
-    border-left: 4px solid var(--accent);
-    padding-left: 16px;
-  }
-  .hero-blob { display: none; }
+.intro-bar {
+  position: absolute;
+  bottom: -12px;
+  left: 0; right: 0;
+  height: 4px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: barGrow 1.6s ease 0.7s forwards;
+  box-shadow: 0 0 18px var(--red);
+}
+@keyframes barGrow {
+  to { transform: scaleX(1); }
+}
 
-  /* ── HERO ACTIONS ── */
-  .hero-actions {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-top: 32px;
-    flex-wrap: wrap;
-  }
-  .hero-btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--accent);
-    color: white;
-    border: var(--bw) solid var(--border);
-    box-shadow: var(--shadow);
-    padding: 12px 26px;
-    font-family: var(--font-b);
-    font-size: 13px;
-    font-weight: bold;
-    text-decoration: none;
-    transition: box-shadow 0.08s, transform 0.08s;
-    letter-spacing: 0.5px;
-  }
-  .hero-btn-primary:hover {
-    box-shadow: 1px 1px 0 var(--border);
-    transform: translate(3px, 3px);
-  }
-  .hero-btn-secondary {
-    font-family: var(--font-b);
-    font-size: 13px;
-    font-weight: bold;
-    color: var(--text-dim);
-    text-decoration: underline;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: color 0.1s;
-  }
-  .hero-btn-secondary:hover { color: var(--accent); }
+/* Scanlines over intro */
+.intro-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 3px,
+    rgba(0,0,0,0.08) 3px, rgba(0,0,0,0.08) 4px
+  );
+  pointer-events: none;
+}
 
-  /* ── STATS ROW ── */
-  .stats-row {
-    display: flex;
-    max-width: 1100px;
-    padding: 0 24px;
-    margin: 0 auto 0;
-    background: var(--dark);
-    border: var(--bw) solid var(--border);
-    box-shadow: var(--shadow);
-  }
-  .stat {
-    flex: 1;
-    padding: 24px 16px;
-    border-right: 1px solid #333;
-    text-align: center;
-  }
-  .stat:last-child { border-right: none; }
-  .stat-num {
-    font-family: var(--font-px);
-    font-size: clamp(18px, 2.5vw, 28px);
-    color: var(--green);
-    line-height: 1.2;
-  }
-  .stat-label {
-    font-size: 9px;
-    color: #888;
-    margin-top: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-family: var(--font-b);
-  }
+/* ═══════════════════════════════════════
+   NAVBAR
+═══════════════════════════════════════ */
+#navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 0 4%;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.4s;
+  background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, transparent 100%);
+}
+#navbar.scrolled {
+  background: rgba(20,20,20,0.97);
+  backdrop-filter: blur(4px);
+}
 
-  /* ── SECTION ── */
-  .section {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 48px 24px 60px;
-  }
-  .section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 28px;
-    padding-bottom: 12px;
-    border-bottom: var(--bw) solid var(--border);
-  }
-  .section-title {
-    font-family: var(--font-px);
-    font-size: clamp(12px, 1.8vw, 18px);
-    font-weight: 400;
-    line-height: 1.8;
-    color: var(--text);
-  }
-  .section-count {
-    font-size: 10px;
-    color: var(--text-dim);
-    font-family: var(--font-b);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-  }
+.nav-logo {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--red);
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  font-style: italic;
+  cursor: pointer;
+  flex-shrink: 0;
+  text-shadow: 0 0 20px rgba(229,9,20,0.4);
+  transition: text-shadow 0.2s;
+}
+.nav-logo:hover { text-shadow: 0 0 40px rgba(229,9,20,0.8); }
 
-  /* ── GRID ── */
-  .grid { display: grid; gap: 16px; }
-  .grid-3 { grid-template-columns: repeat(3, 1fr); }
-  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-left: 32px;
+}
+.nav-link {
+  font-size: 14px;
+  color: var(--gray);
+  text-decoration: none;
+  transition: color 0.2s;
+  white-space: nowrap;
+  font-weight: 400;
+}
+.nav-link:hover { color: var(--white); }
+.nav-link.active { color: var(--white); font-weight: 700; }
 
-  /* ── CARD ── */
-  .card {
-    background: var(--surface-2);
-    border: var(--bw) solid var(--border);
-    box-shadow: var(--shadow);
-    overflow: hidden;
-    cursor: pointer;
-    position: relative;
-    transition: box-shadow 0.08s, transform 0.08s;
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  /* Window title bar */
-  .card::before {
-    content: '■  ■  ■';
-    display: block;
-    background: var(--dark);
-    color: #555;
-    font-size: 7px;
-    padding: 5px 10px;
-    letter-spacing: 3px;
-    font-family: var(--font-b);
-    border-bottom: var(--bw) solid var(--border);
-  }
-  .card.visible {
-    animation: cardReveal 0.25s steps(4) forwards;
-  }
-  @keyframes cardReveal {
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .card:hover {
-    box-shadow: 1px 1px 0 var(--border);
-    transform: translate(3px, 3px);
-  }
+.nav-left { display: flex; align-items: center; }
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
 
-  /* ── CARD VISUAL ── */
-  .card-visual {
-    aspect-ratio: 16/10;
-    position: relative;
-    overflow: hidden;
-    border-bottom: var(--bw) solid var(--border);
-  }
-  .card-visual-inner {
-    width: 100%; height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    font-family: var(--font-b);
-    font-weight: bold;
-    color: rgba(255,255,255,0.6);
-    position: relative;
-    image-rendering: pixelated;
-  }
-  .card-visual-inner::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.18) 100%);
-  }
+.nav-btn {
+  background: var(--red);
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.15s, transform 0.1s;
+  text-decoration: none;
+  display: inline-block;
+  white-space: nowrap;
+}
+.nav-btn:hover { background: var(--red-hover); transform: scale(1.02); }
 
-  /* Flat retro gradient palette */
-  .g1  { background: #1a1a2e; }
-  .g2  { background: #003d7a; }
-  .g3  { background: #005c2e; }
-  .g4  { background: #7a001f; }
-  .g5  { background: #4a0d7a; }
-  .g6  { background: #7a4500; }
-  .g7  { background: #2e2e2e; }
-  .g8  { background: #004d7a; }
-  .g9  { background: #7a0d2e; }
-  .g10 { background: #7a6600; }
-  .g11 { background: #2e5c2e; }
-  .g12 { background: #1a2e6b; }
+.nav-icon-btn {
+  background: none;
+  border: none;
+  color: var(--gray);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+}
+.nav-icon-btn:hover { color: white; }
+.nav-icon-btn svg { width: 22px; height: 22px; }
 
-  /* ── CARD VISUAL REAL ── */
-  .card-visual-real {
-    aspect-ratio: 16/10;
-    position: relative;
-    overflow: hidden;
-    cursor: zoom-in;
-    border-bottom: var(--bw) solid var(--border);
-  }
-  .card-visual-real img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
-    display: block;
-    image-rendering: pixelated;
-    transition: transform 0.12s steps(3);
-  }
-  .card-real:hover .card-visual-real img { transform: scale(1.03); }
-  .card-real:hover .page-zoom-hint { opacity: 1; }
+/* ═══════════════════════════════════════
+   HERO BANNER
+═══════════════════════════════════════ */
+.hero-banner {
+  position: relative;
+  width: 100%;
+  height: 85vh;
+  min-height: 500px;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 4% 8%;
+  overflow: hidden;
+}
 
-  /* ── CARD INFO ── */
-  .card-info {
-    padding: 14px 16px 18px;
-  }
-  .card-label {
-    font-size: 9px;
-    font-family: var(--font-b);
-    font-weight: bold;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-bottom: 8px;
-  }
-  .card-title {
-    font-family: var(--font-px);
-    font-size: 10px;
-    line-height: 2;
-    color: var(--text);
-    margin-bottom: 8px;
-  }
-  .card-desc {
-    font-size: 12px;
-    color: var(--text-dim);
-    line-height: 1.8;
-    font-family: var(--font-b);
-  }
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: #1a1a2e;
+  overflow: hidden;
+}
+.hero-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  opacity: 0.5;
+  filter: saturate(1.2);
+  transition: opacity 1s;
+}
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,0.85) 40%, transparent 80%),
+    linear-gradient(0deg, rgba(0,0,0,0.75) 0%, transparent 50%),
+    linear-gradient(180deg, rgba(0,0,0,0.3) 0%, transparent 30%);
+}
 
-  /* ── CARD ARROW ── */
-  .card-arrow {
-    position: absolute;
-    top: 34px; right: 12px;
-    width: 22px; height: 22px;
-    background: var(--accent);
-    border: var(--bw) solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transform: scale(0.8);
-    transition: opacity 0.08s, transform 0.08s;
-  }
-  .card:hover .card-arrow { opacity: 1; transform: scale(1); }
-  .card-arrow svg { width: 11px; height: 11px; color: white; }
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 580px;
+}
 
-  /* ── FEATURED & TALL CARDS ── */
-  .card-featured { grid-column: span 2; }
-  .card-featured .card-visual { aspect-ratio: 21/8; }
-  .card-featured .card-title { font-size: 13px; }
-  .card-featured .mock-browser { width: 220px; height: 110px; }
-  .card-featured .mock-lines { gap: 5px; padding: 10px; }
-  .card-featured .mock-line { height: 4px; }
-  .card-tall { grid-row: span 2; }
-  .card-tall .card-visual { aspect-ratio: auto; min-height: 260px; flex: 1; }
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--red);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 3px;
+  margin-bottom: 16px;
+}
 
-  /* ── TABS CONTENT ── */
-  .tab-content { display: none; }
-  .tab-content.active {
-    display: block;
-    animation: contentIn 0.18s steps(3);
-  }
-  @keyframes contentIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
+.hero-title {
+  font-size: clamp(28px, 5vw, 64px);
+  font-weight: 900;
+  line-height: 1.05;
+  margin-bottom: 18px;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+}
+.hero-title em {
+  font-style: normal;
+  color: var(--red);
+}
 
-  /* ── CAROUSEL GRID ── */
-  .carousel-showcase {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-  .carousel-wide { grid-column: span 2; }
-  .carousel-card {
-    background: var(--surface-2);
-    border: var(--bw) solid var(--border);
-    box-shadow: var(--shadow);
-    overflow: hidden;
-    cursor: pointer;
-    transition: box-shadow 0.08s, transform 0.08s;
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  .carousel-card.visible { animation: cardReveal 0.25s steps(4) forwards; }
-  .carousel-card:hover {
-    box-shadow: 1px 1px 0 var(--border);
-    transform: translate(3px, 3px);
-  }
-  .carousel-preview {
-    height: 220px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    position: relative;
-    border-bottom: var(--bw) solid var(--border);
-  }
-  .carousel-wide .carousel-preview { height: 200px; }
+.hero-desc {
+  font-size: 15px;
+  color: var(--gray);
+  line-height: 1.7;
+  max-width: 480px;
+  margin-bottom: 28px;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+}
 
-  .slides-row {
-    display: flex;
-    gap: 10px;
-    padding: 0 24px;
-    animation: slideAnim 8s linear infinite;
-    white-space: nowrap;
-  }
-  @keyframes slideAnim {
-    from { transform: translateX(0); }
-    to   { transform: translateX(calc(-50%)); }
-  }
-  .slide-item {
-    width: 100px; height: 140px;
-    background: rgba(255,255,255,0.14);
-    border: 1px solid rgba(255,255,255,0.25);
-    flex-shrink: 0;
-    display: flex;
-    align-items: flex-end;
-    padding: 10px;
-  }
-  .slide-item.active-slide { background: rgba(255,255,255,0.26); }
-  .slide-inner-line { width: 60%; height: 3px; background: rgba(255,255,255,0.3); }
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  font-size: 13px;
+}
+.hero-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--mid);
+}
+.hero-meta-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--dim);
+}
 
-  .pager-dots { display: flex; gap: 5px; margin-top: 12px; justify-content: center; }
-  .pager-dot { width: 8px; height: 8px; background: rgba(255,255,255,0.3); }
-  .pager-dot.active { width: 16px; background: white; }
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
 
-  /* ── PAGES GRID ── */
-  .pages-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-  .page-card {
-    background: var(--surface-2);
-    border: var(--bw) solid var(--border);
-    box-shadow: var(--shadow);
-    overflow: hidden;
-    cursor: pointer;
-    transition: box-shadow 0.08s, transform 0.08s;
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  .page-card::before {
-    content: '■  ■  ■';
-    display: block;
-    background: var(--dark);
-    color: #555;
-    font-size: 7px;
-    padding: 5px 10px;
-    letter-spacing: 3px;
-    font-family: var(--font-b);
-    border-bottom: var(--bw) solid var(--border);
-  }
-  .page-card.visible { animation: cardReveal 0.25s steps(4) forwards; }
-  .page-card:hover {
-    box-shadow: 1px 1px 0 var(--border);
-    transform: translate(3px, 3px);
-  }
-  .page-preview {
-    height: 180px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    border-bottom: var(--bw) solid var(--border);
-  }
+.btn-play {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  color: black;
+  border: none;
+  padding: 12px 28px;
+  font-size: 17px;
+  font-weight: 700;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  text-decoration: none;
+}
+.btn-play:hover { background: rgba(255,255,255,0.82); transform: scale(1.02); }
+.btn-play svg { width: 24px; height: 24px; }
 
-  /* ── PAGE PREVIEW REAL ── */
-  .page-preview-real {
-    height: 240px;
-    overflow: hidden;
-    position: relative;
-    cursor: zoom-in;
-    border-bottom: var(--bw) solid var(--border);
-  }
-  .page-preview-real img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
-    display: block;
-    image-rendering: pixelated;
-    transition: transform 0.12s steps(3);
-  }
-  .page-card-real:hover .page-preview-real img { transform: scale(1.03); }
-  .page-zoom-hint {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0,0,0,0.55);
-    color: white;
-    font-family: var(--font-b);
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    opacity: 0;
-    transition: opacity 0.1s;
-  }
-  .page-card-real:hover .page-zoom-hint { opacity: 1; }
+.btn-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(109,109,110,0.7);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 17px;
+  font-weight: 700;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  text-decoration: none;
+  backdrop-filter: blur(4px);
+}
+.btn-info:hover { background: rgba(109,109,110,0.5); transform: scale(1.02); }
+.btn-info svg { width: 24px; height: 24px; }
 
-  /* ── LIGHTBOX ── */
-  #lightbox {
-    position: fixed;
-    inset: 0;
-    z-index: 9000;
-    background: rgba(0,0,0,0.95);
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    overflow-y: auto;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s steps(4);
-    padding: 64px 20px 40px;
-  }
-  #lightbox.open { opacity: 1; pointer-events: all; }
-  #lightbox-stage { display: flex; justify-content: center; align-items: flex-start; }
-  #lightbox img {
-    max-width: 480px;
-    width: 100%;
-    border: 3px solid #ffffff;
-    box-shadow: 6px 6px 0 rgba(255,255,255,0.25);
-    transform: scale(0.95);
-    transition: transform 0.15s steps(3);
-    display: block;
-    user-select: none;
-    -webkit-user-drag: none;
-    image-rendering: pixelated;
-  }
-  #lightbox.open img { transform: scale(1); }
-  #lightbox.large #lightbox-stage { overflow: auto; width: 100%; }
-  #lightbox.large img { max-width: none; width: auto; min-width: min(1400px, 95vw); }
-  #lightbox.zoom-mode { overflow: hidden; align-items: center; padding: 64px 0 80px; }
-  #lightbox.zoom-mode #lightbox-stage {
-    width: 100%; height: calc(100vh - 144px);
-    overflow: hidden; align-items: center; cursor: grab;
-  }
-  #lightbox.zoom-mode #lightbox-stage.dragging { cursor: grabbing; }
-  #lightbox.zoom-mode #lightbox-img {
-    max-width: none; width: auto; max-height: 100%;
-    transform-origin: center center;
-    transition: none !important; transform: none;
-    border: none;
-    image-rendering: auto;
-  }
-  @media (max-width: 768px) {
-    #lightbox.zoom-mode #lightbox-img {
-      max-width: 100vw;
-      width: 100%;
-      height: auto;
-      max-height: none;
-    }
-    #lightbox.large img { min-width: unset; width: 100%; max-width: 100%; }
-    #lightbox { padding: 56px 8px 32px; }
-  }
-  #lightbox-close {
-    position: fixed;
-    top: 14px; right: 18px;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    background: #ffffff;
-    border: 2px solid #000;
-    box-shadow: 3px 3px 0 #000;
-    color: #000;
-    font-family: var(--font-b);
-    font-size: 13px;
-    font-weight: bold;
-    padding: 8px 18px;
-    cursor: pointer;
-    z-index: 9001;
-    transition: box-shadow 0.08s, transform 0.08s;
-    letter-spacing: 0.5px;
-  }
-  #lightbox-close:hover {
-    box-shadow: 1px 1px 0 #000;
-    transform: translate(2px, 2px);
-  }
-  #zoom-bar {
-    position: fixed;
-    bottom: 22px; left: 50%;
-    transform: translateX(-50%);
-    display: none;
-    align-items: center;
-    gap: 2px;
-    background: #111;
-    border: 2px solid #fff;
-    box-shadow: 3px 3px 0 rgba(255,255,255,0.2);
-    padding: 5px 8px;
-    z-index: 9001;
-    white-space: nowrap;
-  }
-  #lightbox.zoom-mode.open #zoom-bar { display: flex; }
-  .zoom-btn {
-    width: 34px; height: 34px;
-    background: none; border: none;
-    color: white; font-size: 22px;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-b);
-    transition: background 0.08s;
-  }
-  .zoom-btn:hover { background: rgba(255,255,255,0.12); }
-  .zoom-btn:disabled { opacity: 0.3; cursor: default; }
-  #zoom-level {
-    font-family: var(--font-b);
-    font-size: 13px; font-weight: bold;
-    color: rgba(255,255,255,0.8);
-    min-width: 46px; text-align: center;
-  }
-  .zoom-sep { width: 1px; height: 18px; background: rgba(255,255,255,0.2); margin: 0 6px; }
-  #zoom-reset {
-    background: none; border: none;
-    color: rgba(255,255,255,0.65);
-    font-family: var(--font-b);
-    font-size: 13px; font-weight: bold;
-    cursor: pointer; padding: 0 8px; height: 34px;
-    transition: color 0.08s;
-    letter-spacing: 0.3px;
-  }
-  #zoom-reset:hover { color: white; }
+/* Hero bottom fade */
+.hero-bottom-fade {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 100px;
+  background: linear-gradient(transparent, var(--bg));
+  z-index: 1;
+}
 
-  /* ── MARQUEE STRIP ── */
-  .marquee-strip {
-    overflow: hidden;
-    background: var(--accent);
-    border-top: var(--bw) solid var(--border);
-    border-bottom: var(--bw) solid var(--border);
-    padding: 10px 0;
-  }
-  .marquee-track {
-    display: flex;
-    width: max-content;
-    animation: marqueeScroll 28s linear infinite;
-    will-change: transform;
-  }
-  .marquee-track:hover { animation-play-state: paused; }
-  @keyframes marqueeScroll {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
-  .marquee-content { display: flex; align-items: center; white-space: nowrap; }
-  .mq-reg {
-    font-family: var(--font-b);
-    font-size: 12px; font-weight: bold;
-    color: rgba(255,255,255,0.8);
-    letter-spacing: 1.5px; text-transform: uppercase;
-  }
-  .mq-bold {
-    font-family: var(--font-b);
-    font-size: 12px; font-weight: bold;
-    color: #ffffff;
-    letter-spacing: 1.5px; text-transform: uppercase;
-  }
-  .mq-sep {
-    color: rgba(255,255,255,0.5);
-    margin: 0 18px; font-size: 14px;
-  }
+/* ═══════════════════════════════════════
+   CONTENT ROWS
+═══════════════════════════════════════ */
+.content-rows {
+  position: relative;
+  z-index: 2;
+  padding: 0 0 60px;
+  margin-top: -40px;
+}
 
-  /* ── SERVICES ── */
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-  .service-card {
-    background: var(--surface-2);
-    border: var(--bw) solid var(--border);
-    box-shadow: var(--shadow);
-    padding: 24px 20px;
-    transition: box-shadow 0.08s, transform 0.08s;
-  }
-  .service-card:hover {
-    box-shadow: 1px 1px 0 var(--border);
-    transform: translate(3px, 3px);
-  }
-  .service-icon {
-    width: 40px; height: 40px;
-    border: var(--bw) solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 16px;
-    background: var(--bg);
-  }
-  .service-icon svg { width: 20px; height: 20px; }
-  .service-name {
-    font-family: var(--font-px);
-    font-size: 10px;
-    line-height: 2;
-    margin-bottom: 12px;
-    color: var(--text);
-  }
-  .service-desc {
-    font-size: 12px;
-    color: var(--text-dim);
-    line-height: 1.9;
-    font-family: var(--font-b);
-  }
-  .service-tag {
-    display: inline-block;
-    margin-top: 14px;
-    font-family: var(--font-b);
-    font-size: 10px; font-weight: bold;
-    letter-spacing: 1.5px; text-transform: uppercase;
-    color: var(--accent);
-    border: var(--bw) solid var(--accent);
-    padding: 3px 8px;
-    background: var(--accent-bg);
-  }
+.row-section {
+  margin-bottom: 32px;
+  padding: 0;
+}
 
-  /* ── CONTACT STRIP ── */
-  .contact-strip {
-    max-width: 1100px;
-    margin: 0 auto 48px;
-    padding: 0 24px;
-  }
-  .contact-card {
-    background: var(--dark);
-    border: var(--bw) solid var(--border);
-    box-shadow: var(--shadow);
-    padding: 44px 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-    overflow: hidden;
-  }
-  /* scanlines overlay */
-  .contact-card::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: repeating-linear-gradient(
-      0deg, transparent, transparent 3px,
-      rgba(255,255,255,0.015) 3px, rgba(255,255,255,0.015) 4px
-    );
-    pointer-events: none;
-  }
-  .contact-title {
-    font-family: var(--font-px);
-    font-size: clamp(12px, 1.8vw, 20px);
-    color: white;
-    line-height: 2.2;
-  }
-  .contact-sub {
-    font-size: 13px;
-    color: rgba(255,255,255,0.5);
-    margin-top: 12px;
-    font-family: var(--font-b);
-    line-height: 1.8;
-  }
-  .contact-btn {
-    background: var(--green);
-    color: var(--dark);
-    border: var(--bw) solid var(--border);
-    box-shadow: var(--shadow);
-    padding: 14px 28px;
-    font-family: var(--font-b);
-    font-size: 14px; font-weight: bold;
-    cursor: pointer;
-    white-space: nowrap; flex-shrink: 0;
-    margin-left: 32px;
-    text-decoration: none; display: inline-block;
-    transition: box-shadow 0.08s, transform 0.08s;
-    letter-spacing: 0.5px;
-    position: relative; z-index: 1;
-  }
-  .contact-btn:hover {
-    box-shadow: 1px 1px 0 var(--border);
-    transform: translate(3px, 3px);
-  }
+.row-header {
+  padding: 0 4%;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  /* ── TAB PILLS WRAPPER ── */
-  .tab-pills-wrapper {
-    max-width: 1100px;
-    margin: 40px auto 0;
-    padding: 0 24px;
-    display: flex;
-  }
+.row-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gray);
+  transition: color 0.2s;
+  cursor: default;
+}
+.row-title:hover { color: white; }
 
-  /* ── FOOTER ── */
-  footer {
-    border-top: var(--bw) solid var(--border);
-    padding: 32px 24px;
-    background: var(--dark);
-  }
-  .footer-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .footer-copy {
-    font-family: var(--font-b);
-    font-size: 12px; color: #888;
-    letter-spacing: 0.5px;
-  }
-  .footer-tagline {
-    font-family: var(--font-b);
-    font-size: 11px; color: #555;
-    margin-top: 5px; font-style: italic;
-  }
-  .footer-links { display: flex; gap: 20px; }
-  .footer-link {
-    font-family: var(--font-b);
-    font-size: 12px; color: #888;
-    text-decoration: none; letter-spacing: 0.5px;
-    transition: color 0.1s;
-  }
-  .footer-link:hover { color: var(--green); }
+.row-see-all {
+  font-size: 13px;
+  color: var(--red);
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.row-see-all:hover { color: white; }
 
-  /* ── MOCK ELEMENTS ── */
-  .mock-phone {
-    width: 52px; height: 88px;
-    background: rgba(255,255,255,0.15);
-    border: 2px solid rgba(255,255,255,0.3);
-    position: relative;
-  }
-  .mock-phone::before {
-    content: '';
-    position: absolute;
-    top: 8px; left: 50%; transform: translateX(-50%);
-    width: 18px; height: 3px;
-    background: rgba(255,255,255,0.3);
-  }
-  .mock-browser {
-    width: 120px; height: 72px;
-    background: rgba(255,255,255,0.12);
-    border: 2px solid rgba(255,255,255,0.25);
-    overflow: hidden;
-  }
-  .mock-browser-bar {
-    height: 14px;
-    background: rgba(255,255,255,0.1);
-    display: flex; align-items: center;
-    padding: 0 6px; gap: 3px;
-  }
-  .mock-browser-dot {
-    width: 5px; height: 5px;
-    background: rgba(255,255,255,0.4);
-  }
-  .mock-lines { padding: 6px; display: flex; flex-direction: column; gap: 3px; }
-  .mock-line { height: 3px; background: rgba(255,255,255,0.2); }
-  .mock-line.short { width: 50%; }
-  .mock-line.med { width: 75%; }
-  .mock-lines-group { display: flex; flex-direction: column; gap: 4px; width: 60%; }
-  .mock-img-block {
-    width: 80px; height: 50px;
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.2);
-  }
-  .mock-carousel { display: flex; gap: 6px; }
-  .mock-slide {
-    width: 50px; height: 64px;
-    background: rgba(255,255,255,0.15);
-    border: 1px solid rgba(255,255,255,0.2);
-  }
-  .mock-slide.active {
-    background: rgba(255,255,255,0.28);
-    border-color: rgba(255,255,255,0.4);
-  }
-  .mock-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; width: 90px; }
-  .mock-cell {
-    height: 34px;
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.2);
-  }
-  .mock-cell.tall { grid-row: span 2; height: 73px; }
-  .mock-badge {
-    display: inline-flex; align-items: center; gap: 4px;
-    background: rgba(255,255,255,0.2);
-    padding: 4px 10px; font-size: 10px;
-    color: white; font-weight: bold;
-    font-family: var(--font-b);
-  }
-  .mock-badge-dot { width: 5px; height: 5px; background: white; }
-  .mock-stack { position: relative; width: 80px; height: 80px; }
-  .mock-card-s {
-    position: absolute;
-    width: 60px; height: 70px;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-  }
-  .mock-card-s:nth-child(1) { transform: rotate(-8deg); top: 5px; left: 0; }
-  .mock-card-s:nth-child(2) { transform: rotate(-2deg); top: 2px; left: 8px; }
-  .mock-card-s:nth-child(3) { transform: rotate(4deg); top: 0; left: 16px; background: rgba(255,255,255,0.22); }
-  .full-phone {
-    width: 72px; height: 130px;
-    background: rgba(255,255,255,0.12);
-    border: 2px solid rgba(255,255,255,0.3);
-    overflow: hidden; position: relative;
-  }
-  .full-phone-notch {
-    width: 24px; height: 6px;
-    background: rgba(0,0,0,0.3);
-    margin: 8px auto 6px;
-  }
-  .full-phone-content { padding: 0 6px; display: flex; flex-direction: column; gap: 4px; }
-  .fp-img { height: 32px; background: rgba(255,255,255,0.15); }
-  .fp-line { height: 3px; background: rgba(255,255,255,0.25); }
-  .fp-line.sm { width: 60%; }
-  .fp-btn { height: 12px; background: rgba(255,255,255,0.3); margin-top: 4px; }
+/* Scrollable row */
+.row-scroll-container {
+  position: relative;
+  padding: 0 4%;
+}
+.row-scroll-container:hover .scroll-btn { opacity: 1; }
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 800px) {
-    .grid-3 { grid-template-columns: 1fr 1fr; }
-    .services-grid { grid-template-columns: 1fr 1fr; }
-    .pages-grid { grid-template-columns: 1fr 1fr; }
-    .contact-card { flex-direction: column; text-align: left; gap: 28px; }
-    .contact-btn { margin-left: 0; }
-    .stats-row { flex-wrap: wrap; }
-    .stat { min-width: 45%; }
-  }
-  @media (max-width: 600px) {
-    .grid-3, .grid-2 { grid-template-columns: 1fr; }
-    .services-grid { grid-template-columns: 1fr; }
-    .pages-grid { grid-template-columns: 1fr; }
-    .carousel-showcase { grid-template-columns: 1fr; }
-    .carousel-wide { grid-column: span 1; }
-    .card-featured { grid-column: span 1; }
-    .footer-inner { flex-direction: column; gap: 20px; }
-    .contact-card { padding: 28px 20px; }
-    .hero-title { font-size: clamp(13px, 4.5vw, 20px); }
-  }
+.row-scroll {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  padding: 10px 0 20px;
+}
+.row-scroll::-webkit-scrollbar { display: none; }
 
+/* Scroll buttons */
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: calc(100% - 30px);
+  background: rgba(0,0,0,0.7);
+  border: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s, background 0.2s;
+  top: 10px;
+  transform: none;
+}
+.scroll-btn:hover { background: rgba(0,0,0,0.9); }
+.scroll-btn-left { left: 0; border-radius: 0 4px 4px 0; }
+.scroll-btn-right { right: 0; border-radius: 4px 0 0 4px; }
+
+/* ═══════════════════════════════════════
+   CARDS
+═══════════════════════════════════════ */
+.netflix-card {
+  flex-shrink: 0;
+  width: 260px;
+  border-radius: 4px;
+  overflow: visible;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), z-index 0s 0.3s;
+}
+.netflix-card:hover {
+  transform: scale(1.28);
+  z-index: 100;
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), z-index 0s;
+}
+
+/* Evitar clipagem nas bordas do row */
+.row-scroll { overflow: visible; padding: 20px 0 30px; }
+.row-scroll-container { overflow: hidden; padding: 0 4%; }
+.row-scroll-container:hover { overflow: visible; }
+
+.card-thumb {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 4px;
+  display: block;
+  background: var(--surface-2);
+}
+
+.card-thumb-placeholder {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 1px;
+}
+
+.card-hover-info {
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  background: var(--surface);
+  border-radius: 0 0 6px 6px;
+  padding: 14px 14px 16px;
+  opacity: 0;
+  transform: translateY(-2px);
+  transition: opacity 0.25s 0.1s, transform 0.25s 0.1s;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.8);
+  pointer-events: none;
+  z-index: 2;
+}
+.netflix-card:hover .card-hover-info {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.card-hover-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.card-action-btn {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.5);
+  background: transparent;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.card-action-btn:hover { border-color: white; background: rgba(255,255,255,0.1); }
+.card-action-btn svg { width: 14px; height: 14px; }
+.card-action-btn.primary {
+  background: white;
+  border-color: white;
+  color: black;
+}
+.card-action-btn.primary:hover { background: rgba(255,255,255,0.85); }
+
+.card-action-spacer { flex: 1; }
+
+.card-hover-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 5px;
+  line-height: 1.3;
+}
+.card-hover-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.card-hover-tag {
+  font-size: 11px;
+  color: var(--mid);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.card-hover-tag::before {
+  content: '';
+  display: inline-block;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: #46d369;
+}
+.card-hover-tag:first-child::before { display: none; }
+
+.card-hover-desc {
+  font-size: 11px;
+  color: var(--dim);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+/* Wide card (featured) */
+.netflix-card.wide {
+  width: 400px;
+}
+
+/* Tall card (portrait) */
+.netflix-card.tall {
+  width: 190px;
+}
+.netflix-card.tall .card-thumb {
+  aspect-ratio: 2/3;
+}
+.netflix-card.tall .card-thumb-placeholder {
+  aspect-ratio: 2/3;
+}
+
+/* ═══════════════════════════════════════
+   TOP 10 ROW
+═══════════════════════════════════════ */
+.card-top10 {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.top10-number {
+  font-size: 110px;
+  font-weight: 900;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 4px rgba(255,255,255,0.7);
+  margin-right: -18px;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+/* ═══════════════════════════════════════
+   SERVICES SECTION
+═══════════════════════════════════════ */
+.services-showcase {
+  padding: 0 4%;
+  margin-bottom: 48px;
+}
+
+.services-grid-nf {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.service-card-nf {
+  background: var(--surface);
+  padding: 36px 28px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.service-card-nf:hover { background: var(--surface-2); }
+.service-card-nf::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+.service-card-nf:hover::before { transform: scaleX(1); }
+
+.service-icon-nf {
+  width: 52px; height: 52px;
+  background: rgba(229,9,20,0.12);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.service-icon-nf svg { width: 26px; height: 26px; stroke: var(--red); }
+
+.service-name-nf {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: white;
+}
+.service-desc-nf {
+  font-size: 13px;
+  color: var(--mid);
+  line-height: 1.7;
+}
+.service-badge-nf {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--red);
+  background: rgba(229,9,20,0.1);
+  padding: 4px 10px;
+  border-radius: 3px;
+}
+
+/* ═══════════════════════════════════════
+   STATS ROW
+═══════════════════════════════════════ */
+.stats-nf {
+  display: flex;
+  padding: 0 4%;
+  margin-bottom: 48px;
+  gap: 2px;
+}
+.stat-nf {
+  flex: 1;
+  background: var(--surface);
+  padding: 28px 20px;
+  text-align: center;
+}
+.stat-nf-num {
+  font-size: clamp(26px, 4vw, 48px);
+  font-weight: 900;
+  color: var(--red);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.stat-nf-label {
+  font-size: 12px;
+  color: var(--mid);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+/* ═══════════════════════════════════════
+   SECTION TITLE HEADER
+═══════════════════════════════════════ */
+.section-heading {
+  padding: 0 4%;
+  margin-bottom: 28px;
+  position: relative;
+}
+.section-heading h2 {
+  font-size: 28px;
+  font-weight: 900;
+  color: white;
+}
+.section-heading p {
+  font-size: 14px;
+  color: var(--mid);
+  margin-top: 6px;
+}
+.section-heading::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 3px;
+  background: var(--red);
+  margin-top: 14px;
+}
+
+/* ═══════════════════════════════════════
+   CONTACT CTA
+═══════════════════════════════════════ */
+.contact-cta-nf {
+  margin: 0 4% 60px;
+  background: linear-gradient(135deg, #1a0003 0%, #2d0006 40%, #1a0003 100%);
+  border: 1px solid rgba(229,9,20,0.3);
+  border-radius: 8px;
+  padding: 60px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  position: relative;
+  overflow: hidden;
+}
+.contact-cta-nf::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -10%;
+  width: 60%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(229,9,20,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.contact-cta-title {
+  font-size: clamp(20px, 3vw, 32px);
+  font-weight: 900;
+  line-height: 1.3;
+  margin-bottom: 10px;
+}
+.contact-cta-sub {
+  font-size: 15px;
+  color: var(--mid);
+  line-height: 1.7;
+}
+
+/* ═══════════════════════════════════════
+   MARQUEE
+═══════════════════════════════════════ */
+.marquee-nf {
+  overflow: hidden;
+  background: var(--red);
+  padding: 14px 0;
+  margin-bottom: 60px;
+}
+.marquee-track-nf {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 30s linear infinite;
+}
+.marquee-track-nf:hover { animation-play-state: paused; }
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-content-nf {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  gap: 20px;
+  padding-right: 20px;
+}
+.mq-item {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.mq-divider {
+  color: rgba(255,255,255,0.4);
+  font-size: 18px;
+}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+footer {
+  background: var(--dark);
+  padding: 48px 4% 32px;
+  border-top: 1px solid #2a2a2a;
+}
+.footer-logo {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--red);
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  font-style: italic;
+  margin-bottom: 24px;
+}
+.footer-links-nf {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+  margin-bottom: 32px;
+}
+.footer-link-nf {
+  font-size: 13px;
+  color: var(--mid);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-link-nf:hover { color: white; text-decoration: underline; }
+.footer-copy-nf {
+  font-size: 12px;
+  color: var(--dim);
+  margin-bottom: 6px;
+}
+.footer-tagline-nf {
+  font-size: 12px;
+  color: #444;
+  font-style: italic;
+}
+
+/* ═══════════════════════════════════════
+   MODAL
+═══════════════════════════════════════ */
+#modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px 40px;
+  overflow-y: auto;
+}
+#modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal-box {
+  background: var(--surface);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 860px;
+  overflow: hidden;
+  transform: scale(0.95) translateY(20px);
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+  box-shadow: 0 20px 80px rgba(0,0,0,0.8);
+}
+#modal-overlay.open .modal-box {
+  transform: scale(1) translateY(0);
+}
+
+.modal-hero {
+  width: 100%;
+  aspect-ratio: 16/7;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  background: var(--surface-2);
+}
+
+.modal-hero-placeholder {
+  width: 100%;
+  aspect-ratio: 16/7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.3);
+}
+
+.modal-body {
+  padding: 28px 32px 36px;
+}
+.modal-title {
+  font-size: 28px;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+.modal-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+.modal-meta-match { color: #46d369; font-weight: 700; }
+.modal-meta-year { color: var(--mid); }
+.modal-meta-label {
+  border: 1px solid var(--dim);
+  padding: 1px 6px;
+  font-size: 11px;
+  color: var(--mid);
+  border-radius: 3px;
+}
+.modal-desc {
+  font-size: 15px;
+  color: var(--gray);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  background: var(--surface);
+  border: none;
+  color: white;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  z-index: 10;
+}
+.modal-close:hover { background: var(--surface-2); }
+#modal-overlay { position: fixed; }
+.modal-wrapper { position: relative; width: 100%; max-width: 860px; }
+
+.modal-tags-section { margin-top: 4px; }
+.modal-tags-title {
+  font-size: 13px;
+  color: var(--dim);
+  margin-bottom: 8px;
+}
+.modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.modal-tag {
+  font-size: 12px;
+  background: rgba(255,255,255,0.08);
+  color: var(--gray);
+  padding: 4px 12px;
+  border-radius: 3px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* ═══════════════════════════════════════
+   SEARCH OVERLAY
+═══════════════════════════════════════ */
+#search-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  background: rgba(0,0,0,0.92);
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 100px;
+}
+#search-overlay.open { display: flex; }
+
+.search-box {
+  width: 100%;
+  max-width: 640px;
+  padding: 0 20px;
+}
+.search-input-wrap {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 6px;
+  padding: 0 18px;
+  gap: 12px;
+  backdrop-filter: blur(8px);
+}
+.search-input-wrap svg { width: 20px; height: 20px; color: var(--mid); flex-shrink: 0; }
+#search-input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 22px;
+  padding: 18px 0;
+  font-family: inherit;
+}
+#search-input::placeholder { color: rgba(255,255,255,0.3); }
+
+.search-close {
+  background: none;
+  border: none;
+  color: var(--mid);
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 14px;
+  letter-spacing: 1px;
+  transition: color 0.2s;
+  display: block;
+  text-align: right;
+}
+.search-close:hover { color: white; }
+
+/* ═══════════════════════════════════════
+   PROGRESS BAR (loading)
+═══════════════════════════════════════ */
+#progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: var(--red);
+  width: 0%;
+  z-index: 20000;
+  transition: width 0.3s, opacity 0.5s;
+  box-shadow: 0 0 10px var(--red);
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media (max-width: 900px) {
+  .services-grid-nf { grid-template-columns: 1fr; }
+  .stats-nf { flex-wrap: wrap; }
+  .stat-nf { min-width: 45%; }
+  .contact-cta-nf { flex-direction: column; text-align: center; }
+  .netflix-card { width: 200px; }
+  .netflix-card.wide { width: 300px; }
+}
+@media (max-width: 600px) {
+  .nav-links { display: none; }
+  .hero-title { font-size: clamp(22px, 7vw, 40px); }
+  .netflix-card { width: 150px; }
+  .netflix-card.wide { width: 240px; }
+  .netflix-card:hover { transform: scale(1.12); }
+  .stats-nf { flex-direction: column; gap: 2px; }
+  .stat-nf { min-width: unset; }
+  .contact-cta-nf { padding: 32px 24px; }
+  .modal-body { padding: 20px; }
+  .modal-title { font-size: 20px; }
+}
+
+/* ═══════════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.5s, transform 0.5s;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════
+   PROFILE MENU
+═══════════════════════════════════════ */
+.profile-avatar {
+  width: 32px;
+  height: 32px;
+  background: var(--red);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.profile-avatar:hover { opacity: 0.8; }
+
+/* ═══════════════════════════════════════
+   GRADIENT OVERLAYS
+═══════════════════════════════════════ */
+.row-fade-right {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 80px;
+  background: linear-gradient(90deg, transparent, var(--bg));
+  pointer-events: none;
+  z-index: 5;
+}
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-follower" id="cursorFollower"></div>
+<!-- PROGRESS BAR -->
+<div id="progress-bar"></div>
 
-<!-- LIGHTBOX -->
-<div id="lightbox">
-  <button id="lightbox-close">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-    Fechar
-  </button>
-  <div id="lightbox-stage">
-    <img id="lightbox-img" src="" alt="">
-  </div>
-  <div id="zoom-bar">
-    <button class="zoom-btn" id="zoom-out" title="Diminuir zoom">−</button>
-    <span id="zoom-level">100%</span>
-    <button class="zoom-btn" id="zoom-in" title="Aumentar zoom">+</button>
-    <div class="zoom-sep"></div>
-    <button id="zoom-reset">Ajustar</button>
+<!-- INTRO SPLASH -->
+<div id="intro-splash">
+  <div class="intro-scanlines"></div>
+  <div class="intro-logo-wrap">
+    <div class="intro-logo">
+      KAUEFLIX
+      <div class="intro-bar"></div>
+    </div>
   </div>
 </div>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-inner">
-    <div class="nav-logo">Kaue<span>.</span></div>
-    <a href="https://wa.me/5522996143022?text=E%20a%C3%AD%2C%20Kau%C3%AA!%20Vim%20pelo%20seu%20portf%C3%B3lio%2C%20gostaria%20de%20saber%20mais%20sobre%20seus%20servi%C3%A7os!" target="_blank" class="nav-cta">Contato</a>
+<!-- SEARCH OVERLAY -->
+<div id="search-overlay">
+  <div class="search-box">
+    <div class="search-input-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" id="search-input" placeholder="Títulos, serviços, clientes...">
+    </div>
+    <button class="search-close" onclick="closeSearch()">ESC — Fechar busca</button>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="modal-overlay" onclick="closeModalOutside(event)">
+  <div class="modal-wrapper">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-box" id="modal-box">
+      <div id="modal-image-wrap"></div>
+      <div class="modal-body">
+        <div class="modal-title" id="modal-title"></div>
+        <div class="modal-meta" id="modal-meta"></div>
+        <div class="modal-desc" id="modal-desc"></div>
+        <div class="modal-actions" id="modal-actions"></div>
+        <div class="modal-tags-section">
+          <div class="modal-tags-title">Também neste projeto</div>
+          <div class="modal-tags" id="modal-tags"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-left">
+    <div class="nav-logo" onclick="scrollTop()">KAUEFLIX</div>
+    <div class="nav-links">
+      <a href="#hero" class="nav-link active">Início</a>
+      <a href="#row-criativos" class="nav-link">Criativos</a>
+      <a href="#row-carrosseis" class="nav-link">Carrosséis</a>
+      <a href="#row-paginas" class="nav-link">Páginas</a>
+      <a href="#servicos" class="nav-link">Serviços</a>
+    </div>
+  </div>
+  <div class="nav-right">
+    <button class="nav-icon-btn" onclick="openSearch()" title="Buscar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+    </button>
+    <a href="https://wa.me/5522996143022?text=E%20a%C3%AD%2C%20Kau%C3%AA!%20Vim%20pelo%20seu%20portf%C3%B3lio%2C%20gostaria%20de%20saber%20mais%20sobre%20seus%20servi%C3%A7os!" target="_blank" class="nav-btn">Contratar</a>
+    <div class="profile-avatar">K</div>
   </div>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-tag">1 vaga em aberto</div>
-  <h1 class="hero-title">Faço seu criativo<br>parar o feed<br><em>e converter.</em></h1>
-  <p class="hero-sub">Não trabalho pra portfólio bonito. Trabalho pra você vender mais. Criativos, carrosséis e páginas que fazem sentido pro seu bolso.</p>
-  <div class="hero-actions">
-    <a href="#portfolio" class="hero-btn-primary">
-      Ver portfólio
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
-    </a>
-    <a href="https://wa.me/5522996143022?text=E%20a%C3%AD%2C%20Kau%C3%AA!%20Vim%20pelo%20seu%20portf%C3%B3lio%2C%20gostaria%20de%20saber%20mais%20sobre%20seus%20servi%C3%A7os!" target="_blank" class="hero-btn-secondary">
-      Falar comigo
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
+<!-- HERO BANNER -->
+<section class="hero-banner" id="hero">
+  <div class="hero-bg">
+    <img src="ads rd_3_11zon.webp" alt="Hero" class="hero-bg-img" id="hero-bg-img">
   </div>
-</div>
-
-<!-- STATS -->
-<div class="stats-row">
-  <div class="stat">
-    <div class="stat-num" data-count="240">0</div>
-    <div class="stat-label">Projetos entregues</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num" data-count="98">0<span>%</span></div>
-    <div class="stat-label">Taxa de satisfação</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num" data-count="5">0<span>+</span></div>
-    <div class="stat-label">Anos de experiência</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num" data-count="80">0</div>
-    <div class="stat-label">Clientes atendidos</div>
-  </div>
-</div>
-
-<!-- SERVICES -->
-<div class="section" style="padding-bottom: 20px; padding-top: 56px;">
-  <div class="section-header">
-    <h2 class="section-title">O que eu faço</h2>
-    <span class="section-count">3 serviços</span>
-  </div>
-  <div class="services-grid">
-
-    <div class="service-card">
-      <div class="service-icon" style="background: rgba(0,119,85,0.1);">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#007755" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-      </div>
-      <div class="service-name">Criativos para Ads</div>
-      <div class="service-desc">Design estratégico de imagens e vídeos para campanhas no Meta Ads e Google Ads que param o scroll e convertem.</div>
-      <span class="service-tag">Meta · Google Ads</span>
+  <div class="hero-bottom-fade"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      Portfólio em Destaque
     </div>
-
-    <div class="service-card">
-      <div class="service-icon" style="background: rgba(0,119,85,0.1);">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#007755" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="7" height="11" rx="1.5"/><rect x="15" y="11" width="7" height="11" rx="1.5"/><rect x="11" y="2" width="11" height="7" rx="1.5"/><rect x="2" y="15" width="11" height="7" rx="1.5"/></svg>
-      </div>
-      <div class="service-name">Carrosséis</div>
-      <div class="service-desc">Sequências visuais para Instagram e LinkedIn que educam, engajam e conduzem o lead até o próximo passo.</div>
-      <span class="service-tag">Instagram</span>
+    <h1 class="hero-title">Faço seu criativo<br>parar o feed<br><em>e converter.</em></h1>
+    <div class="hero-meta">
+      <span class="hero-meta-item" style="color:#46d369; font-weight:700;">98% Satisfação</span>
+      <span class="hero-meta-dot"></span>
+      <span class="hero-meta-item">2024 · 2025</span>
+      <span class="hero-meta-dot"></span>
+      <span class="hero-meta-item">240+ Projetos</span>
     </div>
-
-    <div class="service-card">
-      <div class="service-icon" style="background: rgba(0,119,85,0.1);">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#007755" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-      </div>
-      <div class="service-name">Páginas de Ação</div>
-      <div class="service-desc">Landing pages e páginas de captura com hierarquia visual clara, focadas em uma única conversão.</div>
-      <span class="service-tag">Landing Page · Captura</span>
-    </div>
-
-  </div>
-</div>
-
-<!-- TAB PILLS -->
-<div class="tab-pills-wrapper" id="portfolio">
-  <div class="tab-pills" id="tabPills">
-    <div class="tab-pill-bg" id="pillBg"></div>
-    <button class="tab-pill active" data-tab="criativos">Criativos</button>
-    <button class="tab-pill" data-tab="carrosseis">Carrosséis</button>
-    <button class="tab-pill" data-tab="acoes">Páginas de Ações</button>
-  </div>
-</div>
-
-<!-- TAB: CRIATIVOS -->
-<div class="tab-content active" id="tab-criativos">
-  <div class="section">
-    <div class="section-header">
-      <h2 class="section-title">Criativos</h2>
-      <span class="section-count">4 campanhas</span>
-    </div>
-
-    <div class="grid grid-3">
-
-      <div class="card card-real" data-img="ads rd_3_11zon.webp" style="animation-delay:0.05s">
-        <div class="card-visual card-visual-real">
-          <img src="ads rd_3_11zon.webp" alt="Ads RD Medicine">
-          <div class="page-zoom-hint">Ver criativo</div>
-        </div>
-        <div class="card-info">
-          <div class="card-label">Perpétuo · 2024/2025</div>
-          <div class="card-title">RD Medicine</div>
-          <div class="card-desc">Campanha de perpétuo com ads que rodam até hoje e resultados acima da média.</div>
-        </div>
-      </div>
-
-      <div class="card card-real" data-img="ads debora_1_11zon.webp" style="animation-delay:0.1s">
-        <div class="card-visual card-visual-real">
-          <img src="ads debora_1_11zon.webp" alt="Ads Débora Heller" loading="lazy">
-          <div class="page-zoom-hint">Ver criativo</div>
-        </div>
-        <div class="card-info">
-          <div class="card-label">Lançamento · Saúde</div>
-          <div class="card-title">Débora Heller — Saliva PRO</div>
-          <div class="card-desc">Ads para lançamento do Saliva PRO, produto da dentista especialista em Saliva.</div>
-        </div>
-      </div>
-
-      <div class="card card-real" data-img="ads macagigo_2_11zon.webp" style="animation-delay:0.15s">
-        <div class="card-visual card-visual-real">
-          <img src="ads macagigo_2_11zon.webp" alt="Ads Macagigo" loading="lazy">
-          <div class="page-zoom-hint">Ver criativo</div>
-        </div>
-        <div class="card-info">
-          <div class="card-label">Influencer · Colômbia</div>
-          <div class="card-title">Macagigo</div>
-          <div class="card-desc">Campanha para influencer colombiana que atraiu um público forte e engajado.</div>
-        </div>
-      </div>
-
-      <div class="card card-real" data-img="ads_aurea_4_11zon.webp" style="animation-delay:0.2s">
-        <div class="card-visual card-visual-real">
-          <img src="ads_aurea_4_11zon.webp" alt="Ads Áurea" loading="lazy">
-          <div class="page-zoom-hint">Ver criativo</div>
-        </div>
-        <div class="card-info">
-          <div class="card-label">Ads · Meta</div>
-          <div class="card-title">Áurea</div>
-          <div class="card-desc">Clique para visualizar em tela cheia.</div>
-        </div>
-      </div>
-
+    <p class="hero-desc">Não trabalho pra portfólio bonito. Trabalho pra você vender mais. Criativos, carrosséis e páginas que fazem sentido pro seu bolso.</p>
+    <div class="hero-actions">
+      <a href="https://wa.me/5522996143022?text=E%20a%C3%AD%2C%20Kau%C3%AA!%20Vim%20pelo%20seu%20portf%C3%B3lio%2C%20gostaria%20de%20saber%20mais%20sobre%20seus%20servi%C3%A7os!" target="_blank" class="btn-play">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l14 9-14 9V3z"/></svg>
+        Falar Comigo
+      </a>
+      <button class="btn-info" onclick="openModal('rd')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        Mais Detalhes
+      </button>
     </div>
   </div>
-</div>
+</section>
 
-<!-- TAB: CARROSSÉIS -->
-<div class="tab-content" id="tab-carrosseis">
-  <div class="section">
-    <div class="section-header">
-      <h2 class="section-title">Carrosséis</h2>
-      <span class="section-count">3 projetos</span>
+<!-- CONTENT ROWS -->
+<div class="content-rows">
+
+  <!-- STATS -->
+  <div class="stats-nf reveal" id="stats-section">
+    <div class="stat-nf">
+      <div class="stat-nf-num" data-count="240">0</div>
+      <div class="stat-nf-label">Projetos Entregues</div>
     </div>
+    <div class="stat-nf">
+      <div class="stat-nf-num" data-count="98" data-suffix="%">0%</div>
+      <div class="stat-nf-label">Taxa de Satisfação</div>
+    </div>
+    <div class="stat-nf">
+      <div class="stat-nf-num" data-count="5" data-suffix="+">0+</div>
+      <div class="stat-nf-label">Anos de Experiência</div>
+    </div>
+    <div class="stat-nf">
+      <div class="stat-nf-num" data-count="80">0</div>
+      <div class="stat-nf-label">Clientes Atendidos</div>
+    </div>
+  </div>
 
-    <div class="grid grid-3">
+  <!-- ROW: CRIATIVOS -->
+  <div class="row-section reveal" id="row-criativos">
+    <div class="row-header">
+      <div class="row-title">🎯 Criativos para Ads</div>
+      <a href="#" class="row-see-all" onclick="scrollToSection('row-criativos'); return false;">Ver todos ›</a>
+    </div>
+    <div class="row-scroll-container">
+      <button class="scroll-btn scroll-btn-left" onclick="scrollRow(this,-1)">‹</button>
+      <div class="row-scroll" id="scroll-criativos">
 
-      <div class="card card-real" data-img="carrosseis_polly_7_11zon_11zon.webp" data-zoom="true" style="animation-delay:0.05s">
-        <div class="card-visual card-visual-real">
-          <img src="carrosseis_polly_7_11zon_11zon.webp" alt="Carrossel Polly" loading="lazy">
-          <div class="page-zoom-hint">Ver carrossel</div>
+        <div class="netflix-card wide" onclick="openModal('rd')">
+          <img src="ads rd_3_11zon.webp" class="card-thumb" alt="RD Medicine" loading="lazy">
+          <div class="card-hover-info">
+            <div class="card-hover-actions">
+              <button class="card-action-btn primary" title="Ver" onclick="openModal('rd'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l14 9-14 9V3z"/></svg>
+              </button>
+              <button class="card-action-btn" title="WhatsApp" onclick="window.open('https://wa.me/5522996143022','_blank'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+              </button>
+              <div class="card-action-spacer"></div>
+              <button class="card-action-btn" title="Detalhes" onclick="openModal('rd'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+              </button>
+            </div>
+            <div class="card-hover-title">RD Medicine</div>
+            <div class="card-hover-tags">
+              <span class="card-hover-tag">Perpétuo</span>
+              <span class="card-hover-tag">2024/2025</span>
+              <span class="card-hover-tag">Meta Ads</span>
+            </div>
+            <div class="card-hover-desc">Campanha de perpétuo com ads que rodam até hoje e resultados acima da média.</div>
+          </div>
         </div>
-        <div class="card-info">
-          <div class="card-label">Carrossel · Instagram</div>
-          <div class="card-title">Polly</div>
-          <div class="card-desc">Clique para visualizar em tela cheia.</div>
+
+        <div class="netflix-card wide" onclick="openModal('debora')">
+          <img src="ads debora_1_11zon.webp" class="card-thumb" alt="Débora Heller" loading="lazy">
+          <div class="card-hover-info">
+            <div class="card-hover-actions">
+              <button class="card-action-btn primary" onclick="openModal('debora'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l14 9-14 9V3z"/></svg>
+              </button>
+              <button class="card-action-btn" onclick="window.open('https://wa.me/5522996143022','_blank'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+              </button>
+              <div class="card-action-spacer"></div>
+              <button class="card-action-btn" onclick="openModal('debora'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+              </button>
+            </div>
+            <div class="card-hover-title">Débora Heller — Saliva PRO</div>
+            <div class="card-hover-tags">
+              <span class="card-hover-tag">Lançamento</span>
+              <span class="card-hover-tag">Saúde</span>
+              <span class="card-hover-tag">Meta Ads</span>
+            </div>
+            <div class="card-hover-desc">Ads para lançamento do Saliva PRO, produto da dentista especialista em Saliva.</div>
+          </div>
         </div>
+
+        <div class="netflix-card wide" onclick="openModal('macagigo')">
+          <img src="ads macagigo_2_11zon.webp" class="card-thumb" alt="Macagigo" loading="lazy">
+          <div class="card-hover-info">
+            <div class="card-hover-actions">
+              <button class="card-action-btn primary" onclick="openModal('macagigo'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l14 9-14 9V3z"/></svg>
+              </button>
+              <button class="card-action-btn" onclick="window.open('https://wa.me/5522996143022','_blank'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+              </button>
+              <div class="card-action-spacer"></div>
+              <button class="card-action-btn" onclick="openModal('macagigo'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+              </button>
+            </div>
+            <div class="card-hover-title">Macagigo</div>
+            <div class="card-hover-tags">
+              <span class="card-hover-tag">Influencer</span>
+              <span class="card-hover-tag">Colômbia</span>
+              <span class="card-hover-tag">Meta Ads</span>
+            </div>
+            <div class="card-hover-desc">Campanha para influencer colombiana que atraiu um público forte e engajado.</div>
+          </div>
+        </div>
+
+        <div class="netflix-card wide" onclick="openModal('aurea')">
+          <img src="ads_aurea_4_11zon.webp" class="card-thumb" alt="Áurea" loading="lazy">
+          <div class="card-hover-info">
+            <div class="card-hover-actions">
+              <button class="card-action-btn primary" onclick="openModal('aurea'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l14 9-14 9V3z"/></svg>
+              </button>
+              <button class="card-action-btn" onclick="window.open('https://wa.me/5522996143022','_blank'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+              </button>
+              <div class="card-action-spacer"></div>
+              <button class="card-action-btn" onclick="openModal('aurea'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+              </button>
+            </div>
+            <div class="card-hover-title">Áurea</div>
+            <div class="card-hover-tags">
+              <span class="card-hover-tag">Ads</span>
+              <span class="card-hover-tag">Meta</span>
+            </div>
+            <div class="card-hover-desc">Criativo estratégico para campanha no Meta Ads com foco em conversão.</div>
+          </div>
+        </div>
+
+      </div>
+      <button class="scroll-btn scroll-btn-right" onclick="scrollRow(this,1)">›</button>
+    </div>
+  </div>
+
+  <!-- ROW: CARROSSÉIS -->
+  <div class="row-section reveal" id="row-carrosseis">
+    <div class="row-header">
+      <div class="row-title">📱 Carrosséis Instagram</div>
+      <a href="#" class="row-see-all" onclick="return false;">3 projetos</a>
+    </div>
+    <div class="row-scroll-container">
+      <button class="scroll-btn scroll-btn-left" onclick="scrollRow(this,-1)">‹</button>
+      <div class="row-scroll" id="scroll-carrosseis">
+
+        <div class="netflix-card tall" onclick="openModal('polly')">
+          <img src="carrosseis_polly_7_11zon_11zon.webp" class="card-thumb" alt="Polly" loading="lazy">
+          <div class="card-hover-info">
+            <div class="card-hover-actions">
+              <button class="card-action-btn primary" onclick="openModal('polly'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l14 9-14 9V3z"/></svg>
+              </button>
+              <div class="card-action-spacer"></div>
+              <button class="card-action-btn" onclick="openModal('polly'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+              </button>
+            </div>
+            <div class="card-hover-title">Polly</div>
+            <div class="card-hover-tags">
+              <span class="card-hover-tag">Carrossel</span>
+              <span class="card-hover-tag">Instagram</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="netflix-card tall" onclick="openModal('pri')">
+          <img src="carrosseis pri_5_11zon_11zon.webp" class="card-thumb" alt="Pri" loading="lazy">
+          <div class="card-hover-info">
+            <div class="card-hover-actions">
+              <button class="card-action-btn primary" onclick="openModal('pri'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l14 9-14 9V3z"/></svg>
+              </button>
+              <div class="card-action-spacer"></div>
+              <button class="card-action-btn" onclick="openModal('pri'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+              </button>
+            </div>
+            <div class="card-hover-title">Pri</div>
+            <div class="card-hover-tags">
+              <span class="card-hover-tag">Carrossel</span>
+              <span class="card-hover-tag">Instagram</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="netflix-card tall" onclick="openModal('fernando')">
+          <img src="carrosseis_fernando_6_11zon_11zon.webp" class="card-thumb" alt="Fernando" loading="lazy">
+          <div class="card-hover-info">
+            <div class="card-hover-actions">
+              <button class="card-action-btn primary" onclick="openModal('fernando'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l14 9-14 9V3z"/></svg>
+              </button>
+              <div class="card-action-spacer"></div>
+              <button class="card-action-btn" onclick="openModal('fernando'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+              </button>
+            </div>
+            <div class="card-hover-title">Fernando</div>
+            <div class="card-hover-tags">
+              <span class="card-hover-tag">Carrossel</span>
+              <span class="card-hover-tag">Instagram</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <button class="scroll-btn scroll-btn-right" onclick="scrollRow(this,1)">›</button>
+    </div>
+  </div>
+
+  <!-- ROW: PÁGINAS -->
+  <div class="row-section reveal" id="row-paginas">
+    <div class="row-header">
+      <div class="row-title">🖥️ Páginas de Ação</div>
+      <a href="#" class="row-see-all" onclick="return false;">3 páginas</a>
+    </div>
+    <div class="row-scroll-container">
+      <button class="scroll-btn scroll-btn-left" onclick="scrollRow(this,-1)">‹</button>
+      <div class="row-scroll" id="scroll-paginas">
+
+        <div class="netflix-card wide" onclick="openModal('pagdebora')">
+          <img src="pagina debora_8_11zon.webp" class="card-thumb" alt="Página Débora" loading="lazy">
+          <div class="card-hover-info">
+            <div class="card-hover-actions">
+              <button class="card-action-btn primary" onclick="openModal('pagdebora'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l14 9-14 9V3z"/></svg>
+              </button>
+              <div class="card-action-spacer"></div>
+              <button class="card-action-btn" onclick="openModal('pagdebora'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+              </button>
+            </div>
+            <div class="card-hover-title">Débora — Landing Page</div>
+            <div class="card-hover-tags">
+              <span class="card-hover-tag">Landing Page</span>
+              <span class="card-hover-tag">Saúde</span>
+            </div>
+            <div class="card-hover-desc">Página de captura focada em conversão para o produto Saliva PRO.</div>
+          </div>
+        </div>
+
+        <div class="netflix-card wide" onclick="openModal('pagmacagigo')">
+          <img src="pagina macagigo_10_11zon.webp" class="card-thumb" alt="Página Macagigo" loading="lazy">
+          <div class="card-hover-info">
+            <div class="card-hover-actions">
+              <button class="card-action-btn primary" onclick="openModal('pagmacagigo'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l14 9-14 9V3z"/></svg>
+              </button>
+              <div class="card-action-spacer"></div>
+              <button class="card-action-btn" onclick="openModal('pagmacagigo'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+              </button>
+            </div>
+            <div class="card-hover-title">Macagigo — Landing Page</div>
+            <div class="card-hover-tags">
+              <span class="card-hover-tag">Landing Page</span>
+              <span class="card-hover-tag">Influencer</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="netflix-card wide" onclick="openModal('pagmacagigo2')">
+          <img src="pagina macagigo 2_9_11zon.webp" class="card-thumb" alt="Página Macagigo 2" loading="lazy">
+          <div class="card-hover-info">
+            <div class="card-hover-actions">
+              <button class="card-action-btn primary" onclick="openModal('pagmacagigo2'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l14 9-14 9V3z"/></svg>
+              </button>
+              <div class="card-action-spacer"></div>
+              <button class="card-action-btn" onclick="openModal('pagmacagigo2'); event.stopPropagation()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+              </button>
+            </div>
+            <div class="card-hover-title">Macagigo 2 — Landing Page</div>
+            <div class="card-hover-tags">
+              <span class="card-hover-tag">Landing Page</span>
+              <span class="card-hover-tag">Colômbia</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <button class="scroll-btn scroll-btn-right" onclick="scrollRow(this,1)">›</button>
+    </div>
+  </div>
+
+  <!-- SERVIÇOS -->
+  <div class="services-showcase reveal" id="servicos">
+    <div class="section-heading">
+      <h2>O Que Eu Faço</h2>
+      <p>Serviços focados em resultado real, não em portfólio bonito.</p>
+    </div>
+    <div class="services-grid-nf">
+
+      <div class="service-card-nf">
+        <div class="service-icon-nf">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <div class="service-name-nf">Criativos para Ads</div>
+        <div class="service-desc-nf">Design estratégico de imagens e vídeos para campanhas no Meta Ads e Google Ads que param o scroll e convertem.</div>
+        <div class="service-badge-nf">Meta · Google Ads</div>
       </div>
 
-      <div class="card card-real" data-img="carrosseis pri_5_11zon_11zon.webp" data-zoom="true" style="animation-delay:0.1s">
-        <div class="card-visual card-visual-real">
-          <img src="carrosseis pri_5_11zon_11zon.webp" alt="Carrossel Pri" loading="lazy">
-          <div class="page-zoom-hint">Ver carrossel</div>
+      <div class="service-card-nf">
+        <div class="service-icon-nf">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="7" height="11" rx="1.5"/><rect x="15" y="11" width="7" height="11" rx="1.5"/><rect x="11" y="2" width="11" height="7" rx="1.5"/><rect x="2" y="15" width="11" height="7" rx="1.5"/></svg>
         </div>
-        <div class="card-info">
-          <div class="card-label">Carrossel · Instagram</div>
-          <div class="card-title">Pri</div>
-          <div class="card-desc">Clique para visualizar em tela cheia.</div>
-        </div>
+        <div class="service-name-nf">Carrosséis</div>
+        <div class="service-desc-nf">Sequências visuais para Instagram e LinkedIn que educam, engajam e conduzem o lead até o próximo passo.</div>
+        <div class="service-badge-nf">Instagram · LinkedIn</div>
       </div>
 
-      <div class="card card-real" data-img="carrosseis_fernando_6_11zon_11zon.webp" data-zoom="true" style="animation-delay:0.15s">
-        <div class="card-visual card-visual-real">
-          <img src="carrosseis_fernando_6_11zon_11zon.webp" alt="Carrossel Fernando" loading="lazy">
-          <div class="page-zoom-hint">Ver carrossel</div>
+      <div class="service-card-nf">
+        <div class="service-icon-nf">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
         </div>
-        <div class="card-info">
-          <div class="card-label">Carrossel · Instagram</div>
-          <div class="card-title">Fernando</div>
-          <div class="card-desc">Clique para visualizar em tela cheia.</div>
-        </div>
+        <div class="service-name-nf">Páginas de Ação</div>
+        <div class="service-desc-nf">Landing pages e páginas de captura com hierarquia visual clara, focadas em uma única conversão.</div>
+        <div class="service-badge-nf">Landing Page · Captura</div>
       </div>
 
     </div>
   </div>
-</div>
 
-<!-- TAB: PÁGINAS DE AÇÕES -->
-<div class="tab-content" id="tab-acoes">
-  <div class="section">
-    <div class="section-header">
-      <h2 class="section-title">Páginas de Ações</h2>
-      <span class="section-count">3 páginas</span>
-    </div>
-
-    <div class="pages-grid">
-
-      <div class="page-card page-card-real" data-img="pagina debora_8_11zon.webp" style="animation-delay:0.05s">
-        <div class="page-preview page-preview-real">
-          <img src="pagina debora_8_11zon.webp" alt="Página Débora" loading="lazy">
-          <div class="page-zoom-hint">Ver página completa</div>
-        </div>
-        <div class="card-info">
-          <div class="card-label">Landing Page</div>
-          <div class="card-title">Débora</div>
-          <div class="card-desc">Clique para visualizar em tela cheia.</div>
-        </div>
+  <!-- MARQUEE -->
+  <div class="marquee-nf">
+    <div class="marquee-track-nf">
+      <div class="marquee-content-nf">
+        <span class="mq-item">Você provavelmente</span>
+        <span class="mq-divider">✦</span>
+        <span class="mq-item">precisa de mim</span>
+        <span class="mq-divider">✦</span>
+        <span class="mq-item">hoje no seu negócio</span>
+        <span class="mq-divider">✦</span>
+        <span class="mq-item">Resultados reais</span>
+        <span class="mq-divider">✦</span>
+        <span class="mq-item">Criativos que vendem</span>
+        <span class="mq-divider">✦</span>
+        <span class="mq-item">Design que converte</span>
+        <span class="mq-divider">✦</span>
       </div>
-
-      <div class="page-card page-card-real" data-img="pagina macagigo_10_11zon.webp" style="animation-delay:0.1s">
-        <div class="page-preview page-preview-real">
-          <img src="pagina macagigo_10_11zon.webp" alt="Página Macagigo" loading="lazy">
-          <div class="page-zoom-hint">Ver página completa</div>
-        </div>
-        <div class="card-info">
-          <div class="card-label">Landing Page</div>
-          <div class="card-title">Macagigo</div>
-          <div class="card-desc">Clique para visualizar em tela cheia.</div>
-        </div>
+      <div class="marquee-content-nf" aria-hidden="true">
+        <span class="mq-item">Você provavelmente</span>
+        <span class="mq-divider">✦</span>
+        <span class="mq-item">precisa de mim</span>
+        <span class="mq-divider">✦</span>
+        <span class="mq-item">hoje no seu negócio</span>
+        <span class="mq-divider">✦</span>
+        <span class="mq-item">Resultados reais</span>
+        <span class="mq-divider">✦</span>
+        <span class="mq-item">Criativos que vendem</span>
+        <span class="mq-divider">✦</span>
+        <span class="mq-item">Design que converte</span>
+        <span class="mq-divider">✦</span>
       </div>
-
-      <div class="page-card page-card-real" data-img="pagina macagigo 2_9_11zon.webp" style="animation-delay:0.15s">
-        <div class="page-preview page-preview-real">
-          <img src="pagina macagigo 2_9_11zon.webp" alt="Página Macagigo 2" loading="lazy">
-          <div class="page-zoom-hint">Ver página completa</div>
-        </div>
-        <div class="card-info">
-          <div class="card-label">Landing Page</div>
-          <div class="card-title">Macagigo 2</div>
-          <div class="card-desc">Clique para visualizar em tela cheia.</div>
-        </div>
-      </div>
-
     </div>
   </div>
-</div>
 
-<!-- CONTACT STRIP -->
-<div class="contact-strip">
-  <div class="contact-card">
+  <!-- CTA CONTACT -->
+  <div class="contact-cta-nf reveal">
     <div>
-      <div class="contact-title">Seu negócio merece<br>mais do que design bonito.</div>
-      <div class="contact-sub">Me chama. A gente vê onde tá travando a sua venda.</div>
+      <div class="contact-cta-title">Seu negócio merece<br>mais do que design bonito.</div>
+      <div class="contact-cta-sub">Me chama. A gente vê onde tá travando a sua venda.</div>
     </div>
-    <a href="https://wa.me/5522996143022?text=E%20a%C3%AD%2C%20Kau%C3%AA!%20Vim%20pelo%20seu%20portf%C3%B3lio%2C%20gostaria%20de%20saber%20mais%20sobre%20seus%20servi%C3%A7os!" target="_blank" class="contact-btn">Falar comigo →</a>
+    <a href="https://wa.me/5522996143022?text=E%20a%C3%AD%2C%20Kau%C3%AA!%20Vim%20pelo%20seu%20portf%C3%B3lio%2C%20gostaria%20de%20saber%20mais%20sobre%20seus%20servi%C3%A7os!" target="_blank" class="btn-play" style="font-size:15px; padding:14px 32px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="20" height="20"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      Falar no WhatsApp →
+    </a>
   </div>
-</div>
 
-<!-- MARQUEE STRIP -->
-<div class="marquee-strip">
-  <div class="marquee-track">
-    <div class="marquee-content">
-      <span class="mq-reg">Você provavelmente</span>
-      <span class="mq-sep">✦</span>
-      <span class="mq-bold">precisa de mim</span>
-      <span class="mq-sep">✦</span>
-      <span class="mq-reg">hoje no seu negócio</span>
-      <span class="mq-sep">✦</span>
-      <span class="mq-bold">;)</span>
-      <span class="mq-sep">✦</span>
-      <span class="mq-bold">Você provavelmente</span>
-      <span class="mq-sep">✦</span>
-      <span class="mq-reg">precisa de mim</span>
-      <span class="mq-sep">✦</span>
-      <span class="mq-bold">hoje no seu negócio</span>
-      <span class="mq-sep">✦</span>
-      <span class="mq-reg">;)</span>
-      <span class="mq-sep">✦</span>
-    </div>
-    <div class="marquee-content" aria-hidden="true">
-      <span class="mq-reg">Você provavelmente</span>
-      <span class="mq-sep">✦</span>
-      <span class="mq-bold">precisa de mim</span>
-      <span class="mq-sep">✦</span>
-      <span class="mq-reg">hoje no seu negócio</span>
-      <span class="mq-sep">✦</span>
-      <span class="mq-bold">;)</span>
-      <span class="mq-sep">✦</span>
-      <span class="mq-bold">Você provavelmente</span>
-      <span class="mq-sep">✦</span>
-      <span class="mq-reg">precisa de mim</span>
-      <span class="mq-sep">✦</span>
-      <span class="mq-bold">hoje no seu negócio</span>
-      <span class="mq-sep">✦</span>
-      <span class="mq-reg">;)</span>
-      <span class="mq-sep">✦</span>
-    </div>
-  </div>
 </div>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
-    <div>
-      <div class="footer-copy">© 2026 Kauê. Todos os direitos reservados.</div>
-      <div class="footer-tagline">Bonito é bom. Bonito que vende é melhor.</div>
-    </div>
-    <div class="footer-links">
-      <a href="https://instagram.com/kaueriscado" target="_blank" class="footer-link">Instagram</a>
-      <a href="https://wa.me/5522996143022?text=E%20a%C3%AD%2C%20Kau%C3%AA!%20Vim%20pelo%20seu%20portf%C3%B3lio%2C%20gostaria%20de%20saber%20mais%20sobre%20seus%20servi%C3%A7os!" target="_blank" class="footer-link">WhatsApp</a>
-    </div>
+  <div class="footer-logo">KAUEFLIX</div>
+  <div class="footer-links-nf">
+    <a href="https://instagram.com/kaueriscado" target="_blank" class="footer-link-nf">Instagram</a>
+    <a href="https://wa.me/5522996143022" target="_blank" class="footer-link-nf">WhatsApp</a>
+    <a href="#row-criativos" class="footer-link-nf">Criativos</a>
+    <a href="#row-carrosseis" class="footer-link-nf">Carrosséis</a>
+    <a href="#row-paginas" class="footer-link-nf">Páginas</a>
+    <a href="#servicos" class="footer-link-nf">Serviços</a>
   </div>
+  <div class="footer-copy-nf">© 2026 Kauê. Todos os direitos reservados.</div>
+  <div class="footer-tagline-nf">Bonito é bom. Bonito que vende é melhor.</div>
 </footer>
 
 <script>
-  // ── CURSOR ──
-  const isTouchOnly = window.matchMedia('(hover: none), (pointer: coarse)').matches;
-  const cursor = document.getElementById('cursor');
-  const follower = document.getElementById('cursorFollower');
+// ── INTRO ──
+setTimeout(() => {
+  document.getElementById('intro-splash').style.display = 'none';
+}, 3900);
 
-  if (!isTouchOnly) {
-    let fx = 0, fy = 0, cx = 0, cy = 0, rafId = null;
-    document.addEventListener('mousemove', e => {
-      cx = e.clientX; cy = e.clientY;
-      cursor.style.transform = `translate(${cx - 5}px,${cy - 5}px)`;
-      if (!rafId) rafId = requestAnimationFrame(animFollower);
-    });
-    function animFollower() {
-      fx += (cx - fx) * 0.12;
-      fy += (cy - fy) * 0.12;
-      follower.style.transform = `translate(${fx - 11}px,${fy - 11}px)`;
-      const dx = cx - fx, dy = cy - fy;
-      rafId = (dx * dx + dy * dy > 0.01) ? requestAnimationFrame(animFollower) : null;
+// ── PROGRESS BAR ──
+const progressBar = document.getElementById('progress-bar');
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  progressBar.style.width = progress + '%';
+  if (progress >= 99) {
+    progressBar.style.opacity = '0';
+  } else {
+    progressBar.style.opacity = '1';
+  }
+});
+
+// ── NAVBAR SCROLL ──
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 60) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
+
+// ── SCROLL TOP ──
+function scrollTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── SCROLL ROW ──
+function scrollRow(btn, dir) {
+  const container = btn.closest('.row-scroll-container');
+  const scroll = container.querySelector('.row-scroll');
+  scroll.scrollBy({ left: dir * 600, behavior: 'smooth' });
+}
+
+// ── SEARCH ──
+function openSearch() {
+  document.getElementById('search-overlay').classList.add('open');
+  setTimeout(() => document.getElementById('search-input').focus(), 100);
+}
+function closeSearch() {
+  document.getElementById('search-overlay').classList.remove('open');
+  document.getElementById('search-input').value = '';
+}
+document.getElementById('search-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeSearch();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeSearch();
+    closeModal();
+  }
+});
+
+// ── MODAL DATA ──
+const projects = {
+  rd: {
+    img: 'ads rd_3_11zon.webp',
+    title: 'RD Medicine',
+    match: '99%',
+    year: '2024/2025',
+    label: 'Perpétuo',
+    desc: 'Campanha de perpétuo para a RD Medicine com criativos que rodam até hoje e geram resultados acima da média do mercado. Estratégia focada em copy direta e visual impactante que para o scroll no feed.',
+    tags: ['Meta Ads', 'Perpétuo', 'Design Estratégico', 'Resultado Comprovado', 'Feed Instagram'],
+  },
+  debora: {
+    img: 'ads debora_1_11zon.webp',
+    title: 'Débora Heller — Saliva PRO',
+    match: '97%',
+    year: '2024',
+    label: 'Lançamento',
+    desc: 'Campanha completa de lançamento para o produto Saliva PRO da dentista Débora Heller, especialista em saúde bucal. Ads para Meta Ads com foco em educação do mercado e conversão direta.',
+    tags: ['Meta Ads', 'Lançamento', 'Saúde', 'Dentista', 'Produto Digital'],
+  },
+  macagigo: {
+    img: 'ads macagigo_2_11zon.webp',
+    title: 'Macagigo',
+    match: '95%',
+    year: '2024',
+    label: 'Influencer · Colômbia',
+    desc: 'Campanha de anúncios para influencer colombiana Macagigo. Os criativos atraíram um público forte, engajado e alinhado ao posicionamento da influencer, gerando crescimento expressivo.',
+    tags: ['Meta Ads', 'Influencer', 'Colômbia', 'Internacional', 'Engajamento'],
+  },
+  aurea: {
+    img: 'ads_aurea_4_11zon.webp',
+    title: 'Áurea',
+    match: '96%',
+    year: '2024',
+    label: 'Ads · Meta',
+    desc: 'Criativo estratégico para campanha no Meta Ads. Design focado em conversão com visual que destaca o produto e direciona o usuário para a ação desejada.',
+    tags: ['Meta Ads', 'Design Criativo', 'Conversão'],
+  },
+  polly: {
+    img: 'carrosseis_polly_7_11zon_11zon.webp',
+    title: 'Polly — Carrossel Instagram',
+    match: '98%',
+    year: '2024',
+    label: 'Carrossel',
+    desc: 'Sequência visual completa para Instagram da Polly. Carrossel educativo que engaja e conduz o lead naturalmente até o próximo passo da jornada de compra.',
+    tags: ['Carrossel', 'Instagram', 'Educativo', 'Engajamento', 'Storytelling Visual'],
+  },
+  pri: {
+    img: 'carrosseis pri_5_11zon_11zon.webp',
+    title: 'Pri — Carrossel Instagram',
+    match: '97%',
+    year: '2024',
+    label: 'Carrossel',
+    desc: 'Carrossel desenvolvido para a Pri com foco em gerar salvamentos e compartilhamentos orgânicos. Estrutura visual que prende a atenção do primeiro ao último slide.',
+    tags: ['Carrossel', 'Instagram', 'Orgânico', 'Salvamentos'],
+  },
+  fernando: {
+    img: 'carrosseis_fernando_6_11zon_11zon.webp',
+    title: 'Fernando — Carrossel Instagram',
+    match: '96%',
+    year: '2024',
+    label: 'Carrossel',
+    desc: 'Projeto de carrossel para o Fernando com abordagem de autoridade. Design clean que posiciona o perfil como referência no segmento.',
+    tags: ['Carrossel', 'Instagram', 'Autoridade', 'Posicionamento'],
+  },
+  pagdebora: {
+    img: 'pagina debora_8_11zon.webp',
+    title: 'Débora — Landing Page',
+    match: '99%',
+    year: '2024',
+    label: 'Landing Page',
+    desc: 'Página de captura completa para o produto Saliva PRO da Débora Heller. Hierarquia visual clara com foco em uma única conversão: o lead entrar na lista ou comprar o produto.',
+    tags: ['Landing Page', 'Captura', 'Saúde', 'Conversão', 'Saliva PRO'],
+  },
+  pagmacagigo: {
+    img: 'pagina macagigo_10_11zon.webp',
+    title: 'Macagigo — Landing Page',
+    match: '97%',
+    year: '2024',
+    label: 'Landing Page',
+    desc: 'Página de ação desenvolvida para a influencer Macagigo. Design adaptado ao posicionamento visual da influencer com foco em conversão do público colombiano.',
+    tags: ['Landing Page', 'Influencer', 'Colômbia', 'Internacional'],
+  },
+  pagmacagigo2: {
+    img: 'pagina macagigo 2_9_11zon.webp',
+    title: 'Macagigo 2 — Landing Page',
+    match: '96%',
+    year: '2024',
+    label: 'Landing Page',
+    desc: 'Segunda versão da landing page para a Macagigo, com novo ângulo de conversão e abordagem visual renovada para testes de performance.',
+    tags: ['Landing Page', 'A/B Test', 'Performance', 'Influencer'],
+  },
+};
+
+// ── MODAL OPEN ──
+function openModal(id) {
+  const p = projects[id];
+  if (!p) return;
+
+  // Image or placeholder
+  const imgWrap = document.getElementById('modal-image-wrap');
+  if (p.img) {
+    imgWrap.innerHTML = `<img src="${p.img}" class="modal-hero" alt="${p.title}" style="object-position:top">`;
+  } else {
+    imgWrap.innerHTML = `<div class="modal-hero-placeholder" style="background:var(--surface-2)">${p.title}</div>`;
+  }
+
+  document.getElementById('modal-title').textContent = p.title;
+  document.getElementById('modal-meta').innerHTML = `
+    <span class="modal-meta-match">${p.match} relevante</span>
+    <span class="modal-meta-year">${p.year}</span>
+    <span class="modal-meta-label">${p.label}</span>
+  `;
+  document.getElementById('modal-desc').textContent = p.desc;
+  document.getElementById('modal-actions').innerHTML = `
+    <a href="https://wa.me/5522996143022?text=E%20a%C3%AD%2C%20Kau%C3%AA!%20Vi%20o%20projeto%20${encodeURIComponent(p.title)}%20e%20quero%20saber%20mais!" target="_blank" class="btn-play" style="font-size:14px;padding:10px 22px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="18" height="18"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      Quero assim pra mim
+    </a>
+    <button class="btn-info" onclick="closeModal()" style="font-size:14px;padding:10px 20px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" width="18" height="18"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      Fechar
+    </button>
+  `;
+
+  const tagsEl = document.getElementById('modal-tags');
+  tagsEl.innerHTML = p.tags.map(t => `<span class="modal-tag">${t}</span>`).join('');
+
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+// ── SCROLL REVEAL ──
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
     }
-  }
-
-  // ── TABS ──
-  const pills = document.querySelectorAll('.tab-pill');
-  const pillBg = document.getElementById('pillBg');
-  const contents = document.querySelectorAll('.tab-content');
-  const pillContainer = document.getElementById('tabPills');
-
-  function movePillBg(pill) {
-    const containerRect = pillContainer.getBoundingClientRect();
-    const pillRect = pill.getBoundingClientRect();
-    pillBg.style.left = (pillRect.left - containerRect.left) + 'px';
-    pillBg.style.width = pillRect.width + 'px';
-  }
-  window.addEventListener('load', () => {
-    const active = document.querySelector('.tab-pill.active');
-    movePillBg(active);
   });
-  pills.forEach(pill => {
-    pill.addEventListener('click', () => {
-      pills.forEach(p => p.classList.remove('active'));
-      pill.classList.add('active');
-      movePillBg(pill);
-      const tabId = 'tab-' + pill.dataset.tab;
-      contents.forEach(c => c.classList.remove('active'));
-      document.getElementById(tabId).classList.add('active');
-      setTimeout(() => observeCards(), 50);
-    });
-  });
+}, { threshold: 0.1 });
 
-  // ── INTERSECTION OBSERVER FOR CARDS ──
-  function observeCards() {
-    const cards = document.querySelectorAll('.card:not(.visible), .carousel-card:not(.visible), .page-card:not(.visible)');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => { entry.target.classList.add('visible'); }, i * 60);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    cards.forEach(card => observer.observe(card));
-  }
-  observeCards();
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-  // ── COUNTER ANIMATION ──
-  const counters = document.querySelectorAll('[data-count]');
-  const countObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
+// ── COUNTER ANIMATION ──
+function animateCounter(el, target, suffix = '') {
+  const duration = 1800;
+  const start = performance.now();
+  const update = (now) => {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = Math.floor(eased * target);
+    el.textContent = current + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  };
+  requestAnimationFrame(update);
+}
+
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('[data-count]').forEach(el => {
         const target = parseInt(el.dataset.count);
-        const suffix = el.innerHTML.match(/[^0-9]/g)?.join('') || '';
-        let start = 0;
-        const duration = 1800;
-        const step = (timestamp) => {
-          if (!start) start = timestamp;
-          const progress = Math.min((timestamp - start) / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          el.innerHTML = Math.floor(eased * target) + suffix;
-          if (progress < 1) requestAnimationFrame(step);
-        };
-        requestAnimationFrame(step);
-        countObserver.unobserve(el);
-      }
-    });
-  }, { threshold: 0.5 });
-  counters.forEach(c => countObserver.observe(c));
-
-  // ── LIGHTBOX ──
-  const lightbox      = document.getElementById('lightbox');
-  const lightboxImg   = document.getElementById('lightbox-img');
-  const lightboxClose = document.getElementById('lightbox-close');
-  const lightboxStage = document.getElementById('lightbox-stage');
-  const zoomLevelEl   = document.getElementById('zoom-level');
-  const zoomInBtn     = document.getElementById('zoom-in');
-  const zoomOutBtn    = document.getElementById('zoom-out');
-  const zoomResetBtn  = document.getElementById('zoom-reset');
-
-  let isZoomMode = false;
-  let zoomScale = 1, panX = 0, panY = 0;
-  let isDragging = false, dragStartX, dragStartY, panStartX, panStartY;
-
-  function applyTransform(animate) {
-    lightboxImg.style.transition = animate ? 'transform 0.22s ease' : 'none';
-    lightboxImg.style.transform = `translate(${panX}px,${panY}px) scale(${zoomScale})`;
-    zoomLevelEl.textContent = Math.round(zoomScale * 100) + '%';
-    zoomOutBtn.disabled = zoomScale <= 0.5;
-    zoomInBtn.disabled  = zoomScale >= 5;
-  }
-  function clampPan() {
-    const maxPan = Math.max(0, (zoomScale - 1) * Math.max(lightboxImg.naturalWidth, lightboxImg.naturalHeight) / 2);
-    panX = Math.max(-maxPan, Math.min(maxPan, panX));
-    panY = Math.max(-maxPan, Math.min(maxPan, panY));
-  }
-  function resetZoom(animate) {
-    zoomScale = 1; panX = 0; panY = 0;
-    applyTransform(animate);
-  }
-
-  lightboxStage.addEventListener('wheel', e => {
-    if (!isZoomMode) return;
-    e.preventDefault();
-    const delta = e.deltaY < 0 ? 0.18 : -0.18;
-    const newScale = Math.min(5, Math.max(0.5, zoomScale + delta));
-    const rect = lightboxImg.getBoundingClientRect();
-    panX -= (e.clientX - (rect.left + rect.width  / 2)) * (newScale / zoomScale - 1);
-    panY -= (e.clientY - (rect.top  + rect.height / 2)) * (newScale / zoomScale - 1);
-    zoomScale = newScale; clampPan(); applyTransform(false);
-  }, { passive: false });
-
-  lightboxStage.addEventListener('mousedown', e => {
-    if (!isZoomMode) return;
-    isDragging = true;
-    dragStartX = e.clientX; dragStartY = e.clientY;
-    panStartX = panX;       panStartY = panY;
-    lightboxStage.classList.add('dragging');
-  });
-  window.addEventListener('mousemove', e => {
-    if (!isDragging) return;
-    panX = panStartX + (e.clientX - dragStartX);
-    panY = panStartY + (e.clientY - dragStartY);
-    clampPan(); applyTransform(false);
-  });
-  window.addEventListener('mouseup', () => {
-    if (!isDragging) return;
-    isDragging = false;
-    lightboxStage.classList.remove('dragging');
-  });
-
-  let lastPinchDist = null;
-  lightboxStage.addEventListener('touchstart', e => {
-    if (!isZoomMode) return;
-    if (e.touches.length === 2) {
-      lastPinchDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
-    } else {
-      isDragging = true;
-      dragStartX = e.touches[0].clientX; dragStartY = e.touches[0].clientY;
-      panStartX = panX; panStartY = panY;
+        const suffix = el.dataset.suffix || '';
+        animateCounter(el, target, suffix);
+      });
+      statsObserver.unobserve(entry.target);
     }
-  }, { passive: true });
-  lightboxStage.addEventListener('touchmove', e => {
-    if (!isZoomMode) return;
-    e.preventDefault();
-    if (e.touches.length === 2 && lastPinchDist) {
-      const dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
-      zoomScale = Math.min(5, Math.max(0.5, zoomScale * (dist / lastPinchDist)));
-      lastPinchDist = dist; clampPan(); applyTransform(false);
-    } else if (e.touches.length === 1 && isDragging) {
-      panX = panStartX + (e.touches[0].clientX - dragStartX);
-      panY = panStartY + (e.touches[0].clientY - dragStartY);
-      clampPan(); applyTransform(false);
-    }
-  }, { passive: false });
-  lightboxStage.addEventListener('touchend', e => {
-    if (e.touches.length < 2) lastPinchDist = null;
-    if (e.touches.length === 0) isDragging = false;
-  }, { passive: true });
-
-  zoomInBtn.addEventListener('click',    () => { zoomScale = Math.min(5, zoomScale + 0.25); clampPan(); applyTransform(true); });
-  zoomOutBtn.addEventListener('click',   () => { zoomScale = Math.max(0.5, zoomScale - 0.25); clampPan(); applyTransform(true); });
-  zoomResetBtn.addEventListener('click', () => resetZoom(true));
-
-  document.querySelectorAll('[data-img]').forEach(card => {
-    card.addEventListener('click', () => {
-      isZoomMode = card.dataset.zoom === 'true';
-      lightboxImg.src = '';
-      lightbox.classList.toggle('zoom-mode', isZoomMode);
-      lightbox.classList.toggle('large', !isZoomMode && card.classList.contains('card-real'));
-      lightbox.classList.add('open');
-      document.body.style.overflow = 'hidden';
-      resetZoom(false);
-      setTimeout(() => { lightboxImg.src = card.dataset.img; }, 30);
-    });
   });
+}, { threshold: 0.3 });
 
-  function closeLightbox() {
-    lightbox.classList.remove('open', 'zoom-mode', 'large');
-    document.body.style.overflow = '';
-    isDragging = false;
-    resetZoom(false);
-  }
-  lightboxClose.addEventListener('click', closeLightbox);
-  lightbox.addEventListener('click', e => { if (e.target === lightbox || e.target === lightboxStage) closeLightbox(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+const statsSection = document.getElementById('stats-section');
+if (statsSection) statsObserver.observe(statsSection);
 
-  if (!isTouchOnly) {
-    document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; follower.style.opacity = '0'; });
-    document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; follower.style.opacity = '1'; });
-  }
+// ── SCROLL TO SECTION ──
+function scrollToSection(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+}
+
+// ── NAV ACTIVE STATE ──
+const sections = document.querySelectorAll('[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    const sTop = s.offsetTop - 120;
+    if (window.scrollY >= sTop) current = s.id;
+  });
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+  });
+});
+
+// ── HERO BG LAZY BLUR ──
+const heroBgImg = document.getElementById('hero-bg-img');
+if (heroBgImg) {
+  heroBgImg.addEventListener('load', () => {
+    heroBgImg.style.opacity = '0.5';
+  });
+}
 </script>
 </body>
 </html>
