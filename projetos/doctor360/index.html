@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Doctor 360 - Bahia | 19 e 20 de Junho de 2026</title>
+<meta name="description" content="Imersão estratégica para médicos que querem assumir o controle da própria carreira.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>@import url('https://fonts.cdnfonts.com/css/brittany-signature');</style>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --black:#030303;--white:#fff;--gray-50:#fafafa;--gray-100:#f5f5f5;
+  --gray-200:#e5e5e5;--gray-300:#d4d4d4;--gray-400:#a3a3a3;
+  --gray-500:#737373;--gray-600:#525252;--gray-700:#404040;
+  --gray-800:#262626;--gray-900:#171717;--gray-950:#0a0a0a;
+  --accent:#89CFF0;--accent-btn:#10b981;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',sans-serif;color:var(--white);background:var(--black);line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+
+/* ── Container ── */
+.container{max-width:1120px;margin:0 auto;padding:0 24px}
+
+/* ── CTA Button ── */
+.cta{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:18px 44px;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--black);background:var(--white);border:none;cursor:pointer;
+  transition:all .35s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;
+  border-radius:6px;box-shadow:0 0 0 1px rgba(255,255,255,.1),0 4px 24px rgba(16,185,129,.08);
+}
+.cta{background:var(--accent-btn);color:var(--white)}
+.cta:hover{background:#0ea472;color:var(--white);transform:translateY(-3px);box-shadow:0 0 0 1px rgba(16,185,129,.4),0 8px 32px rgba(16,185,129,.2)}
+.cta::before{content:'→';margin-left:4px;transition:transform .3s;order:2}
+.cta:hover::before{transform:translateX(4px)}
+.cta-center{display:flex;justify-content:center;margin:48px 0}
+
+/* ── Topbar ── */
+.topbar{
+  padding:16px 0;border-bottom:1px solid var(--gray-800);
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(0,0,0,.85);backdrop-filter:blur(12px);
+}
+.topbar-inner{display:flex;justify-content:space-between;align-items:center}
+.topbar-brand{font-size:.8rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase}
+.topbar-date{font-size:.75rem;font-weight:400;color:var(--gray-400);letter-spacing:.05em}
+
+/* ── Hero ── */
+.hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:140px 0 100px;position:relative;overflow:hidden;
+}
+.hero::before{display:none}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.hero-tag{
+  display:inline-block;font-size:.7rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:24px;
+}
+.hero h1{font-size:clamp(2rem,4vw,3.2rem);font-weight:300;line-height:1.2;margin-bottom:24px;letter-spacing:-.02em}
+.hero h1 strong{font-weight:700}
+.hero-sub{font-size:1rem;color:var(--gray-400);line-height:1.8;margin-bottom:16px}
+.hero-date{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.85rem;font-weight:500;color:var(--white);
+  padding:12px 20px;border:1px solid var(--gray-700);margin-top:24px;margin-bottom:40px;
+}
+.hero-date span{color:var(--accent)}
+.hero-visual{
+  position:relative;aspect-ratio:4/5;background:var(--gray-900);
+  border:1px solid var(--gray-800);display:flex;align-items:center;justify-content:center;
+  flex-direction:column;text-align:center;padding:40px;gap:16px;
+}
+.hero-visual{position:relative}
+.hero-visual img{position:relative;z-index:2}
+
+/* Orbiting cards */
+.hero-orbit-wrap{
+  position:absolute;pointer-events:none;
+  animation:hero-orbit linear infinite;
+}
+/* Back: smaller orbit around head area */
+.hero-orbit-wrap.back{
+  top:0;left:10%;right:10%;bottom:50%;z-index:0;
+  animation-duration:35s;
+}
+/* Front: larger orbit */
+.hero-orbit-wrap.front{
+  inset:-40px;z-index:3;
+  animation-duration:40s;animation-direction:reverse;
+}
+
+.hero-orbit-card{
+  position:absolute;
+  width:160px;height:100px;
+  border-radius:10px;overflow:hidden;
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+  border:1px solid rgba(255,255,255,.08);
+}
+.hero-orbit-card img{width:100%;height:100%;object-fit:cover}
+
+.hero-orbit-wrap.back .hero-orbit-card{top:5%;right:-10px}
+.hero-orbit-wrap.front .hero-orbit-card{bottom:18%;left:-30px}
+
+@keyframes hero-orbit{
+  0%{transform:rotate(0deg)}
+  100%{transform:rotate(360deg)}
+}
+/* Counter-rotate so text stays level */
+.hero-orbit-wrap.back .hero-orbit-card{animation:hero-counter-back 35s linear infinite}
+.hero-orbit-wrap.front .hero-orbit-card{animation:hero-counter-front 40s linear infinite}
+@keyframes hero-counter-back{0%{transform:rotate(0deg)}100%{transform:rotate(-360deg)}}
+@keyframes hero-counter-front{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+
+/* Horizontal sliding card */
+.hero-slide-wrap{
+  position:absolute;top:45%;left:0;right:0;height:100px;z-index:4;
+  pointer-events:none;overflow:visible;
+}
+.hero-slide-card{
+  position:absolute;top:0;
+  width:160px;height:100px;
+  border-radius:10px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+  animation:hero-slide 18s ease-in-out infinite;
+}
+.hero-slide-card img{width:100%;height:100%;object-fit:cover}
+@keyframes hero-slide{
+  0%{left:-180px}
+  45%{left:calc(100% + 20px)}
+  50%{left:calc(100% + 20px)}
+  95%{left:-180px}
+  100%{left:-180px}
+}
+
+/* ── Section base ── */
+section{padding:100px 0}
+.section-dark{background:var(--black)}
+.section-light{background:var(--gray-950)}
+.section-tag{
+  font-size:.65rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:16px;
+}
+.section-title{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:300;line-height:1.2;margin-bottom:24px;letter-spacing:-.02em}
+.section-title strong{font-weight:700}
+.section-desc{font-size:1rem;color:var(--gray-400);line-height:1.8;max-width:680px}
+
+/* ── Posicionamento ── */
+.pos-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-top:64px}
+.pos-left .pos-quote{
+  font-size:clamp(1.5rem,2.5vw,2.2rem);font-weight:300;line-height:1.3;
+  border-left:3px solid var(--accent);padding-left:32px;
+}
+.pos-right{font-size:1rem;color:var(--gray-400);line-height:1.9}
+
+/* ── Para quem / Diagnostic Scanner ── */
+.diag-section{position:relative;overflow:hidden;padding:120px 0}
+.diag-header{text-align:center;max-width:800px;margin:0 auto 80px}
+
+/* Scanner wrapper */
+.diag-scanner{position:relative;max-width:100%;margin:0 auto}
+
+/* Central spine */
+.diag-spine{
+  position:absolute;left:50%;top:0;bottom:0;width:2px;
+  background:linear-gradient(180deg,transparent,var(--gray-800) 10%,var(--gray-800) 90%,transparent);
+  transform:translateX(-50%);z-index:1;
+}
+.diag-spine::after{
+  content:'';position:absolute;left:50%;transform:translateX(-50%);
+  width:4px;height:80px;
+  background:linear-gradient(180deg,transparent,var(--accent),transparent);
+  border-radius:4px;animation:diag-scan 4s ease-in-out infinite;
+  box-shadow:0 0 20px var(--accent),0 0 40px rgba(16,185,129,.3);
+}
+@keyframes diag-scan{
+  0%{top:-80px;opacity:0}10%{opacity:1}90%{opacity:1}
+  100%{top:calc(100% + 80px);opacity:0}
+}
+
+/* Row layout */
+.diag-row{
+  display:grid;grid-template-columns:1fr 40px 1fr;gap:0;align-items:center;
+  margin-bottom:32px;position:relative;
+}
+.diag-row:last-child{margin-bottom:0}
+
+/* Node in center column */
+.diag-node-wrap{display:flex;justify-content:center;align-items:center;position:relative;z-index:2}
+.diag-node{
+  width:14px;height:14px;border-radius:50%;
+  border:2px solid var(--gray-700);background:var(--black);
+  transition:all .5s;position:relative;
+}
+.diag-node.active{border-color:var(--accent);box-shadow:0 0 12px rgba(16,185,129,.4)}
+.diag-node::after{
+  content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:4px;height:4px;border-radius:50%;background:var(--gray-600);transition:all .5s;
+}
+.diag-node.active::after{background:var(--accent)}
+
+/* Card */
+.diag-card{
+  padding:24px 28px;
+  border:1px solid var(--gray-800);background:rgba(10,10,10,.8);
+  backdrop-filter:blur(8px);border-radius:10px;
+  position:relative;overflow:hidden;
+  opacity:0;transition:all .7s cubic-bezier(.4,0,.2,1);
+}
+/* Right-side card slides from right */
+.diag-row.right .diag-card.real{transform:translateX(40px)}
+/* Left-side card slides from left */
+.diag-row.left .diag-card.real{transform:translateX(-40px)}
+.diag-row.active .diag-card.real{opacity:1;transform:translateX(0);border-color:rgba(16,185,129,.12)}
+
+/* Empty placeholder */
+.diag-card.empty{visibility:hidden;padding:0;border:none;background:none;min-height:1px}
+
+/* Card glow */
+.diag-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(300px circle at var(--mx,50%) var(--my,50%),rgba(16,185,129,.06),transparent 60%);
+  opacity:0;transition:opacity .3s;pointer-events:none;
+}
+.diag-card:hover::before{opacity:1}
+
+/* Pulse dot */
+.diag-pulse-dot{
+  position:absolute;top:24px;right:24px;width:8px;height:8px;border-radius:50%;
+  background:var(--gray-700);transition:all .5s;
+}
+.diag-row.active .diag-pulse-dot{background:var(--accent);animation:diag-blink 2s ease-in-out infinite}
+@keyframes diag-blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+.diag-label{
+  font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gray-500);
+  margin-bottom:8px;transition:color .5s;
+}
+.diag-row.active .diag-label{color:var(--accent)}
+.diag-card p{font-size:.88rem;color:var(--gray-400);line-height:1.7;transition:color .5s}
+.diag-row.active .diag-card p{color:var(--gray-300)}
+
+/* Note */
+.diag-note{
+  margin-top:64px;padding:40px;border:1px solid var(--gray-800);background:var(--gray-900);
+  font-size:.95rem;color:var(--gray-300);line-height:1.8;border-radius:10px;
+  text-align:center;position:relative;overflow:hidden;
+}
+.diag-note::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+}
+.diag-note strong{color:var(--white);font-weight:600}
+
+/* Wide bottom item */
+.diag-wide{
+  max-width:500px;margin:0 auto;padding:24px 28px;
+  border:1px solid var(--gray-800);background:rgba(10,10,10,.8);
+  backdrop-filter:blur(8px);border-radius:10px;text-align:center;
+  opacity:0;transform:translateY(20px);transition:all .7s cubic-bezier(.4,0,.2,1);
+  position:relative;
+}
+.diag-wide.active{opacity:1;transform:translateY(0);border-color:rgba(16,185,129,.12)}
+.diag-wide .diag-pulse-dot{position:absolute;top:20px;right:20px}
+.diag-wide.active .diag-pulse-dot{background:var(--accent);animation:diag-blink 2s ease-in-out infinite}
+.diag-wide .diag-label{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gray-500);margin-bottom:8px}
+.diag-wide.active .diag-label{color:var(--accent)}
+.diag-wide p{font-size:.88rem;color:var(--gray-400);line-height:1.7}
+.diag-wide.active p{color:var(--gray-300)}
+
+@media(max-width:768px){
+  .diag-scanner{overflow:hidden}
+  .diag-spine{display:none}
+  .diag-row{grid-template-columns:1fr;gap:16px}
+  .diag-node-wrap{display:none}
+  .diag-card.empty{display:none}
+  .diag-card.real{transform:translateY(30px)!important;opacity:0}
+  .diag-row.active .diag-card.real{transform:translateY(0)!important;opacity:1}
+  .diag-wide{max-width:100%}
+}
+
+/* ── Problema / Orbital ── */
+.orbit-section{position:relative;overflow:hidden;padding:120px 0;min-height:100vh;display:flex;align-items:center}
+.orbit-wrapper{position:relative;width:100%;max-width:1120px;margin:0 auto;padding:0 24px}
+.orbit-universe{position:relative;width:100%;aspect-ratio:1/1;max-width:750px;margin:0 auto}
+
+/* Central planet */
+.orbit-core{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:340px;height:340px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,var(--gray-700),var(--black) 70%);
+  box-shadow:0 0 80px rgba(16,185,129,.06),0 0 200px rgba(16,185,129,.03),inset 0 0 60px rgba(0,0,0,.8);
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  padding:48px;z-index:3;
+}
+.orbit-core h2{font-size:1.15rem;font-weight:300;line-height:1.5;color:var(--gray-300)}
+.orbit-core h2 strong{font-weight:700;color:var(--white);display:block;font-size:1.35rem;margin-top:8px}
+
+/* Orbit rings */
+.orbit-ring{
+  position:absolute;top:50%;left:50%;border-radius:50%;
+  border:1px solid rgba(255,255,255,.04);
+  transform:translate(-50%,-50%);
+}
+.orbit-ring-1{width:520px;height:520px;animation:orbit-spin 90s linear infinite}
+.orbit-ring-2{width:680px;height:680px;animation:orbit-spin 120s linear infinite reverse}
+.orbit-ring-3{width:480px;height:480px;border:1px dashed rgba(16,185,129,.08);animation:orbit-spin 70s linear infinite}
+
+@keyframes orbit-spin{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+/* Floating pain cards */
+.orbit-card{
+  position:absolute;z-index:4;
+  padding:16px 24px;
+  background:rgba(23,23,23,.85);backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.06);border-radius:10px;
+  font-size:.82rem;color:var(--gray-300);line-height:1.5;
+  max-width:210px;
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+  transition:all .5s cubic-bezier(.4,0,.2,1);
+  cursor:default;
+  animation:orbit-float 6s ease-in-out infinite;
+}
+.orbit-card:hover{
+  border-color:var(--accent);background:rgba(16,185,129,.06);
+  transform:scale(1.05);box-shadow:0 0 24px rgba(16,185,129,.12);
+}
+.orbit-card::before{
+  content:'';position:absolute;top:-1px;left:20px;right:20px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(16,185,129,.3),transparent);
+}
+.orbit-card span{display:block;font-weight:600;color:var(--white);margin-bottom:2px;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase}
+
+/* Individual positions + animation delays */
+.orbit-card:nth-child(1){top:2%;left:5%;animation-delay:0s}
+.orbit-card:nth-child(2){top:8%;right:2%;animation-delay:-1s}
+.orbit-card:nth-child(3){top:42%;left:-2%;animation-delay:-2s}
+.orbit-card:nth-child(4){top:45%;right:-3%;animation-delay:-3s}
+.orbit-card:nth-child(5){bottom:12%;left:4%;animation-delay:-4s}
+.orbit-card:nth-child(6){bottom:5%;right:6%;animation-delay:-5s}
+
+@keyframes orbit-float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+
+/* Glowing dots on rings */
+.orbit-dot{
+  position:absolute;width:6px;height:6px;border-radius:50%;
+  background:var(--accent);box-shadow:0 0 12px var(--accent);
+  top:50%;left:50%;margin:-3px 0 0 -3px;
+}
+.orbit-ring-1 .orbit-dot{transform:translateX(260px)}
+.orbit-ring-2 .orbit-dot{transform:translateX(340px)}
+
+/* Bottom text */
+.orbit-bottom{
+  text-align:center;margin-top:48px;position:relative;z-index:5;
+}
+.orbit-bottom p{font-size:.95rem;color:var(--gray-400);line-height:1.8;max-width:620px;margin:0 auto}
+
+/* Tag above */
+.orbit-tag{
+  text-align:center;margin-bottom:48px;position:relative;z-index:5;
+}
+
+/* Responsive */
+@media(max-width:900px){
+  .orbit-universe{max-width:100%;aspect-ratio:auto;min-height:800px}
+  .orbit-core{width:220px;height:220px;padding:28px}
+  .orbit-core h2{font-size:.9rem}
+  .orbit-core h2 strong{font-size:1.05rem}
+  .orbit-ring-1{width:360px;height:360px}
+  .orbit-ring-2{width:480px;height:480px}
+  .orbit-ring-3{width:330px;height:330px}
+  .orbit-card{max-width:160px;padding:12px 16px;font-size:.75rem}
+  .orbit-card:nth-child(1){top:0;left:0}
+  .orbit-card:nth-child(2){top:2%;right:0}
+  .orbit-card:nth-child(3){top:38%;left:-1%}
+  .orbit-card:nth-child(4){top:40%;right:0}
+  .orbit-card:nth-child(5){bottom:8%;left:0}
+  .orbit-card:nth-child(6){bottom:2%;right:0}
+}
+
+/* ── Resultados ── */
+.results-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;margin-top:64px}
+.result-card{
+  padding:32px 24px;border:1px solid var(--gray-800);background:var(--gray-950);
+  position:relative;overflow:hidden;border-radius:12px;
+  transition:all .4s cubic-bezier(.4,0,.2,1);cursor:default;
+}
+/* Spotlight gradient that follows mouse */
+.result-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+  background:radial-gradient(600px circle at var(--mx,50%) var(--my,0%),rgba(16,185,129,.07),transparent 40%);
+  opacity:0;transition:opacity .4s;pointer-events:none;z-index:0;
+}
+.result-card:hover::before{opacity:1}
+/* Animated top border */
+.result-card::after{
+  content:'';position:absolute;top:0;left:0;height:2px;width:0;
+  background:linear-gradient(90deg,var(--accent),rgba(16,185,129,.2));
+  transition:width .6s cubic-bezier(.4,0,.2,1);
+}
+.result-card:hover::after{width:100%}
+.result-card:hover{border-color:rgba(16,185,129,.2);transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.3),0 0 0 1px rgba(16,185,129,.1)}
+
+/* Large background number */
+.result-card .result-bg-num{
+  position:absolute;top:-10px;right:12px;
+  font-size:5rem;font-weight:900;line-height:1;
+  color:rgba(255,255,255,.03);transition:all .5s;pointer-events:none;
+  z-index:0;
+}
+.result-card:hover .result-bg-num{color:rgba(16,185,129,.06);transform:scale(1.1)}
+
+.result-num{font-size:.7rem;font-weight:600;letter-spacing:.15em;color:var(--accent);margin-bottom:16px;position:relative;z-index:1}
+.result-card h3{font-size:1rem;font-weight:600;margin-bottom:12px;line-height:1.3;position:relative;z-index:1}
+.result-card p{font-size:.85rem;color:var(--gray-400);line-height:1.7;position:relative;z-index:1;transition:color .3s}
+.result-card:hover p{color:var(--gray-300)}
+
+/* ── Pilares ── */
+.pilares-header{display:grid;grid-template-columns:1fr 1fr;gap:80px;margin-bottom:64px}
+.pilares-scroll{display:grid;grid-template-columns:repeat(5,1fr);gap:20px}
+.pilar-card{
+  padding:40px 28px;background:var(--white);color:var(--black);
+  position:relative;overflow:hidden;
+}
+.pilar-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--accent)}
+.pilar-num{font-size:.7rem;font-weight:600;letter-spacing:.15em;color:var(--accent);margin-bottom:20px}
+.pilar-card h3{font-size:1.1rem;font-weight:700;margin-bottom:16px;line-height:1.3}
+.pilar-card p{font-size:.85rem;color:var(--gray-600);line-height:1.7}
+
+/* ── Diferencial ── */
+.diff-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:48px}
+.diff-item{
+  padding:32px;border:1px solid var(--gray-800);background:var(--gray-900);
+}
+.diff-item p{font-size:.9rem;color:var(--gray-300);line-height:1.7}
+.diff-item p::before{content:'';display:inline-block;width:6px;height:6px;background:var(--accent);border-radius:50%;margin-right:10px}
+
+/* ── Speakers ── */
+.speakers-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:64px}
+.speaker-card{display:grid;grid-template-columns:200px 1fr;gap:32px;align-items:start;padding:40px;border:1px solid var(--gray-800)}
+.speaker-photo{
+  aspect-ratio:3/4;background:var(--gray-900);border:1px solid var(--gray-800);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  text-align:center;padding:20px;gap:8px;
+}
+.speaker-photo .mockup-label{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-500)}
+.speaker-photo .mockup-desc{font-size:.75rem;color:var(--gray-400)}
+.speaker-name{font-size:1.1rem;font-weight:700;margin-bottom:4px}
+.speaker-role{font-size:.8rem;color:var(--accent);margin-bottom:16px;font-weight:500}
+.speaker-bio{font-size:.85rem;color:var(--gray-400);line-height:1.8}
+
+/* ── Speakers (editorial collage) ── */
+.spk-block{margin-top:64px;position:relative}
+.spk-compose{position:relative;height:520px;max-width:800px;margin:0 auto}
+.spk-float{
+  position:absolute;border-radius:10px;overflow:hidden;
+  box-shadow:0 12px 40px rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.06);
+  transition:transform .5s cubic-bezier(.4,0,.2,1);z-index:1;
+}
+.spk-float img{width:100%;height:100%;object-fit:cover;filter:brightness(.7)}
+.spk-float-nat{width:220px;height:150px;top:30px;left:0;transform:rotate(-4deg)}
+.spk-float-fel{width:220px;height:150px;top:50px;right:0;transform:rotate(3deg)}
+.spk-sig{
+  position:absolute;font-family:'Brittany Signature',cursive;
+  color:rgba(255,255,255,.04);pointer-events:none;z-index:0;transition:color .5s;
+}
+.spk-sig-nat{font-size:8rem;top:0;left:-20px;transform:rotate(-8deg)}
+.spk-sig-fel{font-size:8rem;bottom:60px;right:-20px;transform:rotate(5deg)}
+.spk-portraits{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  display:flex;gap:0;z-index:3;
+}
+.spk-portrait{
+  width:260px;height:360px;border-radius:14px;overflow:hidden;
+  border:3px solid var(--gray-900);box-shadow:0 20px 60px rgba(0,0,0,.5);
+  position:relative;transition:all .5s cubic-bezier(.4,0,.2,1);
+}
+.spk-portrait:first-child{transform:rotate(-4deg) translateX(16px);z-index:3}
+.spk-portrait:last-child{transform:rotate(4deg) translateX(-16px);z-index:2}
+.spk-portrait:hover{transform:rotate(0deg) translateX(0) scale(1.04) translateY(-8px);z-index:5;border-color:var(--accent)}
+.spk-portrait img{width:100%;height:100%;object-fit:cover;object-position:top}
+.spk-nametag{position:absolute;bottom:0;left:0;right:0;padding:20px;background:linear-gradient(transparent,rgba(0,0,0,.85))}
+.spk-nametag .spk-name{font-size:.95rem;font-weight:700}
+.spk-nametag .spk-role{font-size:.65rem;font-weight:400;color:var(--accent);margin-top:3px}
+.spk-portrait-sig{
+  position:absolute;top:16px;right:16px;font-family:'Brittany Signature',cursive;font-size:1.8rem;
+  color:rgba(255,255,255,.15);pointer-events:none;transition:color .4s;
+}
+.spk-portrait:hover .spk-portrait-sig{color:rgba(137,207,240,.25)}
+.spk-info-card{
+  background:var(--gray-950);border:1px solid var(--gray-800);border-radius:16px;
+  padding:48px;text-align:center;position:relative;overflow:hidden;margin-top:48px;
+}
+.spk-info-card::before{
+  content:'';position:absolute;top:0;left:20%;right:20%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+}
+.spk-headline{font-size:clamp(1.3rem,2.5vw,1.7rem);font-weight:300;line-height:1.4;max-width:640px;margin:0 auto 28px}
+.spk-headline strong{font-weight:700}
+.spk-divider{width:40px;height:2px;background:var(--accent);margin:0 auto 28px;border-radius:2px}
+.spk-text{font-size:.88rem;color:var(--gray-400);line-height:1.9;max-width:660px;margin:0 auto;column-count:2;column-gap:36px;text-align:left}
+
+@media(max-width:768px){
+  .spk-compose{height:400px}
+  .spk-portrait{width:170px;height:240px}
+  .spk-portrait:first-child{transform:rotate(-3deg) translateX(10px)}
+  .spk-portrait:last-child{transform:rotate(3deg) translateX(-10px)}
+  .spk-float-nat{width:140px;height:95px;top:20px;left:0}
+  .spk-float-fel{width:140px;height:95px;top:30px;right:0}
+  .spk-sig{font-size:4.5rem}
+  .spk-info-card{padding:32px 20px}
+  .spk-text{column-count:1}
+}
+
+/* ── Perfil ideal / Chaos → Clarity ── */
+.chaos-section{position:relative;overflow:hidden;padding:100px 0}
+.chaos-header{text-align:center;max-width:800px;margin:0 auto 48px}
+
+/* Items as simple list */
+.chaos-list{
+  display:flex;flex-direction:column;gap:14px;max-width:640px;margin:0 auto;
+}
+
+/* Each item */
+.chaos-item{
+  padding:20px 32px;
+  background:var(--gray-950);
+  border:1px solid var(--gray-800);border-radius:10px;
+  font-size:.9rem;color:var(--gray-400);line-height:1.6;
+  cursor:default;
+  opacity:0;transform:translateY(20px);
+  transition:all .6s cubic-bezier(.22,1,.36,1);
+}
+.chaos-item.visible{opacity:1;transform:translateY(0)}
+.chaos-item.checked{
+  color:var(--gray-200);
+  border-color:rgba(16,185,129,.2);
+  background:rgba(16,185,129,.03);
+}
+.chaos-item:hover{border-color:rgba(16,185,129,.4);box-shadow:0 0 30px rgba(16,185,129,.06)}
+
+/* Checkmark */
+.chaos-check{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:22px;height:22px;border-radius:50%;
+  border:2px solid var(--gray-700);
+  margin-right:14px;flex-shrink:0;
+  transition:all .5s cubic-bezier(.22,1,.36,1);
+  position:relative;vertical-align:middle;
+}
+.chaos-check svg{
+  width:12px;height:12px;stroke:var(--accent);stroke-width:3;
+  fill:none;stroke-linecap:round;stroke-linejoin:round;
+  opacity:0;transform:scale(0);transition:all .4s cubic-bezier(.22,1,.36,1);
+}
+.chaos-item.checked .chaos-check{border-color:var(--accent);background:rgba(16,185,129,.1)}
+.chaos-item.checked .chaos-check svg{opacity:1;transform:scale(1)}
+
+/* ── Carousel ── */
+.carousel-track{
+  display:flex;width:max-content;
+  animation:carousel-scroll 30s linear infinite;
+}
+.carousel-track img{height:500px;flex-shrink:0;margin-right:110px}
+@keyframes carousel-scroll{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
+
+/* Particles */
+.chaos-particles{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.chaos-particle{
+  position:absolute;width:2px;height:2px;border-radius:50%;
+  background:var(--accent);opacity:.15;
+  animation:chaos-drift linear infinite;
+}
+@keyframes chaos-drift{
+  0%{transform:translateY(0) translateX(0);opacity:.15}
+  50%{opacity:.3}
+  100%{transform:translateY(-300px) translateX(40px);opacity:0}
+}
+
+@media(max-width:768px){
+  .chaos-item{font-size:.8rem;padding:14px 20px}
+}
+
+/* ── Custo ── */
+.custo-block{
+  margin-top:48px;padding:64px;border:1px solid var(--gray-800);
+  text-align:center;
+}
+.custo-list{
+  list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:16px;
+  margin:32px 0;
+}
+.custo-list li{
+  font-size:.85rem;color:var(--gray-400);padding:12px 24px;
+  border:1px solid var(--gray-800);
+}
+
+/* ── Aplicacao ── */
+.app-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.app-steps{display:flex;flex-direction:column;gap:16px;margin-top:32px}
+.app-step{
+  display:flex;gap:16px;align-items:baseline;
+  font-size:.9rem;color:var(--gray-300);
+  padding:16px 0;border-bottom:1px solid var(--gray-800);
+}
+.app-step-num{font-size:.7rem;font-weight:700;color:var(--accent);letter-spacing:.1em;flex-shrink:0}
+
+/* ── FAQ ── */
+.faq-list{max-width:800px;margin:48px auto 0}
+.faq-item{border-bottom:1px solid var(--gray-800);padding:28px 0}
+.faq-q{font-size:1rem;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.faq-q::after{content:'+';font-size:1.4rem;font-weight:300;color:var(--gray-500);transition:transform .3s}
+.faq-item.open .faq-q::after{transform:rotate(45deg)}
+.faq-a{font-size:.9rem;color:var(--gray-400);line-height:1.8;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s}
+.faq-item.open .faq-a{max-height:300px;padding-top:16px}
+
+/* ── CTA Final ── */
+.final{padding:120px 0;text-align:center}
+.final h2{font-size:clamp(1.8rem,3vw,2.5rem);font-weight:300;line-height:1.3;max-width:700px;margin:0 auto 24px}
+.final h2 strong{font-weight:700}
+.final p{color:var(--gray-400);margin-bottom:40px;max-width:600px;margin-left:auto;margin-right:auto}
+
+/* ── Footer ── */
+footer{padding:40px 0;border-top:1px solid var(--gray-800);text-align:center}
+footer p{font-size:.75rem;color:var(--gray-500);letter-spacing:.05em}
+
+/* ── Mockup placeholder ── */
+.mockup-block{
+  background:var(--gray-900);border:1px dashed var(--gray-700);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  padding:48px 32px;gap:12px;text-align:center;
+}
+.mockup-block .mockup-label{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gray-500)}
+.mockup-block .mockup-desc{font-size:.8rem;color:var(--gray-400);max-width:300px}
+
+/* ── Responsive ── */
+@media(max-width:900px){
+  .hero-grid,.pos-grid,.problema-grid,.pilares-header,.speakers-grid,.app-grid{grid-template-columns:1fr;gap:48px}
+  .check-grid,.diff-grid{grid-template-columns:1fr}
+  .results-grid,.pilares-scroll{grid-template-columns:1fr 1fr;gap:16px}
+  .speaker-card{grid-template-columns:1fr;text-align:center}
+  .speaker-photo{max-width:200px;margin:0 auto}
+  .cta{width:100%;justify-content:center;padding:16px 24px;font-size:.8rem}
+  section{padding:64px 0}
+  .hero{padding:100px 0 64px}
+  .custo-block{padding:40px 24px}
+}
+@media(max-width:600px){
+  .results-grid,.pilares-scroll{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="container topbar-inner">
+    <div class="topbar-brand">Doctor 360 &mdash; Bahia</div>
+    <div class="topbar-date">19 &amp; 20 de Junho &middot; Salvador, BA</div>
+  </div>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-tag">Imersão Presencial &middot; 19 e 20 de Junho de 2026</div>
+        <h1>Um evento para médicos que estão <strong>prontos para romper</strong> com um sistema que os limita, e <strong>assumir o controle</strong> da própria carreira.</h1>
+        <p class="hero-sub">Na Doctor 360 Bahia, você vai mergulhar em uma imersão estratégica para entender como sair do modelo que limita sua carreira e assumir o controle do seu crescimento.</p>
+        <div class="hero-date"><span>&#9670;</span> 19 e 20 de Junho de 2026 &mdash; Salvador, Bahia</div>
+        <br>
+        <a href="#aplicar" class="cta">Quero aplicar para a Doctor 360 - Bahia</a>
+      </div>
+      <div class="hero-visual" style="border:none;padding:0;background:transparent;aspect-ratio:auto">
+        <!-- Back orbit -->
+        <div class="hero-orbit-wrap back">
+          <div class="hero-orbit-card"><img src="assets/img/bloquinho.webp" alt="Evento"></div>
+        </div>
+        <!-- Horizontal slide -->
+        <div class="hero-slide-wrap">
+          <div class="hero-slide-card"><img src="assets/img/bloquinho 2.webp" alt="Evento"></div>
+        </div>
+        <!-- Image -->
+        <img src="assets/img/mockup hero.webp" alt="Dra. Natália Carneiro" style="width:100%;height:auto;object-fit:contain;border-radius:0">
+        <!-- Front orbit -->
+        <div class="hero-orbit-wrap front">
+          <div class="hero-orbit-card"><img src="assets/img/bloquinho 3.webp" alt="Evento"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Posicionamento -->
+<section class="section-light">
+  <div class="container">
+    <div class="section-tag">Posicionamento</div>
+    <div class="pos-grid">
+      <div class="pos-left">
+        <p class="pos-quote">A faculdade forma o médico técnico. Mas não ensina como construir uma carreira médica <strong>forte, independente e próspera.</strong></p>
+      </div>
+      <div class="pos-right">
+        <p>A Doctor 360 - Bahia é um encontro presencial, intenso e seletivo, para médicos que querem deixar de ser apenas peças de um sistema e começar a pensar como empresarios da própria carreira, com visão de negócio, posicionamento, captação e vendas éticas.</p>
+      </div>
+    </div>
+    <div class="cta-center">
+      <a href="#aplicar" class="cta">Quero aplicar para a Doctor 360 - Bahia</a>
+    </div>
+  </div>
+</section>
+
+<!-- Para quem - Diagnostic Scanner -->
+<section class="diag-section section-dark" id="diagSection">
+  <div class="container">
+    <div class="diag-header">
+      <div class="section-tag" style="text-align:center">Esse evento não é para qualquer médico</div>
+      <h2 class="section-title" style="text-align:center">A Doctor 360 - Bahia foi desenhada para médicos que já entenderam que <strong>competência técnica, sozinha, não garante crescimento.</strong></h2>
+      <p style="color:var(--gray-400);text-align:center;font-size:1rem">Este evento é para quem:</p>
+    </div>
+
+    <div class="diag-scanner">
+      <div class="diag-spine"></div>
+
+      <!-- Row 1 - card on left -->
+      <div class="diag-row right" data-diag>
+        <div class="diag-card real">
+          <div class="diag-pulse-dot"></div>
+          <div class="diag-label">Captação</div>
+          <p>Sente dificuldade na captação e prospecção de pacientes particulares.</p>
+        </div>
+        <div class="diag-node-wrap"><div class="diag-node"></div></div>
+        <div class="diag-card empty"></div>
+      </div>
+
+      <!-- Row 2 - card on right -->
+      <div class="diag-row left" data-diag>
+        <div class="diag-card empty"></div>
+        <div class="diag-node-wrap"><div class="diag-node"></div></div>
+        <div class="diag-card real">
+          <div class="diag-pulse-dot"></div>
+          <div class="diag-label">Comercial</div>
+          <p>Não domina o processo comercial e não se sente seguro em vender no particular.</p>
+        </div>
+      </div>
+
+      <!-- Row 3 - card on left -->
+      <div class="diag-row right" data-diag>
+        <div class="diag-card real">
+          <div class="diag-pulse-dot"></div>
+          <div class="diag-label">Renda</div>
+          <p>Vive vendendo suas horas para operadoras de saúde e não consegue escalar a própria renda.</p>
+        </div>
+        <div class="diag-node-wrap"><div class="diag-node"></div></div>
+        <div class="diag-card empty"></div>
+      </div>
+
+      <!-- Row 4 - card on right -->
+      <div class="diag-row left" data-diag>
+        <div class="diag-card empty"></div>
+        <div class="diag-node-wrap"><div class="diag-node"></div></div>
+        <div class="diag-card real">
+          <div class="diag-pulse-dot"></div>
+          <div class="diag-label">Exaustão</div>
+          <p>Se sente exausto com a rotina e a pressão constante da profissão.</p>
+        </div>
+      </div>
+
+      <!-- Row 5 - card on left -->
+      <div class="diag-row right" data-diag>
+        <div class="diag-card real">
+          <div class="diag-pulse-dot"></div>
+          <div class="diag-label">Sistema</div>
+          <p>Está inserido em um sistema que limita seu crescimento e autonomia.</p>
+        </div>
+        <div class="diag-node-wrap"><div class="diag-node"></div></div>
+        <div class="diag-card empty"></div>
+      </div>
+
+      <!-- Row 6 - card on right -->
+      <div class="diag-row left" data-diag>
+        <div class="diag-card empty"></div>
+        <div class="diag-node-wrap"><div class="diag-node"></div></div>
+        <div class="diag-card real">
+          <div class="diag-pulse-dot"></div>
+          <div class="diag-label">Burnout</div>
+          <p>Enfrenta níveis altos de estresse e burnout.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wide bottom item -->
+    <div style="margin-top:40px">
+      <div class="diag-wide" data-diag-wide>
+        <div class="diag-pulse-dot"></div>
+        <div class="diag-label">Valorização</div>
+        <p>Apesar de até ganhar bem, sente que o custo é alto demais com baixa valorização da sua hora e da sua entrega.</p>
+      </div>
+    </div>
+
+    <!-- Note -->
+    <div class="diag-note">
+      <strong>Se você quer apenas motivação passageira, frases prontas ou ideias rasas sobre marketing, este evento não é o lugar.</strong><br><br>
+      Mas se você quer clareza estratégica, direção e visão prática para evoluir sua forma de atuar, então esse encontro foi pensado para você.
+    </div>
+    <div class="cta-center">
+      <a href="#aplicar" class="cta">Quero aplicar para a Doctor 360 - Bahia</a>
+    </div>
+  </div>
+</section>
+
+<!-- Problema - Orbital -->
+<section class="orbit-section section-dark">
+  <div class="orbit-wrapper">
+    <div class="orbit-tag">
+      <div class="section-tag" style="text-align:center">A verdade que ninguém conta</div>
+    </div>
+
+    <div class="orbit-universe">
+      <!-- Orbit rings -->
+      <div class="orbit-ring orbit-ring-1"><div class="orbit-dot"></div></div>
+      <div class="orbit-ring orbit-ring-2"><div class="orbit-dot"></div></div>
+      <div class="orbit-ring orbit-ring-3"></div>
+
+      <!-- Central planet -->
+      <div class="orbit-core">
+        <h2>O maior risco hoje não é ser um médico ruim. É ser um <strong>médico bom preso em um modelo ruim.</strong></h2>
+      </div>
+
+      <!-- Orbiting pain cards -->
+      <div class="orbit-card">
+        <span>Rotina</span>
+        Agenda desorganizada e falta de controle sobre o próprio tempo.
+      </div>
+      <div class="orbit-card">
+        <span>Renda</span>
+        Falta de previsibilidade financeira e crescimento travado.
+      </div>
+      <div class="orbit-card">
+        <span>Valor</span>
+        Dificuldade de valorização e medo de vender no particular.
+      </div>
+      <div class="orbit-card">
+        <span>Autonomia</span>
+        Dependência de sistemas que comprimem margem e liberdade.
+      </div>
+      <div class="orbit-card">
+        <span>Desgaste</span>
+        Exaustão constante, pressão e níveis altos de burnout.
+      </div>
+      <div class="orbit-card">
+        <span>Estagnação</span>
+        Produzir muito e construir pouco. Crescimento no improviso.
+      </div>
+    </div>
+
+    <div class="orbit-bottom">
+      <p>A Doctor 360 - Bahia nasce para responder essa lacuna. O foco é mostrar o que precisa mudar na prática para que o médico deixe de operar no improviso e passe a construir uma carreira com visão, posicionamento e estrutura.</p>
+      <div class="cta-center">
+        <a href="#aplicar" class="cta">Quero aplicar para a Doctor 360 - Bahia</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mockup - Evento -->
+<section class="section-dark" style="padding:60px 0">
+  <div class="container">
+    <img src="assets/img/Fotos do evento_imersão.webp" alt="Fotos do evento" style="width:100%;border-radius:12px">
+  </div>
+</section>
+
+<!-- Resultados -->
+<section class="section-dark">
+  <div class="container">
+    <div class="section-tag">O que você leva</div>
+    <h2 class="section-title">Ao final do evento, você terá mais do que inspiração. <strong>Terá clareza.</strong></h2>
+    <p class="section-desc">Você sairá da Doctor 360 - Bahia com uma nova leitura sobre o seu momento profissional.</p>
+    <div class="results-grid" id="resultsGrid">
+      <div class="result-card">
+        <div class="result-bg-num">01</div>
+        <div class="result-num">//01</div>
+        <h3>Clareza sobre o seu modelo de negócios atual</h3>
+        <p>Você vai entender o que, hoje, está travando sua evolução: posicionamento, oferta, processo, mentalidade, estrutura comercial ou execução.</p>
+      </div>
+      <div class="result-card">
+        <div class="result-bg-num">02</div>
+        <div class="result-num">//02</div>
+        <h3>Visão de negócio aplicada ao consultório</h3>
+        <p>Vai enxergar como médicos podem estruturar uma operação mais inteligente, mais valorizada e menos dependente do acaso.</p>
+      </div>
+      <div class="result-card">
+        <div class="result-bg-num">03</div>
+        <div class="result-num">//03</div>
+        <h3>Posicionamento e valor percebido</h3>
+        <p>Vai compreender por que alguns médicos atraem pacientes melhores e constroem mais autoridade.</p>
+      </div>
+      <div class="result-card">
+        <div class="result-bg-num">04</div>
+        <div class="result-num">//04</div>
+        <h3>Direção para crescer com previsibilidade</h3>
+        <p>Visão mais madura sobre aquisição de pacientes, experiência, conversão, retenção e sustentabilidade.</p>
+      </div>
+      <div class="result-card">
+        <div class="result-bg-num">05</div>
+        <div class="result-num">//05</div>
+        <h3>Mentalidade empreendedora</h3>
+        <p>Empreender na medicina não significa perder a ética. Significa estruturar a carreira com consciência e liderança.</p>
+      </div>
+    </div>
+    <div class="cta-center">
+      <a href="#aplicar" class="cta">Quero aplicar para a Doctor 360 - Bahia</a>
+    </div>
+  </div>
+</section>
+
+<!-- Pilares -->
+<section class="section-light">
+  <div class="container">
+    <div class="pilares-header">
+      <div>
+        <div class="section-tag">2 Dias Completos de Transformação</div>
+        <h2 class="section-title">Os pilares que sustentam uma <strong>operação médica forte.</strong></h2>
+      </div>
+      <div>
+        <p class="section-desc">Cada pilar conecta teoria comprovada com execução real, casos práticos e ferramentas prontas para implementar na segunda-feira com seu time.</p>
+      </div>
+    </div>
+    <div class="pilares-scroll">
+      <div class="pilar-card">
+        <div class="pilar-num">//01</div>
+        <h3>Modelo de Negócio Médico</h3>
+        <p>Como estruturar um consultório que não dependa apenas de volume, correria e improviso.</p>
+      </div>
+      <div class="pilar-card">
+        <div class="pilar-num">//02</div>
+        <h3>Posicionamento e Autoridade</h3>
+        <p>Como construir uma percepção de valor mais forte no mercado e atrair pacientes mais alinhados.</p>
+      </div>
+      <div class="pilar-card">
+        <div class="pilar-num">//03</div>
+        <h3>Jornada do Paciente e Conversão</h3>
+        <p>Como transformar interesse em relacionamento, confiança e decisão com ética.</p>
+      </div>
+      <div class="pilar-card">
+        <div class="pilar-num">//04</div>
+        <h3>Gestão, Estrutura e Sustentabilidade</h3>
+        <p>Como deixar de operar no caos e construir base para crescimento real.</p>
+      </div>
+      <div class="pilar-card">
+        <div class="pilar-num">//05</div>
+        <h3>Mentalidade e Liderança</h3>
+        <p>Como pensar como médico empreendedor sem perder essência, excelência e propósito.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Diferencial -->
+<section class="section-dark">
+  <div class="container">
+    <div class="section-tag">O que torna esse evento diferente</div>
+    <h2 class="section-title">Não é um congresso. Não é um curso raso. <strong>Não é só networking.</strong></h2>
+    <p class="section-desc">A Doctor 360 - Bahia é um encontro criado para médicos que desejam olhar para sua carreira com mais profundidade.</p>
+    <div class="diff-grid">
+      <div class="diff-item"><p>Conteúdo pensado para a realidade do médico que quer crescer no particular</p></div>
+      <div class="diff-item"><p>Discussões voltadas à prática, e não apenas à teoria</p></div>
+      <div class="diff-item"><p>Ambiente seleto, com médicos que valorizam evolução real</p></div>
+      <div class="diff-item"><p>Experiência premium, com curadoria e profundidade</p></div>
+      <div class="diff-item" style="grid-column:1/-1"><p>Contato com uma visão mais estratégica sobre carreira, consultório e crescimento</p></div>
+    </div>
+    <div class="cta-center">
+      <a href="#aplicar" class="cta">Quero aplicar para a Doctor 360 - Bahia</a>
+    </div>
+  </div>
+</section>
+
+<!-- Speakers -->
+<section class="section-light">
+  <div class="container">
+    <div class="section-tag" style="text-align:center">Quem conduz a Doctor 360 - Bahia</div>
+    <h2 class="section-title" style="text-align:center">A proposta nasce da <strong>vivência prática.</strong></h2>
+
+    <div class="spk-block" id="spkBlock">
+      <div class="spk-compose">
+        <div class="spk-sig spk-sig-nat">Natália</div>
+        <div class="spk-sig spk-sig-fel">Felipe</div>
+        <div class="spk-float spk-float-nat" data-spk-depth="1">
+          <img src="assets/img/foto atrás da natália.webp" alt="Natália no evento">
+        </div>
+        <div class="spk-float spk-float-fel" data-spk-depth="2">
+          <img src="assets/img/foto atrás do felipe.webp" alt="Felipe no evento">
+        </div>
+        <div class="spk-portraits">
+          <div class="spk-portrait">
+            <img src="assets/img/natalia_bio.webp" alt="Dra. Natália Carneiro">
+            <div class="spk-portrait-sig">Natália</div>
+            <div class="spk-nametag">
+              <div class="spk-name">Dra. Natália Carneiro</div>
+              <div class="spk-role">CEO Doctor360 &middot; Doutorado pela USP</div>
+            </div>
+          </div>
+          <div class="spk-portrait">
+            <img src="assets/img/felipe_bio.webp" alt="Dr. Felipe Carneiro">
+            <div class="spk-portrait-sig">Felipe</div>
+            <div class="spk-nametag">
+              <div class="spk-name">Dr. Felipe Carneiro</div>
+              <div class="spk-role">CFO Doctor360 &middot; Doutorado pela USP</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="spk-info-card">
+        <h3 class="spk-headline">A proposta do encontro não nasce da teoria. Nasce da <strong>vivência prática</strong>, do acompanhamento de médicos em transformação.</h3>
+        <div class="spk-divider"></div>
+        <div class="spk-text">
+          <p>Dra. Natália é médica desde os 23 anos, com experiência como pesquisadora na Suíça, professora universitária no Piauí e doutora pela USP. Atuou na Rede D'Or e, após uma virada de carreira, iniciou sua jornada no empreendedorismo. Fundadora da Doctor 360, hoje lidera mais de 100 médicos.</p>
+          <p style="margin-top:16px">Dr. Felipe começou aos 18 ajudando os pais no negócio familiar. Formou-se médico aos 27, passou por centros de excelência como USP e Sírio-Libanês. Fundou o Centro de Medicina Sexual do Sírio-Libanês. Hoje, empresário, mentor e criador de cursos em saúde.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mockup - Experiencia -->
+<section class="section-dark" style="padding:60px 0;overflow:hidden">
+  <div class="carousel-track" id="carouselTrack">
+    <img src="assets/img/carrossel.webp" alt="Evento Doctor 360">
+    <img src="assets/img/carrossel.webp" alt="Evento Doctor 360">
+  </div>
+</section>
+
+<!-- Perfil ideal / Chaos → Clarity -->
+<section class="chaos-section section-dark">
+  <div class="chaos-particles" id="chaosParticles"></div>
+  <div class="container">
+    <div class="chaos-header">
+      <div class="section-tag" style="text-align:center">Para quem este evento faz mais sentido</div>
+      <h2 class="section-title" style="text-align:center">O melhor aproveitamento acontece quando o médico <strong>já decidiu evoluir.</strong></h2>
+    </div>
+
+    <div class="chaos-list" id="chaosList">
+      <div class="chaos-item">
+        <span class="chaos-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+        Já atua ou deseja atuar no consultório particular
+      </div>
+      <div class="chaos-item">
+        <span class="chaos-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+        Está cansado de crescer no improviso
+      </div>
+      <div class="chaos-item">
+        <span class="chaos-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+        Quer elevar o nível do posicionamento e da operação
+      </div>
+      <div class="chaos-item">
+        <span class="chaos-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+        Entende que a carreira médica precisa de direção estratégica
+      </div>
+      <div class="chaos-item">
+        <span class="chaos-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+        Está disposto a rever a forma como constrói valor no mercado
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Custo de nao agir -->
+<section class="section-light">
+  <div class="container" style="text-align:center">
+    <div class="section-tag" style="text-align:center">Reflexão</div>
+    <h2 class="section-title" style="max-width:700px;margin:0 auto 24px"><strong>Continuar como está</strong> também tem um preço.</h2>
+    <p class="section-desc" style="margin:0 auto 48px;text-align:center;max-width:600px">Muitos médicos seguem adiando decisões importantes porque estão ocupados demais resolvendo o urgente.</p>
+    <div class="custo-block">
+      <p style="color:var(--gray-300);font-size:.95rem;margin-bottom:32px">Na prática, o custo de não evoluir aparece todos os dias:</p>
+      <ul class="custo-list">
+        <li>Desgaste constante</li>
+        <li>Baixa previsibilidade</li>
+        <li>Dependência de modelos desvalorizantes</li>
+        <li>Crescimento lento</li>
+        <li>Produzir muito, construir pouco</li>
+      </ul>
+      <p style="color:var(--white);font-size:1rem;font-weight:500;margin-top:32px">Participar da Doctor 360 - Bahia é decidir interromper esse ciclo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Aplicacao -->
+<section class="section-dark" id="aplicar">
+  <div class="container">
+    <div class="app-grid">
+      <div>
+        <div class="section-tag">Vagas Limitadas</div>
+        <h2 class="section-title">Sua participação acontece por <strong>aplicação.</strong></h2>
+        <p class="section-desc">Para preservar o nível da experiência e o perfil dos participantes, as vagas serão disponibilizadas mediante aplicação.</p>
+        <p style="color:var(--gray-400);margin-top:24px;font-size:.9rem;line-height:1.8">Após preencher sua candidatura, sua solicitação será analisada pelo time. Se o seu perfil estiver alinhado com o propósito do encontro, você receberá os próximos passos.</p>
+      </div>
+      <div>
+        <p style="color:var(--gray-400);font-size:.85rem;margin-bottom:24px">O que avaliamos na aplicação:</p>
+        <div class="app-steps">
+          <div class="app-step"><span class="app-step-num">01</span>Momento atual da carreira</div>
+          <div class="app-step"><span class="app-step-num">02</span>Tipo de atuação</div>
+          <div class="app-step"><span class="app-step-num">03</span>Objetivos com o consultório</div>
+          <div class="app-step"><span class="app-step-num">04</span>Abertura para crescimento estratégico</div>
+          <div class="app-step"><span class="app-step-num">05</span>Aderência ao perfil do evento</div>
+        </div>
+        <div style="margin-top:40px">
+          <a href="#aplicar" class="cta">Quero aplicar para a Doctor 360 - Bahia</a>
+        </div>
+        <p style="color:var(--gray-500);font-size:.8rem;margin-top:16px">Leva poucos minutos e nos ajuda a entender se este evento faz sentido para o seu momento.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section-light">
+  <div class="container">
+    <div style="text-align:center">
+      <div class="section-tag">Perguntas Frequentes</div>
+      <h2 class="section-title"><strong>FAQ</strong></h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">A Doctor 360 - Bahia é para qualquer médico?</div>
+        <div class="faq-a">Não. O evento foi pensado para médicos que desejam construir ou fortalecer uma atuação mais estratégica no consultório e enxergam valor em uma visão empresarial da carreira médica.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Preciso já ter consultório estabelecido?</div>
+        <div class="faq-a">Não necessariamente. Mas o melhor aproveitamento tende a acontecer quando o médico já tem clareza de que deseja crescer no particular e estruturar melhor sua atuação.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">O evento é aberto para compra direta?</div>
+        <div class="faq-a">A entrada acontece por aplicação, para garantir alinhamento entre o perfil do participante e a proposta da experiência.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">O que acontece depois da aplicação?</div>
+        <div class="faq-a">Após o envio, o time analisa as informações e entra em contato com os próximos passos, caso o perfil esteja aderente ao evento.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Esse evento substitui uma mentoria?</div>
+        <div class="faq-a">Não. A Doctor 360 - Bahia é uma experiência imersiva e estratégica. Pode trazer clareza, visão e direção, mas não substitui processos de acompanhamento mais longos.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section class="final section-dark">
+  <div class="container">
+    <div class="section-tag" style="text-align:center">O momento é agora</div>
+    <h2>Se você sente que sua carreira médica precisa de um <strong>novo nível de estrutura, visão e direção,</strong> esse é o momento de agir.</h2>
+    <p>A Doctor 360 - Bahia foi criada para médicos que não querem apenas continuar atendendo. Foi criada para médicos que querem construir algo mais sólido, mais valorizado e mais sustentável.</p>
+    <a href="#aplicar" class="cta">Quero aplicar para a Doctor 360 - Bahia</a>
+    <p style="color:var(--gray-500);font-size:.8rem;margin-top:20px">Preencha sua aplicação e descubra se esse encontro faz sentido para o seu momento.</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>Doctor 360 &mdash; Bahia &middot; 19 e 20 de Junho de 2026 &middot; Salvador, BA</p>
+  </div>
+</footer>
+
+<script>
+/* FAQ */
+document.querySelectorAll('.faq-q').forEach(q=>{
+  q.addEventListener('click',()=>{
+    const item=q.parentElement;
+    document.querySelectorAll('.faq-item').forEach(i=>{if(i!==item)i.classList.remove('open')});
+    item.classList.toggle('open');
+  });
+});
+
+/* Orbit mouse parallax */
+const orbitSection=document.querySelector('.orbit-section');
+if(orbitSection){
+  const cards=orbitSection.querySelectorAll('.orbit-card');
+  const core=orbitSection.querySelector('.orbit-core');
+  orbitSection.addEventListener('mousemove',(e)=>{
+    const rect=orbitSection.getBoundingClientRect();
+    const cx=(e.clientX-rect.left)/rect.width-.5;
+    const cy=(e.clientY-rect.top)/rect.height-.5;
+    cards.forEach((card,i)=>{
+      const depth=(i%3+1)*12;
+      const rx=cx*depth;
+      const ry=cy*depth;
+      card.style.transform=`translate(${rx}px,${ry}px)`;
+    });
+    if(core){
+      core.style.transform=`translate(calc(-50% + ${cx*-6}px),calc(-50% + ${cy*-6}px))`;
+      core.style.boxShadow=`${cx*-20}px ${cy*-20}px 80px rgba(16,185,129,.06),0 0 200px rgba(16,185,129,.03),inset 0 0 60px rgba(0,0,0,.8)`;
+    }
+  });
+  orbitSection.addEventListener('mouseleave',()=>{
+    cards.forEach(card=>{card.style.transform=''});
+    if(core)core.style.transform='translate(-50%,-50%)';
+  });
+}
+
+/* ══ Chaos → Clarity (simple scroll reveal + check) ══ */
+(function(){
+  const items=document.querySelectorAll('#chaosList .chaos-item');
+  if(!items.length) return;
+
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        setTimeout(()=>{e.target.classList.add('checked')},500);
+      }
+    });
+  },{threshold:.4});
+
+  items.forEach((item,i)=>{
+    item.style.transitionDelay=`${i*.1}s`;
+    obs.observe(item);
+  });
+
+  /* Particles */
+  const particlesEl=document.getElementById('chaosParticles');
+  if(particlesEl){
+    for(let i=0;i<25;i++){
+      const p=document.createElement('div');
+      p.className='chaos-particle';
+      p.style.left=Math.random()*100+'%';
+      p.style.top=Math.random()*100+'%';
+      p.style.animationDuration=(4+Math.random()*6)+'s';
+      p.style.animationDelay=(-Math.random()*10)+'s';
+      particlesEl.appendChild(p);
+    }
+  }
+})();
+
+/* Speaker parallax on mouse */
+const spkBlock=document.getElementById('spkBlock');
+if(spkBlock){
+  const floats=spkBlock.querySelectorAll('.spk-float');
+  const sigs=spkBlock.querySelectorAll('.spk-sig');
+  spkBlock.addEventListener('mousemove',(e)=>{
+    const r=spkBlock.getBoundingClientRect();
+    const cx=(e.clientX-r.left)/r.width-.5;
+    const cy=(e.clientY-r.top)/r.height-.5;
+    floats.forEach((f)=>{
+      const d=parseInt(f.dataset.spkDepth||1)*15;
+      f.style.transform=f.classList.contains('spk-float-nat')
+        ?`rotate(-4deg) translate(${cx*d}px,${cy*d}px)`
+        :`rotate(3deg) translate(${cx*d}px,${cy*d}px)`;
+    });
+    sigs.forEach((s,i)=>{
+      const d=(i+1)*-8;
+      s.style.transform=s.classList.contains('spk-sig-nat')
+        ?`rotate(-8deg) translate(${cx*d}px,${cy*d}px)`
+        :`rotate(5deg) translate(${cx*d}px,${cy*d}px)`;
+    });
+  });
+  spkBlock.addEventListener('mouseleave',()=>{
+    floats.forEach(f=>{f.style.transform=f.classList.contains('spk-float-nat')?'rotate(-4deg)':'rotate(3deg)'});
+    sigs.forEach(s=>{s.style.transform=s.classList.contains('spk-sig-nat')?'rotate(-8deg)':'rotate(5deg)'});
+  });
+}
+
+/* Diagnostic scanner scroll reveal */
+const diagObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('active');
+      const node=e.target.querySelector('.diag-node');
+      if(node)node.classList.add('active');
+    }
+  });
+},{threshold:.3});
+document.querySelectorAll('[data-diag]').forEach((row,i)=>{
+  row.style.transitionDelay=`${i*.15}s`;
+  diagObs.observe(row);
+});
+const diagWideObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('active')});
+},{threshold:.3});
+document.querySelectorAll('[data-diag-wide]').forEach(el=>diagWideObs.observe(el));
+
+/* Diagnostic card spotlight on mouse */
+document.querySelectorAll('.diag-card').forEach(card=>{
+  card.addEventListener('mousemove',(e)=>{
+    const r=card.getBoundingClientRect();
+    card.style.setProperty('--mx',(e.clientX-r.left)+'px');
+    card.style.setProperty('--my',(e.clientY-r.top)+'px');
+  });
+});
+
+/* Result cards spotlight */
+const resultsGrid=document.getElementById('resultsGrid');
+if(resultsGrid){
+  resultsGrid.addEventListener('mousemove',(e)=>{
+    resultsGrid.querySelectorAll('.result-card').forEach(card=>{
+      const r=card.getBoundingClientRect();
+      card.style.setProperty('--mx',(e.clientX-r.left)+'px');
+      card.style.setProperty('--my',(e.clientY-r.top)+'px');
+    });
+  });
+}
+
+/* Scroll reveal */
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}
+  });
+},{threshold:.15});
+document.querySelectorAll('.orbit-card').forEach((c,i)=>{
+  c.style.opacity='0';c.style.transform='translateY(30px)';
+  c.style.transition=`all .6s cubic-bezier(.4,0,.2,1) ${i*.12}s`;
+  observer.observe(c);
+});
+</script>
+</body>
+</html>

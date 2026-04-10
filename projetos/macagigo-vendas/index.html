@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arquitecta de Contenido — Macagigo</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #000000;
+  --offwhite: #F5F5F3;
+  --blush: #E8DFD6;
+  --gray: #D9D9D9;
+  --gold: #C5A55A;
+  --gold-light: #D4BC7C;
+  --gold-gradient: linear-gradient(135deg, #C5A55A 0%, #E8D5A0 50%, #C5A55A 100%);
+  --text-dark: #1a1a1a;
+  --text-medium: #4a4a4a;
+  --text-light: #7a7a7a;
+  --hero-bg: #D0C5C3;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-dark);
+  background: var(--offwhite);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 500; }
+
+.section { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
+
+@media (max-width: 768px) { .section { padding: 56px 20px; } }
+
+/* ═══════ LOGO ═══════ */
+.logo-mark {
+  height: 32px;
+  width: auto;
+  display: block;
+  margin-bottom: 32px;
+  opacity: 0.9;
+}
+
+.logo-mark.centered {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.logo-mark.inverted {
+  filter: brightness(0) invert(1);
+  opacity: 0.4;
+}
+
+.logo-mark.small {
+  height: 24px;
+}
+
+/* ═══════ HERO ═══════ */
+.hero {
+  min-height: 100vh;
+  background: var(--hero-bg) url('assets/img/hero.webp') right center / cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    background: var(--hero-bg);
+    flex-direction: column;
+    align-items: stretch;
+    min-height: auto;
+  }
+}
+
+.hero-inner {
+  max-width: 560px;
+  padding: 60px 24px 60px 64px;
+  text-align: left;
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .hero-inner {
+    padding: 48px 24px 32px;
+    max-width: 100%;
+  }
+}
+
+.hero-mobile-img {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hero-mobile-img {
+    display: block;
+    width: 75%;
+    max-width: 360px;
+    margin: 0 auto;
+    object-fit: contain;
+  }
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border: 1px solid rgba(0,0,0,0.25);
+  border-radius: 100px;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-dark);
+  margin-bottom: 40px;
+  animation: fadeDown 1s ease 0.2s both;
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  color: var(--black);
+  line-height: 1.15;
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
+  animation: fadeDown 1s ease 0.4s both;
+}
+
+.hero h1 em {
+  font-style: italic;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero h1 em.hero-em {
+  -webkit-text-fill-color: var(--black);
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+}
+
+.hero-sub {
+  font-size: clamp(0.88rem, 1.5vw, 1rem);
+  color: var(--text-medium);
+  line-height: 1.7;
+  max-width: 480px;
+  margin: 0 0 40px;
+  font-weight: 300;
+  animation: fadeDown 1s ease 0.6s both;
+}
+
+.cta-btn {
+  display: inline-block;
+  padding: 18px 48px;
+  background: var(--gold-gradient);
+  color: var(--black);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  animation: fadeDown 1s ease 0.8s both;
+}
+
+.cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(197,165,90,0.3);
+}
+
+.hero-tags {
+  display: flex;
+  justify-content: flex-start;
+  gap: 24px;
+  margin-top: 40px;
+  animation: fadeDown 1s ease 1s both;
+  flex-wrap: wrap;
+}
+
+.hero-tags span {
+  font-size: 12px;
+  color: var(--text-light);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* ═══════ PROBLEMA ═══════ */
+.problema {
+  background: var(--offwhite);
+  padding: 100px 24px;
+}
+
+.problema-inner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.section-title {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  line-height: 1.2;
+  margin-bottom: 40px;
+  color: var(--black);
+}
+
+.problema p {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--text-medium);
+  margin-bottom: 24px;
+  font-weight: 300;
+}
+
+.problema strong {
+  color: var(--text-dark);
+  font-weight: 500;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  margin: 48px 0;
+  padding: 40px;
+  background: var(--black);
+  border-left: 3px solid var(--gold);
+}
+
+.stat-item .stat-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.stat-item .stat-text {
+  font-size: 0.85rem;
+  color: var(--gray);
+  line-height: 1.5;
+  font-weight: 300;
+}
+
+/* ═══════ PUENTE ═══════ */
+.puente {
+  background: var(--blush);
+  padding: 100px 24px;
+}
+
+.puente-inner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.puente p {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--text-medium);
+  margin-bottom: 24px;
+  font-weight: 300;
+}
+
+.puente strong {
+  color: var(--black);
+  font-weight: 600;
+}
+
+.highlight-box {
+  background: var(--black);
+  padding: 40px;
+  margin: 40px 0;
+}
+
+.highlight-box p {
+  color: var(--offwhite);
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+  font-style: italic;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.highlight-box em {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: italic;
+}
+
+/* ═══════ PRESENTACIÓN ═══════ */
+.presentacion {
+  background: var(--offwhite);
+  padding: 100px 24px;
+}
+
+.presentacion-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.presentacion .section-title {
+  margin-bottom: 20px;
+}
+
+.presentacion-sub {
+  font-size: 1.1rem;
+  color: var(--text-medium);
+  font-weight: 300;
+  margin-bottom: 56px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
+}
+
+.check-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  text-align: left;
+  margin-bottom: 56px;
+}
+
+@media (max-width: 600px) { .check-grid { grid-template-columns: 1fr; } }
+
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px;
+  background: white;
+  border: 1px solid rgba(0,0,0,0.06);
+  transition: all 0.3s ease;
+}
+
+.check-item:hover {
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+}
+
+.check-icon {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  background: var(--gold-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: white;
+  margin-top: 2px;
+}
+
+.check-text {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-dark);
+  font-weight: 400;
+}
+
+/* ═══════ TRANSFORMACIÓN ═══════ */
+.transformacion {
+  background: var(--black);
+  padding: 100px 24px;
+}
+
+.transformacion-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.transformacion .section-label { color: var(--gold-light); }
+.transformacion .section-title { color: var(--offwhite); text-align: center; margin-bottom: 56px; }
+
+.transform-row {
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr;
+  gap: 0;
+  align-items: center;
+  padding: 28px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+@media (max-width: 600px) {
+  .transform-row { grid-template-columns: 1fr; gap: 12px; padding: 24px 0; }
+  .transform-arrow { transform: rotate(90deg); }
+}
+
+.transform-before {
+  font-size: 0.95rem;
+  color: rgba(217,217,217,0.5);
+  font-weight: 300;
+  font-style: italic;
+  text-align: right;
+  padding-right: 20px;
+}
+
+@media (max-width: 600px) { .transform-before { text-align: left; padding: 0; } }
+
+.transform-arrow {
+  text-align: center;
+  color: var(--gold);
+  font-size: 18px;
+}
+
+.transform-after {
+  font-size: 0.95rem;
+  color: var(--offwhite);
+  font-weight: 400;
+  padding-left: 20px;
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) { .transform-after { padding: 0; } }
+
+/* ═══════ RESULTS GRID ═══════ */
+.resultados {
+  background: var(--offwhite);
+  padding: 80px 24px;
+}
+
+.resultados-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 48px;
+}
+
+@media (max-width: 600px) {
+  .results-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+}
+
+.result-item {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.result-item:hover {
+  transform: scale(1.03);
+}
+
+.result-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ═══════ FASES ═══════ */
+.fases {
+  background: var(--offwhite);
+  padding: 100px 24px;
+}
+
+.fases-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.fases .section-title { text-align: center; margin-bottom: 64px; }
+
+.fase-block {
+  margin-bottom: 64px;
+  padding: 48px;
+  background: white;
+  border: 1px solid rgba(0,0,0,0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.fase-block::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+}
+
+.fase-block.f1::before { background: var(--gold-gradient); }
+.fase-block.f2::before { background: var(--black); }
+.fase-block.f3::before { background: var(--blush); }
+.fase-block.f4::before { background: var(--gold-gradient); }
+
+.fase-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.85rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.fase-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  margin-bottom: 8px;
+  color: var(--black);
+}
+
+.fase-tagline {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  font-style: italic;
+  margin-bottom: 32px;
+}
+
+.semana {
+  margin-bottom: 24px;
+  padding: 20px 24px;
+  background: var(--offwhite);
+  border-left: 2px solid var(--gray);
+}
+
+.semana-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.semana-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  color: var(--black);
+  margin-bottom: 8px;
+}
+
+.semana-desc {
+  font-size: 0.88rem;
+  color: var(--text-medium);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.hot-seat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: var(--black);
+  color: var(--gold-light);
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 16px;
+}
+
+/* ═══════ DINÁMICAS ═══════ */
+.dinamicas {
+  background: var(--offwhite);
+  padding: 100px 24px;
+}
+
+.dinamicas-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.dinamicas .section-title { text-align: center; margin-bottom: 56px; }
+
+.dinamica-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 700px) { .dinamica-grid { grid-template-columns: 1fr; } }
+
+.dinamica-card {
+  padding: 32px;
+  background: white;
+  border: 1px solid rgba(0,0,0,0.06);
+  transition: all 0.3s ease;
+}
+
+.dinamica-card:hover {
+  border-color: var(--gold);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.04);
+}
+
+.dinamica-icon {
+  font-size: 1.6rem;
+  margin-bottom: 16px;
+}
+
+.dinamica-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  margin-bottom: 8px;
+  color: var(--black);
+}
+
+.dinamica-desc {
+  font-size: 0.88rem;
+  color: var(--text-medium);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* ═══════ QUIÉN ═══════ */
+.quien {
+  background: var(--black);
+  padding: 100px 24px;
+}
+
+.quien-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.quien .section-label { color: var(--gold-light); }
+.quien .section-title { color: var(--offwhite); margin-bottom: 32px; }
+
+.quien-bio-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 32px;
+  display: block;
+  border: 3px solid rgba(197,165,90,0.3);
+}
+
+.quien p {
+  font-size: 1rem;
+  color: var(--gray);
+  line-height: 1.85;
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+.quien strong { color: var(--offwhite); font-weight: 500; }
+
+.quien-stats {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  margin-top: 48px;
+  flex-wrap: wrap;
+}
+
+.quien-stat {
+  text-align: center;
+}
+
+.quien-stat-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.quien-stat-label {
+  font-size: 0.75rem;
+  color: var(--gray);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ═══════ PRECIO ═══════ */
+.precio {
+  background: var(--blush);
+  padding: 100px 24px;
+}
+
+.precio-inner {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.precio .section-title { text-align: center; margin-bottom: 56px; }
+
+.precio-ancla {
+  max-width: 600px;
+  margin: 0 auto 48px;
+}
+
+.ancla-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  font-size: 0.9rem;
+}
+
+.ancla-row span:first-child { color: var(--text-medium); font-weight: 300; }
+.ancla-row span:last-child { color: var(--text-dark); font-weight: 500; }
+
+.ancla-total {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 0;
+  margin-top: 8px;
+  font-size: 1rem;
+}
+
+.ancla-total span:first-child { font-weight: 600; color: var(--black); }
+.ancla-total span:last-child {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  text-decoration: line-through;
+  color: var(--text-light);
+}
+
+.mockup-oferta {
+  display: block;
+  width: 100%;
+  max-width: 700px;
+  margin: 48px auto 40px;
+}
+
+.precio-card-single {
+  max-width: 480px;
+  margin: 48px auto 0;
+  padding: 56px 40px;
+  text-align: center;
+  position: relative;
+  background: var(--black);
+  border: 1px solid rgba(197,165,90,0.3);
+}
+
+.precio-card-single .precio-card-badge {
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gold-gradient);
+  color: var(--black);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 20px;
+}
+
+.precio-card-single .precio-card-label {
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-bottom: 12px;
+  margin-top: 16px;
+}
+
+.precio-card-single .precio-card-amount {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.precio-card-single .precio-card-cuotas-highlight {
+  font-size: 0.9rem;
+  color: var(--gray);
+  font-weight: 300;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.precio-card-single .precio-card-usd {
+  font-size: 0.85rem;
+  color: var(--gray);
+  margin-bottom: 12px;
+  font-weight: 300;
+}
+
+.precio-card-single .precio-card-full {
+  font-size: 0.8rem;
+  color: rgba(217,217,217,0.45);
+  margin-bottom: 24px;
+  font-weight: 300;
+}
+
+.precio-card-single .precio-card-desc {
+  font-size: 0.85rem;
+  color: rgba(217,217,217,0.6);
+  line-height: 1.6;
+  margin-bottom: 32px;
+  font-weight: 300;
+}
+
+.precio-card-single .cta-btn {
+  width: 100%;
+  text-align: center;
+  animation: none;
+  background: var(--gold-gradient);
+  color: var(--black);
+}
+
+/* ═══════ GARANTÍA ═══════ */
+.garantia {
+  background: var(--offwhite);
+  padding: 80px 24px;
+}
+
+.garantia-inner {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 48px;
+  border: 1px solid var(--gray);
+}
+
+.garantia-icon {
+  font-size: 2.4rem;
+  margin-bottom: 20px;
+}
+
+.garantia h3 {
+  font-size: 1.6rem;
+  margin-bottom: 16px;
+}
+
+.garantia p {
+  font-size: 0.95rem;
+  color: var(--text-medium);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ═══════ FAQ ═══════ */
+.faq {
+  background: var(--blush);
+  padding: 100px 24px;
+}
+
+.faq-inner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.faq .section-title { text-align: center; margin-bottom: 56px; }
+
+.faq-item {
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  padding: 24px 0;
+  cursor: pointer;
+}
+
+.faq-question {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--black);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faq-question::after {
+  content: '+';
+  font-size: 1.4rem;
+  color: var(--gold);
+  font-weight: 300;
+  transition: transform 0.3s ease;
+}
+
+.faq-item.open .faq-question::after {
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+}
+
+.faq-item.open .faq-answer {
+  max-height: 300px;
+  padding-top: 16px;
+}
+
+.faq-answer p {
+  font-size: 0.9rem;
+  color: var(--text-medium);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ═══════ CIERRE ═══════ */
+.cierre {
+  background: var(--black);
+  padding: 120px 24px;
+  text-align: center;
+}
+
+.cierre-inner {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.cierre .section-title {
+  color: var(--offwhite);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  margin-bottom: 32px;
+}
+
+.cierre-paths {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 56px;
+  text-align: left;
+}
+
+@media (max-width: 600px) { .cierre-paths { grid-template-columns: 1fr; } }
+
+.cierre-path {
+  padding: 28px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.cierre-path.path-no { opacity: 0.5; }
+.cierre-path.path-yes { border-color: var(--gold); }
+
+.cierre-path h4 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.cierre-path.path-no h4 { color: var(--gray); }
+.cierre-path.path-yes h4 { color: var(--gold-light); }
+
+.cierre-path p {
+  font-size: 0.88rem;
+  color: var(--gray);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.cierre-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-style: italic;
+  color: var(--blush);
+  line-height: 1.6;
+  margin-bottom: 48px;
+  padding: 0 20px;
+}
+
+.cierre .cta-btn { animation: none; }
+
+.cierre-footer {
+  margin-top: 32px;
+  font-size: 0.8rem;
+  color: rgba(217,217,217,0.4);
+  letter-spacing: 1px;
+}
+
+/* ═══════ ANIMATIONS ═══════ */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════ HERO ═══════ -->
+<section class="hero">
+  <div class="hero-inner">
+    <img src="assets/img/logo.webp" alt="Arquitecta de Contenido" class="logo-mark">
+    <div class="hero-badge">Formación en vivo · 8 semanas</div>
+    <h1>Deja de publicar a ciegas.<br>Conviértete en <em class="hero-em">Arquitecta de tu Contenido.</em></h1>
+    <p class="hero-sub">8 semanas en vivo donde construyes tu sistema completo de contenido — mentalidad, identidad, método, calendario y monetización.</p>
+    <a href="#precio" class="cta-btn">Quiero mi lugar →</a>
+    <div class="hero-tags">
+      <span>Inicio: Abril 2026</span>
+      <span>100% en vivo</span>
+      <span>Cupos limitados</span>
+    </div>
+  </div>
+  <img src="assets/img/hero%20maca.webp" alt="Macagigo" class="hero-mobile-img">
+</section>
+
+<!-- ═══════ PROBLEMA ═══════ -->
+<section class="problema">
+  <div class="problema-inner reveal">
+    <div class="section-label">La verdad</div>
+    <h2 class="section-title">Tienes talento.<br>Pero talento sin sistema es <em>decoración.</em></h2>
+    <p>Tus videos se ven bien. Sabes editar. Tienes estética. Pero abres el celular el lunes y no sabes qué publicar. Pasas 30 minutos mirando qué hicieron las demás. Intentas algo. No te convence. Cierras la app.</p>
+    <p><strong>Publicas cuando te llega la inspiración</strong> — que cada vez llega menos. Y cuando publicas, recibes 40 likes, 2 comentarios y cero DMs de marcas.</p>
+    <p>Ves creadoras con menos talento que tú cerrando publis, creciendo y viviendo de esto. No porque sean mejores — sino porque tienen algo que tú no: <strong>una arquitectura detrás de su contenido.</strong></p>
+
+    <div class="stat-grid">
+      <div class="stat-item">
+        <span class="stat-number">40%</span>
+        <span class="stat-text">No saben qué publicar para atraer marcas</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">51%</span>
+        <span class="stat-text">Nunca ganaron dinero con su contenido</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">84%</span>
+        <span class="stat-text">Tienen menos de 5K seguidores</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PUENTE ═══════ -->
+<section class="puente">
+  <div class="puente-inner reveal">
+    <div class="section-label">El problema real</div>
+    <h2 class="section-title">Te enseñaron a crear.<br>Pero nadie te enseñó a <em>construir.</em></h2>
+    <p>Hay miles de cursos de edición. Miles de tutoriales de transiciones. Miles de videos sobre el algoritmo.</p>
+    <p>Pero nadie te enseñó a <strong>pensar ANTES de crear.</strong> Nadie te dijo que cada video necesita una intención. Que tu perfil es un portafolio. Que existe un sistema para nunca quedarte sin ideas. Que hay un método para saber si un contenido es para impactar, conectar o monetizar.</p>
+
+    <div class="highlight-box">
+      <p>Lo que necesitas no es otro curso de edición. Lo que necesitas es la <em>arquitectura</em> detrás de todo.</p>
+    </div>
+
+    <p>Una estructura que sostenga tu contenido, tu crecimiento y tu monetización. Semana tras semana. Sin depender de la inspiración. Sin publicar al azar.</p>
+  </div>
+</section>
+
+<!-- ═══════ PRESENTACIÓN ═══════ -->
+<section class="presentacion">
+  <div class="presentacion-inner reveal">
+    <div class="section-label">La formación</div>
+    <h2 class="section-title">Arquitecta de Contenido</h2>
+    <p class="presentacion-sub">8 semanas en vivo donde no solo aprendes — construyes. Cada semana sales con algo hecho, publicado, funcionando.</p>
+
+    <div class="check-grid">
+      <div class="check-item">
+        <div class="check-icon">✦</div>
+        <span class="check-text">Mentalidad de creadora profesional</span>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">✦</div>
+        <span class="check-text">Identidad y posicionamiento claro</span>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">✦</div>
+        <span class="check-text">Sistema de ideas infinitas</span>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">✦</div>
+        <span class="check-text">Guiones con storytelling que enganchan</span>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">✦</div>
+        <span class="check-text">Calendario con intención (Método I.C.M)</span>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">✦</div>
+        <span class="check-text">Dominio del algoritmo y métricas</span>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">✦</div>
+        <span class="check-text">Media kit + primeras marcas contactadas</span>
+      </div>
+      <div class="check-item">
+        <div class="check-icon">✦</div>
+        <span class="check-text">Tu primer producto o servicio diseñado</span>
+      </div>
+    </div>
+
+    <a href="#precio" class="cta-btn" style="animation:none">Quiero construir mi arquitectura →</a>
+  </div>
+</section>
+
+<!-- ═══════ TRANSFORMACIÓN ═══════ -->
+<section class="transformacion">
+  <div class="transformacion-inner reveal">
+    <div class="section-label" style="text-align:center">El cambio</div>
+    <h2 class="section-title">8 semanas que cambian todo</h2>
+
+    <div class="transform-row">
+      <div class="transform-before">"No sé qué publicar"</div>
+      <div class="transform-arrow">→</div>
+      <div class="transform-after">Banco de guiones listos. Matriz de ideas infinitas. Nunca más tela en blanco.</div>
+    </div>
+    <div class="transform-row">
+      <div class="transform-before">"Publico y rezo"</div>
+      <div class="transform-arrow">→</div>
+      <div class="transform-after">Cada contenido tiene intención: impactar, conectar o monetizar.</div>
+    </div>
+    <div class="transform-row">
+      <div class="transform-before">"Se ve bonito pero no crece"</div>
+      <div class="transform-arrow">→</div>
+      <div class="transform-after">Entiendes el algoritmo. Lees métricas. Optimizas. Reciclas.</div>
+    </div>
+    <div class="transform-row">
+      <div class="transform-before">"No soy constante"</div>
+      <div class="transform-arrow">→</div>
+      <div class="transform-after">Sistema semanal. Calendario listo. Batch content. Flujo realista.</div>
+    </div>
+    <div class="transform-row">
+      <div class="transform-before">"Las marcas no me notan"</div>
+      <div class="transform-arrow">→</div>
+      <div class="transform-after">Media kit profesional. Precios definidos. 3 pitches enviados.</div>
+    </div>
+    <div class="transform-row">
+      <div class="transform-before">"Esto es solo un hobby"</div>
+      <div class="transform-arrow">→</div>
+      <div class="transform-after">Mapa de negocio. Primer producto diseñado. Plan de 90 días.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ RESULTADOS (da página /eei) ═══════ -->
+<section class="resultados">
+  <div class="resultados-inner reveal">
+    <div class="section-label" style="text-align:center">Resultados reales</div>
+    <h2 class="section-title" style="text-align:center">Esto es lo que pasa cuando tu contenido tiene arquitectura.</h2>
+    <div class="results-grid">
+      <div class="result-item"><img src="./assets/img/1.webp" alt="Resultado Macagigo" loading="lazy"></div>
+      <div class="result-item"><img src="./assets/img/2.webp" alt="Resultado Macagigo" loading="lazy"></div>
+      <div class="result-item"><img src="./assets/img/3.webp" alt="Resultado Macagigo" loading="lazy"></div>
+      <div class="result-item"><img src="./assets/img/4.webp" alt="Resultado Macagigo" loading="lazy"></div>
+      <div class="result-item"><img src="./assets/img/5.webp" alt="Resultado Macagigo" loading="lazy"></div>
+      <div class="result-item"><img src="./assets/img/6.webp" alt="Resultado Macagigo" loading="lazy"></div>
+      <div class="result-item"><img src="./assets/img/7.webp" alt="Resultado Macagigo" loading="lazy"></div>
+      <div class="result-item"><img src="./assets/img/8.webp" alt="Resultado Macagigo" loading="lazy"></div>
+      <div class="result-item"><img src="./assets/img/9.webp" alt="Resultado Macagigo" loading="lazy"></div>
+      <div class="result-item"><img src="./assets/img/10.webp" alt="Resultado Macagigo" loading="lazy"></div>
+      <div class="result-item"><img src="./assets/img/11.webp" alt="Resultado Macagigo" loading="lazy"></div>
+      <div class="result-item"><img src="./assets/img/12.webp" alt="Resultado Macagigo" loading="lazy"></div>
+      <div class="result-item"><img src="./assets/img/13.webp" alt="Resultado Macagigo" loading="lazy"></div>
+      <div class="result-item"><img src="./assets/img/14.webp" alt="Resultado Macagigo" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FASES ═══════ -->
+<section class="fases">
+  <div class="fases-inner reveal">
+    <div class="section-label" style="text-align:center">El método</div>
+    <h2 class="section-title">4 fases. 8 semanas. 1 transformación.</h2>
+
+    <div class="fase-block f1">
+      <div class="fase-number">Fase 1 · Semanas 1-2</div>
+      <div class="fase-title">Activación</div>
+      <div class="fase-tagline">Antes de construir, activa tu modo creadora.</div>
+      <div class="semana">
+        <div class="semana-label">Semana 1</div>
+        <div class="semana-title">Activa tu modo creadora</div>
+        <div class="semana-desc">Rompes bloqueos mentales. Creencias limitantes. El miedo a publicar. La trampa del perfeccionismo. Sales con tu primer contenido publicado sin sobrepensar.</div>
+      </div>
+      <div class="semana">
+        <div class="semana-label">Semana 2</div>
+        <div class="semana-title">Identidad, propósito y posicionamiento</div>
+        <div class="semana-desc">Defines quién eres en redes. Tu arquetipo de marca. Tus pilares. Tu bio. Tu narrativa. Sales sabiendo exactamente cómo quieres ser percibida.</div>
+      </div>
+      <div class="hot-seat-badge">🔥 Hot Seat #1 — Análisis de perfiles en vivo</div>
+    </div>
+
+    <div class="fase-block f2">
+      <div class="fase-number">Fase 2 · Semanas 3-4</div>
+      <div class="fase-title">Construcción</div>
+      <div class="fase-tagline">Ahora que sabes quién eres — construye tu universo creativo.</div>
+      <div class="semana">
+        <div class="semana-label">Semana 3</div>
+        <div class="semana-title">Identidad creativa y referencias</div>
+        <div class="semana-desc">Construyes tu universo visual. Moodboard estratégico. Aprendes a usar referencias sin copiar. Defines tu formato propio.</div>
+      </div>
+      <div class="semana">
+        <div class="semana-label">Semana 4</div>
+        <div class="semana-title">Ideas, guiones y storytelling</div>
+        <div class="semana-desc">Dominas la Matriz de Ideas Infinitas. Escribes 10 guiones. Hooks que detienen el scroll. Storytelling para contenido corto. Publicas 3 contenidos con estructura.</div>
+      </div>
+      <div class="hot-seat-badge">🔥 Hot Seat #2 — Análisis de contenidos publicados</div>
+    </div>
+
+    <div class="fase-block f3">
+      <div class="fase-number">Fase 3 · Semanas 5-6</div>
+      <div class="fase-title">Sistema</div>
+      <div class="fase-tagline">Ideas sin sistema son solo buenas intenciones. Aquí construyes la máquina.</div>
+      <div class="semana">
+        <div class="semana-label">Semana 5</div>
+        <div class="semana-title">Consistencia, organización y sistema</div>
+        <div class="semana-desc">Construyes tu sistema semanal. Batch content. Calendario con Método I.C.M. Flujo de trabajo realista. Cumples 1 semana completa planificada.</div>
+      </div>
+      <div class="semana">
+        <div class="semana-label">Semana 6</div>
+        <div class="semana-title">Algoritmo, crecimiento y comunidad</div>
+        <div class="semana-desc">Entiendes el algoritmo de 2026. Lees métricas. Optimizas. Reciclas contenido. Construyes comunidad real — no audiencia fría.</div>
+      </div>
+      <div class="hot-seat-badge">🔥 Hot Seat #3 — Métricas, calendario y evolución</div>
+    </div>
+
+    <div class="fase-block f4">
+      <div class="fase-number">Fase 4 · Semanas 7-8</div>
+      <div class="fase-title">Expansión</div>
+      <div class="fase-tagline">El contenido ya funciona. Ahora transfórmalo en negocio.</div>
+      <div class="semana">
+        <div class="semana-label">Semana 7</div>
+        <div class="semana-title">Monetización y marca personal</div>
+        <div class="semana-desc">Armas tu media kit. Defines precios. Contactas marcas sin rogar. Envías 3 pitches reales. Vendes sin sentirte incómoda.</div>
+      </div>
+      <div class="semana">
+        <div class="semana-label">Semana 8</div>
+        <div class="semana-title">Escalabilidad, lanzamientos y negocio</div>
+        <div class="semana-desc">Diseñas tu primer producto digital. Embudos básicos. Mapa de negocio. Plan de acción 90 días. De creadora a empresaria.</div>
+      </div>
+      <div class="hot-seat-badge">🔥 Hot Seat #4 — Sesión final + celebración</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ DINÁMICAS ═══════ -->
+<section class="dinamicas">
+  <div class="dinamicas-inner reveal">
+    <div class="section-label" style="text-align:center">La experiencia</div>
+    <h2 class="section-title">Esto no es un curso que miras sola.</h2>
+
+    <div class="dinamica-grid">
+      <div class="dinamica-card">
+        <div class="dinamica-icon">📹</div>
+        <div class="dinamica-title">Clase en vivo semanal</div>
+        <div class="dinamica-desc">Martes, 90 minutos con Macagigo. Enseña, muestra ejemplos reales, hace ejercicios contigo. Grabación disponible.</div>
+      </div>
+      <div class="dinamica-card">
+        <div class="dinamica-icon">🎯</div>
+        <div class="dinamica-title">Desafío semanal</div>
+        <div class="dinamica-desc">Cada semana una misión concreta con entregable real. Haces, publicas, entregas, recibes feedback.</div>
+      </div>
+      <div class="dinamica-card">
+        <div class="dinamica-icon">💬</div>
+        <div class="dinamica-title">Q&A pre-grabado</div>
+        <div class="dinamica-desc">Dejas dudas durante la semana. Macagigo selecciona las mejores, graba respuestas y las entrega el domingo.</div>
+      </div>
+      <div class="dinamica-card">
+        <div class="dinamica-icon">🔥</div>
+        <div class="dinamica-title">Hot seats quincenales</div>
+        <div class="dinamica-desc">Cada 15 días Macagigo analiza perfiles en vivo. 4 sesiones en total. Aprende quien mira y quien es analizada.</div>
+      </div>
+      <div class="dinamica-card">
+        <div class="dinamica-icon">👥</div>
+        <div class="dinamica-title">Comunidad exclusiva</div>
+        <div class="dinamica-desc">Grupo privado de creadoras. Networking, entregas, victorias, dudas. Activo por 10 semanas.</div>
+      </div>
+      <div class="dinamica-card">
+        <div class="dinamica-icon">🤝</div>
+        <div class="dinamica-title">Duplas de accountability</div>
+        <div class="dinamica-desc">Te emparejamos con otra creadora. Se exigen y celebran mutuamente. Crecer juntas es más fácil.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ QUIÉN ═══════ -->
+<section class="quien">
+  <div class="quien-inner reveal">
+    <div class="section-label">Tu mentora</div>
+    <h2 class="section-title">Macagigo</h2>
+
+    <img src="./assets/img/maca-bio.webp" alt="Macagigo" class="quien-bio-img" loading="lazy">
+
+    <p>Creadora de contenido con más de <strong>100K seguidores</strong>. Trabaja con <strong>marcas globales</strong>. Enseña a otras creadoras a elevar su estética, crecer su audiencia y transformar su contenido en oportunidades reales.</p>
+    <p>No es una gurú que habla desde un escenario. Es una creadora que <strong>hace lo que enseña</strong>. Todos los días. En su propio perfil.</p>
+    <p>Colombiana viviendo en Brasil. Especialista en edición, storytelling visual y estrategia de contenido para creadoras latinas.</p>
+
+    <div class="quien-stats">
+      <div class="quien-stat">
+        <div class="quien-stat-number">100K+</div>
+        <div class="quien-stat-label">Seguidoras</div>
+      </div>
+      <div class="quien-stat">
+        <div class="quien-stat-number">150+</div>
+        <div class="quien-stat-label">Alumnas</div>
+      </div>
+      <div class="quien-stat">
+        <div class="quien-stat-number">8</div>
+        <div class="quien-stat-label">Semanas en vivo</div>
+      </div>
+      <div class="quien-stat">
+        <div class="quien-stat-number">34</div>
+        <div class="quien-stat-label">Templates incluidos</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PRECIO ═══════ -->
+<section class="precio" id="precio">
+  <div class="precio-inner reveal">
+    <div class="section-label" style="text-align:center">La inversión</div>
+    <h2 class="section-title">Todo esto por menos de $3.500 COP al día.</h2>
+
+    <div class="precio-ancla">
+      <div class="ancla-row"><span>8 clases en vivo (90 min)</span><span>$2.944.000 COP</span></div>
+      <div class="ancla-row"><span>4 hot seats con análisis en vivo</span><span>$1.472.000 COP</span></div>
+      <div class="ancla-row"><span>8 Q&A semanales</span><span>$1.177.600 COP</span></div>
+      <div class="ancla-row"><span>34 templates profesionales</span><span>$1.288.000 COP</span></div>
+      <div class="ancla-row"><span>Comunidad + accountability</span><span>$736.000 COP</span></div>
+      <div class="ancla-row"><span>Media kit + guía de precios + pitches</span><span>$920.000 COP</span></div>
+      <div class="ancla-row"><span>Plan de negocio + ruta monetización</span><span>$736.000 COP</span></div>
+      <div class="ancla-total"><span>Valor total</span><span>$9.273.600 COP</span></div>
+    </div>
+
+    <img src="assets/img/mockup%20oferta.webp" alt="Todo lo que incluye Arquitecta de Contenido" class="mockup-oferta">
+
+    <img src="assets/img/logo.webp" alt="Arquitecta de Contenido" class="logo-mark centered" style="margin-bottom:24px; margin-top:16px;">
+
+    <div class="precio-card-single">
+      <div class="precio-card-badge">Oferta de lanzamiento</div>
+      <div class="precio-card-label">Acceso completo</div>
+      <div class="precio-card-cuotas-highlight">12 cuotas de</div>
+      <div class="precio-card-amount">$77.500</div>
+      <div class="precio-card-usd">COP en la tarjeta de crédito</div>
+      <div class="precio-card-full">o un solo pago de $930.000 COP (≈ $250 USD)</div>
+      <div class="precio-card-desc">Formación completa de 8 semanas, comunidad, templates, hot seats y acompañamiento.</div>
+      <a href="#" onclick="return false" class="cta-btn">Entrar ahora →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ GARANTÍA ═══════ -->
+<section class="garantia">
+  <div class="garantia-inner reveal">
+    <div class="garantia-icon">✦</div>
+    <h3>Tu inversión está segura</h3>
+    <p>Si en los primeros 7 días sientes que Arquitecta de Contenido no es para ti, te devolvemos el 100% de tu dinero. Sin preguntas. Confiamos tanto en lo que entregamos que el riesgo es nuestro, no tuyo.</p>
+  </div>
+</section>
+
+<!-- ═══════ FAQ ═══════ -->
+<section class="faq">
+  <div class="faq-inner reveal">
+    <h2 class="section-title">Preguntas frecuentes</h2>
+
+    <div class="faq-item">
+      <div class="faq-question">¿Necesito haber participado en la Inmersión?</div>
+      <div class="faq-answer"><p>No. Arquitecta de Contenido es un programa completo por sí solo. Si participaste de la Inmersión, vas a profundizar e implementar. Si no, construyes todo desde cero con acompañamiento.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">¿Las clases son en vivo? ¿Y si no puedo asistir?</div>
+      <div class="faq-answer"><p>Sí, en vivo los martes a las 17h Colombia / 19h Brasil. Todas quedan grabadas y disponibles para ver a tu ritmo.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">¿Cuánto tiempo por semana necesito dedicar?</div>
+      <div class="faq-answer"><p>Mínimo 3-4 horas: 90 min de clase + 2 horas para el desafío semanal. El programa está diseñado para creadoras con otras responsabilidades.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">¿Funciona para mi nicho?</div>
+      <div class="faq-answer"><p>Sí. El método funciona para cualquier nicho: belleza, moda, gastronomía, fitness, educación, lifestyle, diseño, emprendimiento. Los principios son universales.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">¿Necesito muchos seguidores?</div>
+      <div class="faq-answer"><p>No. El 84% de nuestras alumnas tienen menos de 5.000 seguidores. El programa está diseñado para creadoras que están empezando o profesionalizando.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">¿Qué pasa después de las 8 semanas?</div>
+      <div class="faq-answer"><p>El grupo sigue activo 30 días más. Después, puedes unirte a la comunidad mensual para seguir con lives, desafíos y networking.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">¿Tiene garantía?</div>
+      <div class="faq-answer"><p>Sí. 7 días de garantía incondicional. Si no es para ti, devolvemos el 100%.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">¿En qué idioma es la formación?</div>
+      <div class="faq-answer"><p>Español. Macagigo es colombiana y da las clases en español.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CIERRE ═══════ -->
+<section class="cierre">
+  <div class="cierre-inner reveal">
+    <h2 class="section-title">Dos caminos.<br>Tú decides.</h2>
+
+    <div class="cierre-paths">
+      <div class="cierre-path path-no">
+        <h4>Camino 1</h4>
+        <p>Cierras esta página. Mañana abres Instagram. No sabes qué publicar. 40 likes. Repites. En 6 meses, exactamente en el mismo lugar.</p>
+      </div>
+      <div class="cierre-path path-yes">
+        <h4>Camino 2</h4>
+        <p>Entras hoy. En 8 semanas tienes identidad, sistema, calendario, media kit, marcas contactadas y tu primer producto diseñado.</p>
+      </div>
+    </div>
+
+    <p class="cierre-quote">"Entré sin saber qué publicar. Salí con identidad, sistema, calendario, media kit, 3 marcas contactadas y mi primer producto digital diseñado."</p>
+
+    <a href="#precio" class="cta-btn">Quiero ser Arquitecta de mi Contenido →</a>
+
+    <img src="assets/img/logo.webp" alt="Arquitecta de Contenido" class="logo-mark centered inverted small" style="margin-top:48px; margin-bottom:16px;">
+    <div class="cierre-footer">Inicio: Abril 2026 · 8 semanas en vivo · Cupos limitados</div>
+  </div>
+</section>
+
+<script>
+// FAQ Accordion
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.querySelector('.faq-question').addEventListener('click', () => {
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
